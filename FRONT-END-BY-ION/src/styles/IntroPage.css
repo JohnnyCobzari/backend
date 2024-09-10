@@ -1,0 +1,132 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #DAD5CD;
+}
+
+/*Pentru header ===============================================>*/
+
+.header {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.headerBox {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 40%;
+}
+
+.headerBox p {
+  color: rgba(0, 0, 0, 1);
+  text-decoration: underline;
+  font-size: 12px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.headerBox p:hover {
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.7); /* Slightly lighter color */
+}
+
+.headerBox img {
+  cursor: pointer;
+  transform: translateY(3px);
+  height: 40px;
+  width: auto;
+}
+
+.headerBox img:hover {
+  transform: scale(1.01);
+  filter: brightness(1.3);
+}
+
+/*PENTRU LOGO =================================================>*/
+
+.logo {
+  display: flex;
+  align-items: center;
+  width: 40%;
+}
+
+.logo p {
+  font-family: 'Neuton', serif;
+  font-weight: 300; /* Bold */
+  color: rgba(107, 94, 73, 1);
+  font-size: 36px;
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.logo img {
+  margin: 0 5px;
+  width: auto;
+  height: 32px;
+}
+
+/*PENTRU textul mare de pe mijloc */
+
+.FrontBigTextFromFirstPage {
+  margin: 60px auto 20px;
+  width: 80%;
+  max-width: 610px;
+  font-size: 32px;
+  font-family: 'Neuton', serif;
+  color: black;
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+/* Imaginea mare din centru */
+
+.firstPageImagecontainer {
+  display: flex;
+  justify-content: center;
+}
+
+.firstPageImage {
+  width: 80%;
+  max-width: 610px;
+}
+
+/*Pentru textul mic */
+
+.smallTextAtTheButton {
+  margin: 60px auto 60px;
+  font-size: 10px;
+  width: 80%;
+  text-align: center;
+  max-width: 610px;
+}
+
+/* pentru butonul mare */
+
+.buttonBox {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonBox img {
+  width: 40%;
+  max-width: 305px;
+  cursor: pointer;
+  margin: 30px 0;
+}
+
+.buttonBox img:hover {
+  transform: scale(1.01);
+  filter: brightness(1.3);
+}
