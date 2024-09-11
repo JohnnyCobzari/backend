@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaCamera } from 'react-icons/fa'; // Importăm o iconiță de cameră
 
 const ImageUpload = () => {
   const [imageSrc, setImageSrc] = useState(''); // Stocăm URL-ul imaginii
@@ -28,7 +29,8 @@ const ImageUpload = () => {
   };
 
   const labelStyle = {
-    padding: '6px 12px',
+    margin: '10px 0 15px 0',
+    padding: '6px 25px',
     fontSize: '14px',
     fontWeight: '400',
     color: '#fff', // Culoare text albă pentru buton
@@ -37,6 +39,8 @@ const ImageUpload = () => {
     borderRadius: '4px',
     cursor: 'pointer',
     marginRight: '10px', // Spațiu între buton și textul fișierului
+    display: 'flex',
+    alignItems: 'center', // Centrarea pe verticală
   };
 
   const inputStyle = {
@@ -52,10 +56,15 @@ const ImageUpload = () => {
     marginTop: '20px', // Spațiu între buton și imaginea selectată
   };
 
+  const h3Style = {
+    color: '#6b5e49', // Culoare personalizată pentru h3
+  };
+
   return (
     <div>
       <div style={containerStyle}>
         <label htmlFor="file-upload" style={labelStyle}>
+          {!fileName && <FaCamera style={{ marginRight: '10px' }} />} {/* Iconița de cameră */}
           Choose Image
         </label>
         <input
@@ -72,7 +81,7 @@ const ImageUpload = () => {
       {/* Imaginea selectată va fi afișată mai jos */}
       {imageSrc && (
         <div style={imageContainerStyle}>
-          <h3>Selected Image:</h3>
+          <h3 style={h3Style}>Selected Image:</h3>
           <img src={imageSrc} alt="Selected" style={{ maxWidth: '300px', maxHeight: '300px' }} />
         </div>
       )}

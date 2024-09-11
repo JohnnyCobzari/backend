@@ -1,7 +1,6 @@
-// src/Sidebar.js
 import React, { useState } from 'react';
-import '../styles/SideBar.css';
-import PetForm from './CreateProfileForm';
+import { FaBars, FaTimes } from 'react-icons/fa';
+import "../styles/SideBar.css" // Import the separate CSS file
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,19 +10,13 @@ const Sidebar = () => {
   };
 
   return (
-    <div className={`sidebar ${isOpen ? 'open' : ''}`}>
-      <button className="sidebar-toggle" onClick={toggleSidebar}>
-        {isOpen ? 'Close' : 'Open'}
+    <div className={isOpen ? 'sidebar expanded' : 'sidebar'}>
+      <button className="toggle-btn" onClick={toggleSidebar}>
+        {isOpen ? <FaTimes /> : <FaBars />}
       </button>
-      <nav className="sidebar-menu">
-        <ul>
-            <PetForm/>
-          <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/services">Services</a></li>
-          <li><a href="/contact">Contact</a></li>
-        </ul>
-      </nav>
+      <div className="sidebar-content">
+        
+      </div>
     </div>
   );
 };

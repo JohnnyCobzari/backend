@@ -8,6 +8,7 @@
 }
 
 body {
+
   background: #DAD5CD;
 }
 
@@ -88,6 +89,7 @@ body {
   text-align: center;
 }
 
+
 /* Imaginea mare din centru */
 
 .firstPageImagecontainer {
@@ -96,7 +98,7 @@ body {
 }
 
 .firstPageImage {
-  width: 80%;
+  width: 85%;
   max-width: 610px;
 }
 
@@ -120,7 +122,7 @@ body {
 }
 
 .buttonBox img {
-  width: 40%;
+  width: 50%;
   max-width: 305px;
   cursor: pointer;
   margin: 30px 0;
@@ -129,4 +131,41 @@ body {
 .buttonBox img:hover {
   transform: scale(1.01);
   filter: brightness(1.3);
+}
+
+
+@media (max-width: 768px) {
+  .headerBox img {
+    height: 37px;
+  }
+}
+
+@media (max-width: 480px) {
+  .headerBox img {
+    height: 33px;
+  }
+  
+  .headerBox p {
+  font-size: 10px;
+  margin-right: 5px;
+  }
+
+  .logo p {
+  font-size: 28px;
+  }
+
+  .FrontBigTextFromFirstPage {
+  margin: 50px auto 10px;
+  font-size: 26px;
+  }
+
+  .buttonBox img {
+    width: 60%;
+  }
+
+  .smallTextAtTheButton {
+    margin: 40px auto 60px;
+    font-size: 10px;
+  }
+
 }

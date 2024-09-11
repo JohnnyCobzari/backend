@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import axios from 'axios';
 import Footer from "../components/Footer";
 import Logo from "../components/Logo";
+import axios from "axios";
 
 const api = axios.create({
   baseURL: 'http://localhost:3002', // Your backend URL
@@ -20,15 +20,33 @@ export const setAuthToken = (token) => {
   }
 };
 
-
-
-
 function SignUpPage() {
-  // State pentru câmpurile de input și mesajul de eroare
+  // State pentru câmpurile de input și mesaje de eroare/avertizare
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [error, setError] = useState("");
+  const [passwordWarning, setPasswordWarning] = useState("");
+
+  // Funcție care verifică puterea parolei
+  const validatePasswordStrength = (password) => {
+    const minLength = 6;
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumbers = /\d/.test(password);
+
+    if (password.length < minLength) {
+      return "Password must be at least 6 characters long.";
+    }
+    if (!hasLowerCase) {
+      return "Password must contain at least one lowercase letter.";
+    }
+    if (!hasNumbers) {
+      return "Password must contain at least one number.";
+    }
+    
+
+    return ""; // Parola este puternică
+  };
 
   // Handler pentru schimbarea valorii email
   const handleEmailChange = (event) => {
@@ -37,7 +55,12 @@ function SignUpPage() {
 
   // Handler pentru schimbarea valorii password
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+    const newPassword = event.target.value;
+    setPassword(newPassword);
+
+    // Validează puterea parolei și afișează avertismentul dacă este slabă
+    const warning = validatePasswordStrength(newPassword);
+    setPasswordWarning(warning);
   };
 
   // Handler pentru schimbarea valorii confirmPassword
@@ -55,6 +78,12 @@ function SignUpPage() {
       return;
     }
 
+    // Verifică dacă există avertismente pentru parola slabă
+    if (passwordWarning) {
+      setError(passwordWarning);
+      return;
+    }
+
     // Dacă parolele coincid, resetează mesajul de eroare și procesează formularul
     setError("");
 
@@ -64,19 +93,17 @@ function SignUpPage() {
       password: password,
     })
     .then((response) => {
-
       const token = response.data.token;
-    localStorage.setItem('authToken', token);
+      localStorage.setItem('authToken', token);
 
-    // Update Axios default headers
-    setAuthToken(token);
-      // Reset fields after successful submission
+      // Update Axios default headers
+      setAuthToken(token);
+      // Resetează câmpurile după trimitere
       setEmail("");
       setPassword("");
       setPassword2("");
     })
     .catch((err) => {
-      // Handle errors
       setError("An error occurred while signing up.");
     });
   };
@@ -116,6 +143,9 @@ function SignUpPage() {
             required
           />
         </div>
+
+        {/* Afișează avertismentul dacă parola este slabă */}
+        {passwordWarning && <p className="warning-message">{passwordWarning}</p>}
 
         <p className="emailAndpasword">Confirm Password</p>
 

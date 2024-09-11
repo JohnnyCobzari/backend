@@ -5,24 +5,6 @@ import Logo from "../components/Logo";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const api = axios.create({
-  baseURL: 'http://localhost:3002', // Your backend URL
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-  }
-});
-
-// Function to set the token in headers
-export const setAuthToken = (token) => {
-  if (token) {
-    api.defaults.headers['Authorization'] = `Bearer ${token}`;
-  } else {
-    delete api.defaults.headers['Authorization'];
-  }
-};
-
-
 
 function LoginPage() {
   
@@ -31,7 +13,8 @@ function LoginPage() {
   // State pentru câmpurile de input
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState("");  // Definește error și setError
+  const [authToken, setAuthToken] = useState("");
 
   // Handler pentru schimbarea valorii email
   const handleEmailChange = (event) => {
@@ -69,6 +52,7 @@ function LoginPage() {
     });
   };
 
+
   return (
     <div>
       <Logo />
@@ -104,8 +88,6 @@ function LoginPage() {
             required
           />
         </div>
-
-        {error && <p className="error-message">{error}</p>} {/* Afișează mesajul de eroare */}
 
         <a href="#" className="forgot">
           <p>Forgot password</p>

@@ -2,7 +2,6 @@ import React from "react";
 import "../styles/IntroPage.css";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../components/SideBar";
 
 function IntroPage() {
 
@@ -15,7 +14,6 @@ function IntroPage() {
 
     return (
         <>
-            <Sidebar/>
             <div className="header">
                 <div className="logo">
                     <p>PawPaw</p>

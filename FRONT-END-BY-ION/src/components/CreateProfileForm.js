@@ -1,5 +1,6 @@
-// src/PetForm.js
 import React, { useState } from 'react';
+import ImageUpload from './DragAndDrop';
+import "../styles/LogInPage.css";
 
 const PetForm = () => {
   const [formData, setFormData] = useState({
@@ -26,26 +27,25 @@ const PetForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission
     console.log('Form data submitted:', formData);
   };
 
   return (
-    <form id="login-form2" onSubmit={handleSubmit}>
+    <form id="login-form" onSubmit={handleSubmit}>
       <p className="writingFromPetLogIn">Pet name</p>
-      <div className="input_filed2">
+      <div className="input_filed">
         <input
           type="text"
           name="petName"
           value={formData.petName}
-          placeholder="ex:Bobby"
+          placeholder="ex: Bobby"
           onChange={handleChange}
           required
         />
       </div>
 
       <p className="writingFromPetLogIn">Gender</p>
-      <div className="input_filed2">
+      <div className="input_filed">
         <select
           name="gender"
           value={formData.gender}
@@ -61,7 +61,7 @@ const PetForm = () => {
       </div>
 
       <p className="writingFromPetLogIn">Breed</p>
-      <div className="input_filed2">
+      <div className="input_filed">
         <input
           type="text"
           name="breed"
@@ -73,7 +73,7 @@ const PetForm = () => {
       </div>
 
       <p className="writingFromPetLogIn">Age</p>
-      <div className="input_filed2">
+      <div className="input_filed">
         <input
           type="text"
           name="age"
@@ -85,7 +85,7 @@ const PetForm = () => {
       </div>
 
       <p className="writingFromPetLogIn">Owner name</p>
-      <div className="input_filed2">
+      <div className="input_filed">
         <input
           type="text"
           name="ownerName"
@@ -97,7 +97,7 @@ const PetForm = () => {
       </div>
 
       <p className="writingFromPetLogIn">Owner Phone Number</p>
-      <div className="input_filed2">
+      <div className="input_filed">
         <input
           type="text"
           name="ownerPhone"
@@ -109,7 +109,7 @@ const PetForm = () => {
       </div>
 
       <p className="writingFromPetLogIn">Vaccinated</p>
-      <div className="input_filed2">
+      <div className="input_filed">
         <select
           name="vaccinated"
           value={formData.vaccinated}
@@ -126,7 +126,7 @@ const PetForm = () => {
       </div>
 
       <p className="writingFromPetLogIn">Allergies</p>
-      <div className="input_filed2">
+      <div className="input_filed">
         <input
           type="text"
           name="allergies"
@@ -137,8 +137,8 @@ const PetForm = () => {
         />
       </div>
 
-      <p className="writingFromPetLogIn">Veterinar Information</p>
-      <div className="input_filed2">
+      <p className="writingFromPetLogIn">Veterinarian Information</p>
+      <div className="input_filed">
         <input
           type="text"
           name="vetInfo"
@@ -163,7 +163,7 @@ const PetForm = () => {
       {formData.readyForBreeding && (
         <>
           <p className="writingFromPetLogIn">Price for breeding</p>
-          <div className="input_filed2">
+          <div className="input_filed">
             <input
               type="text"
               name="breedingPrice"
@@ -176,8 +176,10 @@ const PetForm = () => {
         </>
       )}
 
-      <button type="submit" className="login2">
-        Create
+      <ImageUpload />
+
+      <button type="submit" className="login">
+        Create Pet Profile
       </button>
     </form>
   );
