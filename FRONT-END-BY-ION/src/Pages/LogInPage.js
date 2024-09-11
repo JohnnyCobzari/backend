@@ -3,6 +3,25 @@ import "../styles/LogInPage.css";
 import Footer from "../components/Footer";
 import Logo from "../components/Logo";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const api = axios.create({
+  baseURL: 'http://localhost:3002', // Your backend URL
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+  }
+});
+
+// Function to set the token in headers
+export const setAuthToken = (token) => {
+  if (token) {
+    api.defaults.headers['Authorization'] = `Bearer ${token}`;
+  } else {
+    delete api.defaults.headers['Authorization'];
+  }
+};
+
 
 
 function LoginPage() {
@@ -12,6 +31,7 @@ function LoginPage() {
   // State pentru câmpurile de input
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   // Handler pentru schimbarea valorii email
   const handleEmailChange = (event) => {
@@ -26,36 +46,27 @@ function LoginPage() {
   // Handler pentru trimiterea formularului
   const handleSubmit = async (event) => {
     event.preventDefault(); // Previne reîncărcarea paginii
+    axios.post('http://localhost:3002/auth/login', {
+      email: email,
+      password: password,
+    })
+    .then((response) => {
 
-    console.log("Email:", email);
-    console.log("Password:", password);
+      const token = response.data.token;
+    localStorage.setItem('authToken', token);
 
-    // FETCH CATRE Server
-    try {
-      const response = await fetch("http://localhost:3001/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        console.log("Response from server:", data); // Expecting "OK"
-      } else {
-        console.log("Error:", data.message);
-      }
-    } catch (error) {
-      console.error("Error during fetch:", error);
-    }
-
-    // Resetare câmpuri după trimitere
-    setEmail("");
-    setPassword("");
+    // Update Axios default headers
+    setAuthToken(token);
+      // Reset fields after successful submission
+      setEmail("");
+      setPassword("");
+      setError("");
+      
+    })
+    .catch((err) => {
+      // Handle errors
+      setError("An error occurred while loging up.");
+    });
   };
 
   return (
@@ -93,6 +104,8 @@ function LoginPage() {
             required
           />
         </div>
+
+        {error && <p className="error-message">{error}</p>} {/* Afișează mesajul de eroare */}
 
         <a href="#" className="forgot">
           <p>Forgot password</p>

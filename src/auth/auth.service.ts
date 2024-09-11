@@ -44,12 +44,14 @@ async login(loginDto:LoginDto): Promise<{token: string}> {
     })
 
     if(!user) {
+      console.log('invalid email');
         throw new UnauthorizedException('Invalid email')
     }
 
     const isPassCorect = await bcrypt.compare(password, user.password)
 
     if(!isPassCorect) {
+      console.log('incorect pass');
         throw new UnauthorizedException('Invalid password')
     }
     const token = this.jwtService.sign({id: user._id })

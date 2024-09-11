@@ -1,6 +1,27 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import Footer from "../components/Footer";
 import Logo from "../components/Logo";
+
+const api = axios.create({
+  baseURL: 'http://localhost:3002', // Your backend URL
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+  }
+});
+
+// Function to set the token in headers
+export const setAuthToken = (token) => {
+  if (token) {
+    api.defaults.headers['Authorization'] = `Bearer ${token}`;
+  } else {
+    delete api.defaults.headers['Authorization'];
+  }
+};
+
+
+
 
 function SignUpPage() {
   // State pentru câmpurile de input și mesajul de eroare
@@ -36,15 +57,28 @@ function SignUpPage() {
 
     // Dacă parolele coincid, resetează mesajul de eroare și procesează formularul
     setError("");
-    console.log("Email:", email);
-    console.log("Password:", password);
 
-    // Resetare câmpuri după trimitere
-    setEmail("");
-    setPassword("");
-    setPassword2("");
+    axios.post('http://localhost:3002/auth/signup', {
+      name: 'User', // Adjust according to your DTO
+      email: email,
+      password: password,
+    })
+    .then((response) => {
 
-    // Aici poți adăuga logica pentru trimite datele către server
+      const token = response.data.token;
+    localStorage.setItem('authToken', token);
+
+    // Update Axios default headers
+    setAuthToken(token);
+      // Reset fields after successful submission
+      setEmail("");
+      setPassword("");
+      setPassword2("");
+    })
+    .catch((err) => {
+      // Handle errors
+      setError("An error occurred while signing up.");
+    });
   };
 
   return (
