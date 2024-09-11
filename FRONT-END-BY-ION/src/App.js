@@ -6,6 +6,7 @@ import SignUpPage from './Pages/SignUpPage';
 import ImageUpload from './components/DragAndDrop';
 import AddPetPage from './Pages/AddPetPage';
 import MainPage from './Pages/MainPage';
+import ProfilePage from './Pages/ProfilePage';
 
 
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/SignUp" element={<SignUpPage/>} />
         <Route path="/AddPet" element={<AddPetPage/>} />
         <Route path="/HomePage" element={<MainPage/>} />
+        <Route path="/ProfilePage" element={<ProfilePage/>} />
 
       </Routes>
 

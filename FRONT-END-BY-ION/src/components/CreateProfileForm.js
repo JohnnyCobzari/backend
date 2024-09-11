@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import ImageUpload from './DragAndDrop';
 import "../styles/LogInPage.css";
+import { useNavigate } from "react-router-dom";
+
 
 const PetForm = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +18,12 @@ const PetForm = () => {
     readyForBreeding: false,
     breedingPrice: '',
   });
+
+  const navigate = useNavigate();
+
+  const goToHomePage1 = () =>{
+      navigate('/HomePage');
+  }
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -178,7 +186,7 @@ const PetForm = () => {
 
       <ImageUpload />
 
-      <button type="submit" className="login">
+      <button type="submit" className="login" onClick={goToHomePage1}>
         Create Pet Profile
       </button>
     </form>

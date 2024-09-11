@@ -5,12 +5,14 @@ import Footer from "../components/Footer";
 import Logo from "../components/Logo"
 import MapBox from "../components/MapBox";
 import "../styles/HomePage.css"
+
 const MainPage = () => {
     return (
       <>
         <Sidebar />
         <Logo />
         <MapBox />
+        
       </>
     );
   };

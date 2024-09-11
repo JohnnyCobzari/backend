@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapbox Geocoding API Test</title>
+    <script defer src="java.js"></script> <!-- Include your JS file here -->
+</head>
+<body>
+    <h1>Mapbox Geocoding API Test</h1>
+    <input type="text" id="address" placeholder="Enter an address">
+    <button onclick="getCoordinates()">Get Coordinates</button>
+    <p id="result"></p>
+
+    <script>
+        async function getCoordinates() {
+            const accessToken = 'pk.eyJ1IjoiY29zbWFrLTQ3IiwiYSI6ImNtMHhoczZsejA3ZjgyanF6YWpzMDV4cDAifQ.LiwxPafEUZs60SWhAMCpdg'; // Replace with your Mapbox access token
+            const baseUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
+            const address = document.getElementById('address').value; // Get address from input field
+
+            if (!address) {
+                alert('Please enter an address.');
+                return;
+            }
+
+            try {
+                // Encode the address to make it URL-safe
+                const response = await fetch(`${baseUrl}${encodeURIComponent(address)}.json?access_token=${accessToken}`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch coordinates');
+                }
+
+                const data = await response.json();
+
+                // Check if any results were found
+                if (data.features.length === 0) {
+                    throw new Error('No coordinates found for this address');
+                }
+
+                // Extract the coordinates from the first result
+                const coordinates = data.features[0].geometry.coordinates; // [longitude, latitude]
+
+                // Display the result
+                document.getElementById('result').textContent = `Latitude: ${coordinates[1]}, Longitude: ${coordinates[0]}`;
+            } catch (error) {
+                console.error('Error fetching coordinates:', error);
+                document.getElementById('result').textContent = 'Error fetching coordinates. Check console for details.';
+            }
+        }
+    </script>
+</body>
+</html>

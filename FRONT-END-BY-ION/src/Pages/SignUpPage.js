@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import Footer from "../components/Footer";
 import Logo from "../components/Logo";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+
 
 const api = axios.create({
   baseURL: 'http://localhost:3002', // Your backend URL
@@ -27,6 +30,8 @@ function SignUpPage() {
   const [password2, setPassword2] = useState("");
   const [error, setError] = useState("");
   const [passwordWarning, setPasswordWarning] = useState("");
+
+  const navigate = useNavigate();
 
   // Funcție care verifică puterea parolei
   const validatePasswordStrength = (password) => {
@@ -98,10 +103,14 @@ function SignUpPage() {
 
       // Update Axios default headers
       setAuthToken(token);
-      // Resetează câmpurile după trimitere
+
+      // Resetez câmpurile după trimitere
       setEmail("");
       setPassword("");
       setPassword2("");
+
+      // go to the home page
+      navigate('/HomePage'); //<============================================
     })
     .catch((err) => {
       setError("An error occurred while signing up.");
@@ -145,7 +154,7 @@ function SignUpPage() {
         </div>
 
         {/* Afișează avertismentul dacă parola este slabă */}
-        {passwordWarning && <p className="warning-message">{passwordWarning}</p>}
+        {/*passwordWarning && <p className="warning-message">{passwordWarning}</p>*/}
 
         <p className="emailAndpasword">Confirm Password</p>
 
@@ -159,6 +168,20 @@ function SignUpPage() {
             required
           />
         </div>
+
+        {/*
+        <p className="emailAndpasword">User Name</p>
+        
+        <div className="input_filed">
+          <input
+            type="text"
+            className="password"
+            placeholder="User Name"
+            //value={password2}
+            //onChange={handlePasswordChange2}
+            required
+          />
+        </div>*/}
 
         {error && <p className="error-message">{error}</p>} {/* Afișează mesajul de eroare */}
 
