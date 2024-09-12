@@ -105,8 +105,7 @@
 
 /* Hover effect for text */
 .textInSideBar:hover {
-  background-color: var(--hoverColor); /* Slightly brighter background */
-  cursor: pointer; /* Add pointer cursor */
+  filter: brightness(1.2);
 }
 
 .BoxSidebarButton {
@@ -153,16 +152,74 @@
   height: 60px;
 }
 
+/*NU stiu ce e mai jos da o facut chatul si merge , nu atingeti!!!!!!!!!!!!! */
+
+.textInSideBar {
+  max-width: 40px; /* Setează dimensiunea inițială mică */
+  font-size: 7px;
+  white-space: nowrap; /* Evită ruperea pe linii multiple */
+  overflow: hidden; /* Ascunde textul care nu încape în dimensiunea restrânsă */
+  transition: max-width 0.5s ease-in-out, font-size 0.5s ease-in-out; /* Tranziție lină */
+  display: inline-block;
+  background-color: var(--highColor);
+  border-radius: 10px;
+  text-align: center;
+
+}
+
+.sidebar.expanded .textInSideBar {
+  max-width: 200px; /* Dimensiunea extinsă */
+  font-size: 16px; /* Dimensiune mai mare a textului */
+}
+
+
 @media (max-width: 480px) {
   .sidebar {
     width: 0px;
   }
 
   .toggle-btn {
-    color: var(--lowColor);
+    color: var(--highColor);
   }
 
   .sidebar.expanded button {
     color: white;
   }
+
+  .ImageBoxSidebar{
+    background-color: var(--lowColor);
+  }
+  .textInSideBar{
+    background-color: var(--lowColor);
+  }
+
+  .sidebar.expanded .textInSideBar{
+    background-color: var(--highColor);
+  }
+
+  .sidebar.expanded .textInSideBar{
+    color: var(--lowColor);
+  }
+
+  .sidebar.expanded .ImageBoxSidebar{
+    background-color: var(--hoverColor);
+    color: var(--lowColor);
+  }
+
+  .sidebar-content{
+    visibility: hidden;
+  }
+
+  .toggle-btn {
+    top:10px
+  }
+
+
+  .ImageBoxSidebar:hover{
+    filter: brightness(1.2);
 }
+
+}
+
+
+

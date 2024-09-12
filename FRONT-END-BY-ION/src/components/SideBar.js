@@ -58,18 +58,19 @@ const Sidebar = () => {
             </div>
           </div>
         ))}
-      </div>
+      
 
-      {/* Add Pet Button */}
-      <div className="iconUserProfileContainer">
-          <div className="BoxSidebarButton" onClick={goToCreateProfile}>
-            +
-          </div>
-          <div className="textInSideBar" onClick={goToCreateProfile}>
-            Add Pet
+        {/* Add Pet Button */}
+        <div className="iconUserProfileContainer">
+            <div className="BoxSidebarButton" onClick={goToCreateProfile}>
+              +
+            </div>
+            <div className="textInSideBar" onClick={goToCreateProfile}>
+              Add Pet
+            </div>
           </div>
         </div>
-    </div>
+      </div>
   );
 };
 
