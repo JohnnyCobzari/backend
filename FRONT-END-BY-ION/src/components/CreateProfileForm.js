@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import ImageUpload from './DragAndDrop';
 import "../styles/LogInPage.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 
 const PetForm = () => {
 
-  const [imageSrc, setImageSrc] = useState(''); // Stare pentru imaginea în format base64
+  const [imageSrc, setImageSrc] = useState('');
+  const [error, setError] = useState(''); // Stare pentru imaginea în format base64
 
   useEffect(() => {
     if (imageSrc) {
@@ -44,32 +46,47 @@ const PetForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const updatedFormData = { 
-      ...formData, 
-      image: imageSrc,  // Atribuim `imageSrc` în câmpul `image`
-      userId: localStorage.getItem('UserId') 
+  
+    // Construct the updated form data
+    const updatedFormData = {
+      ...formData,
+      image: imageSrc // Keep the image data
     };
-
-    // Trimitem datele către server
-    console.log('Form data submitted:', updatedFormData);
-
-    // Exemplu de trimitere a datelor către server
-    // fetch('/api/pets', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(updatedFormData),
-    // }).then((response) => {
-    //   if (response.ok) {
-    //     console.log('Pet profile created successfully!');
-    //     goToHomePage1();
-    //   }
-    // });
+  
+    // Retrieve the userId from localStorage
+    const user = localStorage.getItem('userId');
+    
+    // Log the form data to check if it's correctly structured
+    console.log('Form data submitted:', updatedFormData, user);
+    
+    try {
+      // Make the POST request to the server, sending userId as a query parameter
+      const response = await axios.post(`http://localhost:3002/pets?userId=${user}`, updatedFormData, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`, // Use token from localStorage for authorization
+          'Content-Type': 'application/json', // Set content type to JSON
+        },
+      });
+  
+      // Check the response status and handle success
+      if (response.status === 201) {
+        console.log('Pet profile created successfully!');
+        navigate('/HomePage'); // Redirect to home page on success
+      } else {
+        setError('Failed to create pet profile.'); // Set error message if status is not 201
+      }
+    } catch (error) {
+      // Log error and set error message if request fails
+      console.error('Error creating pet profile:', error);
+      setError('Failed to create pet profile.');
+    }
   };
+  
+  
+    
+  
   return (
     <form id="login-form" onSubmit={handleSubmit}>
       <p className="writingFromPetLogIn">Pet name</p>
@@ -115,7 +132,7 @@ const PetForm = () => {
       <p className="writingFromPetLogIn">Age</p>
       <div className="input_filed">
         <input
-          type="text"
+          type="number"
           name="age"
           value={formData.age}
           placeholder="ex: 1 year and 6 months"
@@ -204,7 +221,7 @@ const PetForm = () => {
           <p className="writingFromPetLogIn">Price for breeding</p>
           <div className="input_filed">
             <input
-              type="text"
+              type="number"
               name="breedingPrice"
               value={formData.breedingPrice}
               placeholder="ex: 100$"
@@ -214,6 +231,7 @@ const PetForm = () => {
           </div>
         </>
       )}
+      {error && <p className="error-message">{error}</p>} {/* Afișează mesajul de eroare */}
 
       <ImageUpload setImageSrc={setImageSrc} imageSrc={imageSrc} /> {/* Transmitem setImageSrc către componenta copil */}
 

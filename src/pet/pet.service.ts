@@ -17,7 +17,7 @@ export class PetService {
     }
 
     async create(pet: Pet, user: User): Promise<Pet> {
-        const data = Object.assign(pet, {user: user._id})
+        const data = Object.assign(pet, {userId: user._id})
         const res = await this.petModel.create(data)
         return res
     }
@@ -48,7 +48,7 @@ export class PetService {
         
      }
      async findPetsByUser(userId: string): Promise<Pet[]> {
-        return this.petModel.find({ user: userId }).exec();
+        return this.petModel.find({ userId: userId }).exec();
       }
 
 }

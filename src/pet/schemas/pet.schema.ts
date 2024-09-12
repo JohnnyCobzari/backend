@@ -16,7 +16,7 @@ export class Pet {
     breed: string;
     
     @Prop() 
-    age: number;
+    age: string;
 
     @Prop() 
     ownerName: string;
@@ -40,10 +40,13 @@ export class Pet {
     readyForBreeding: boolean;
 
     @Prop() 
-    breedingPrice: number;
+    breedingPrice: string;
+
+    @Prop() 
+    image: string;
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User'}) 
-    user: User;
+    userId: User;
 }
 
 export const PetSchema = SchemaFactory.createForClass(Pet)
