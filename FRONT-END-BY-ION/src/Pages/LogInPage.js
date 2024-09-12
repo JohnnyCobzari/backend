@@ -60,8 +60,9 @@ function LoginPage() {
     })
     .then((response) => {
 
-      const token = response.data.token;
+      const { token, userId } = response.data;
     localStorage.setItem('authToken', token);
+    localStorage.setItem('userId', userId);
 
     // Update Axios default headers
     setAuthToken(token);

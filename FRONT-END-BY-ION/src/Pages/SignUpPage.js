@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import Footer from "../components/Footer";
 import Logo from "../components/Logo";
 import axios from "axios";
@@ -23,6 +23,7 @@ export const setAuthToken = (token) => {
   }
 };
 
+
 function SignUpPage() {
   // State pentru câmpurile de input și mesaje de eroare/avertizare
   const [email, setEmail] = useState("");
@@ -32,6 +33,14 @@ function SignUpPage() {
   const [passwordWarning, setPasswordWarning] = useState("");
 
   const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      // Dacă tokenul există, setează header-ul și redirecționează utilizatorul
+      setAuthToken(token);
+      navigate('/HomePage'); // Redirecționează către dashboard sau altă pagină
+    }
+  }, [navigate]);
 
   // Funcție care verifică puterea parolei
   const validatePasswordStrength = (password) => {
@@ -98,8 +107,9 @@ function SignUpPage() {
       password: password,
     })
     .then((response) => {
-      const token = response.data.token;
+      const { token, userId } = response.data;
       localStorage.setItem('authToken', token);
+      localStorage.setItem('userId', userId);
 
       // Update Axios default headers
       setAuthToken(token);

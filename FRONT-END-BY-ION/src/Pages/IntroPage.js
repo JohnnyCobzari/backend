@@ -1,11 +1,36 @@
-import React from "react";
+import React, { useEffect} from "react";
 import "../styles/IntroPage.css";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
+const api = axios.create({
+  baseURL: 'http://localhost:3002', // Your backend URL
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+  }
+});
+
+// Function to set the token in headers
+export const setAuthToken = (token) => {
+  if (token) {
+    api.defaults.headers['Authorization'] = `Bearer ${token}`;
+  } else {
+    delete api.defaults.headers['Authorization'];
+  }
+};
 function IntroPage() {
 
     const navigate = useNavigate();
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+          // Dacă tokenul există, setează header-ul și redirecționează utilizatorul
+          setAuthToken(token);
+          navigate('/HomePage'); // Redirecționează către dashboard sau altă pagină
+        }
+      }, [navigate]);
 
     const GoToLogIn = () =>{
         navigate("/LogIn");

@@ -18,54 +18,60 @@ export class AuthService {
         private usermodel: Model<User>,
         private jwtService: JwtService
     ) {}
-async signUp(signUpDto: SignUpDto): Promise<{token: string}> {
-    const{name, email, password} = signUpDto;
-
-    const hashedPassword = await bcrypt.hash(password, 10)
-
-    const user = await this.usermodel.create({
+    async signUp(signUpDto: SignUpDto): Promise<{ token: string; userId: string }> {
+      const { name, email, password } = signUpDto;
+    
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(password, 10);
+    
+      // Create the user
+      const user = await this.usermodel.create({
         name,
         email,
         password: hashedPassword
-    })
-
-    const token = this.jwtService.sign({id: user._id })
-
-    return {token}
-
-}
-async login(loginDto:LoginDto): Promise<{token: string}> {
-    const{ email, password} = loginDto;
-
-    const hashedPassword = await bcrypt.hash(password, 10)
-
-    const user = await this.usermodel.findOne({
-        email
-    })
-
-    if(!user) {
-      console.log('invalid email');
+      });
+    
+      // Generate JWT token
+      const token = this.jwtService.sign({ id: user._id });
+    
+      // Return both token and user ID
+      return { token, userId: user._id.toString() };
+    }
+    
+    async login(loginDto: LoginDto): Promise<{ token: string; userId: string }> {
+      const { email, password } = loginDto;
+    
+      // Find the user by email
+      const user = await this.usermodel.findOne({ email });
+    
+      if (!user) {
+        console.log('Invalid email');
         throw new UnauthorizedException({
           statusCode: 401,
           message: 'Invalid email',
           error: 'Unauthorized',
         });
-    }
-
-    const isPassCorect = await bcrypt.compare(password, user.password)
-
-    if(!isPassCorect) {
-      console.log('incorect pass');
+      }
+    
+      // Compare password
+      const isPassCorrect = await bcrypt.compare(password, user.password);
+    
+      if (!isPassCorrect) {
+        console.log('Incorrect password');
         throw new UnauthorizedException({
           statusCode: 401,
           message: 'Invalid password',
           error: 'Unauthorized',
         });
+      }
+    
+      // Generate JWT token
+      const token = this.jwtService.sign({ id: user._id });
+    
+      // Return both token and user ID
+      return { token, userId: user._id.toString() };
     }
-    const token = this.jwtService.sign({id: user._id })
-
-    return {token}
-}
+    
 async sendResetLink(email: string): Promise<void> {
     const token = crypto.randomBytes(32).toString('hex');
 
