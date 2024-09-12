@@ -7,6 +7,7 @@ import ImageUpload from './components/DragAndDrop';
 import AddPetPage from './Pages/AddPetPage';
 import MainPage from './Pages/MainPage';
 import { Navigate } from 'react-router-dom';
+import ProfilePage from './Pages/ProfilePage';
 
 const ProtectedRoute = ({ children }) => {
   const authToken = localStorage.getItem('authToken');
@@ -33,6 +34,7 @@ function App() {
         <Route path="/SignUp" element={<SignUpPage/>} />
         <Route path="/AddPet" element={<ProtectedRoute><AddPetPage/></ProtectedRoute>} />
         <Route path="/HomePage" element={<ProtectedRoute><MainPage/></ProtectedRoute>} />
+        <Route path="/ProfilePage" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
 
       </Routes>
 

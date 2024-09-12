@@ -9,13 +9,21 @@ function AddPetPage() {
 
     const navigate = useNavigate();
 
-
+    const goToHomePage3 = () => {
+        navigate('/HomePage');
+    }
 
     return (
     <>
-        <Logo/>
+    <div onClick={goToHomePage3} style={{ cursor: "pointer" }}>
+        <Logo />
+    </div>
+        <div id="CREATEYOURPETPROFILE">
+            <img src="images/CREATE YOUR PET’S PROFILE.png"></img>
+        </div>
         <div className="uperContainerForImagesPage2">
         <img src="images/LogInDog.png" className="logInPet" alt="LogIn Dog" />
+        
         <img src="images/logInCat.png" className="logInPet" alt="LogIn Cat" />
         </div>
         <PetForm/>

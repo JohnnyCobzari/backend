@@ -32,6 +32,15 @@ function LoginPage() {
   const [error, setError] = useState("");  // Definește error și setError
   const [authToken, setAuthToken] = useState("");
 
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      // Dacă tokenul există, setează header-ul și redirecționează utilizatorul
+      setAuthToken(token);
+      navigate('/HomePage'); // Redirecționează către dashboard sau altă pagină
+    }
+  }, [navigate]);
+
   // Handler pentru schimbarea valorii email
   const handleEmailChange = (event) => {
     setEmail(event.target.value);

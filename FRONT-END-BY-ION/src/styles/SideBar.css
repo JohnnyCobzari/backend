@@ -2,17 +2,18 @@
   --highColor: #F3EDE4;
   --midColor: #DAD5CD;
   --lowColor: #6b5e49;
+  --hoverColor: #eae4d1; /* Slightly brighter color for hover */
 }
 
-
+/* Smooth transition for the sidebar */
 .sidebar {
-  width: 50px;
+  width: 80px;
   height: 100vh;
-  background-color:var(--lowColor);
+  background-color: var(--lowColor);
   position: fixed;
-  transition: width 0.3s;
+  transition: width 0.5s ease-in-out; /* Smooth and slower transition */
   z-index: 100;
-  
+  box-shadow: 2px 0px 8px rgba(0, 0, 0, 0.1); /* Light shadow for the sidebar */
 }
 
 .sidebar.expanded {
@@ -22,40 +23,146 @@
 .toggle-btn {
   background-color: transparent;
   border: none;
-  color: white;
+  color: var(--lowColor);
   font-size: 24px;
   cursor: pointer;
   position: absolute;
-  top: 20px;
-  left: 10px; /* Position the button so it's visible even with width 0 */
-  z-index: 10; /* Keep it on top */
+  top: 30px;
+  left: 20px;
+  z-index: 10;
 }
 
 .sidebar-content {
-  margin-top: 60px;
-  visibility: hidden; /* Hide the content when sidebar is collapsed */
-  opacity: 0;
-  transition: opacity 0.3s;
+  margin-top: 140px;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out; /* Smooth fade in/out */
 }
 
 .sidebar.expanded .sidebar-content {
-  visibility: visible; /* Show the content when sidebar is expanded */
+  visibility: visible;
   opacity: 1;
 }
 
+.iconUserProfileContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 10px;
+  transition: width 0.5s ease-in-out; /* Smooth size adjustment */
+}
 
+.ImageBoxSidebar {
+  width: 40px;
+  background-color: var(--highColor);
+  height: 40px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2px;
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out; /* Smooth size change */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for the profile image */
+}
+
+/* Hover effect to brighten the image */
+.ImageBoxSidebar:hover, .pet-image:hover {
+  filter: brightness(1.2); /* Makes the image slightly brighter */
+}
+
+.textInSideBar {
+  width: 40px;
+  font-size: 7px;
+  background-color: var(--highColor);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: width 0.0s ease-in-out, font-size 0.0s ease-in-out; /* Smooth size and font change */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for text boxes */
+}
+
+.sidebar.expanded .iconUserProfileContainer {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar.expanded .ImageBoxSidebar {
+  width: 60px;
+  height: 60px;
+}
+
+.sidebar.expanded .textInSideBar {
+  width: 200px;
+  height: 40px;
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+/* Hover effect for text */
+.textInSideBar:hover {
+  background-color: var(--hoverColor); /* Slightly brighter background */
+  cursor: pointer; /* Add pointer cursor */
+}
+
+.BoxSidebarButton {
+  width: 40px;
+  background-color: var(--highColor);
+  height: 40px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2px;
+  color: var(--lowColor);
+  font-size: 28px;
+  cursor: pointer;
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out, font-size 0.5s ease-in-out; /* Smooth size and font change */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for the button */
+}
+
+.sidebar.expanded .BoxSidebarButton {
+  width: 60px;
+  height: 60px;
+  font-size: 32px;
+}
+
+/* Hover effect for Add Pet button */
+.BoxSidebarButton:hover {
+  background-color: var(--hoverColor); /* Slightly brighter background */
+  filter: brightness(1.2); /* Make it pop a little more */
+  cursor: pointer;
+}
+
+.pet-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out; /* Smooth image resize */
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for pet images */
+}
+
+.sidebar.expanded .pet-image {
+  width: 60px;
+  height: 60px;
+}
 
 @media (max-width: 480px) {
   .sidebar {
-    width:0px;
+    width: 0px;
   }
 
   .toggle-btn {
     color: var(--lowColor);
-    
   }
-  .sidebar.expanded button{
+
+  .sidebar.expanded button {
     color: white;
   }
-  
 }
