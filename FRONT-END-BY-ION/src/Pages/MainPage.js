@@ -20,17 +20,7 @@ const MainPage = () => {
         const token = localStorage.getItem('authToken');
         const userId = localStorage.getItem('userId');
   
-        // Check if data is available in localStorage
-        const storedAllPets = localStorage.getItem('allPets');
-        const storedUserPets = localStorage.getItem('userPets');
-  
-        if (storedAllPets && storedUserPets) {
-          setAllPets(JSON.parse(storedAllPets));
-          setUserPets(JSON.parse(storedUserPets));
-          setLoading(false);
-          return; // Skip the fetch if data is in localStorage
-        }
-  
+       
         // Fetch pets from the API if not in localStorage
         const response = await axios.get('http://localhost:3002/pets', {
           headers: {

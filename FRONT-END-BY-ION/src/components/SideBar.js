@@ -15,17 +15,14 @@ const Sidebar = () => {
       navigate('/AddPet')
   }
 
-  const goToPetProfile = () =>{
-    navigate('/ProfilePage');
-  }
+  const goToPetProfile = (id) => {
+    navigate(`/ProfilePage/${id}`);
+  };
 
   // Array to store pet information (name and image link)
   //!!!!!!!!!!!!!! PENTRU ION ---> in asa gen de tabel doar ca cu toata info o sa trebuiasca sa primim de la back
-  const pets = [
-    { name: 'Buddy', image: 'https://cdn.pixabay.com/photo/2023/08/18/15/02/dog-8198719_640.jpg' },
-    { name: 'Milo', image: 'https://www.shutterstock.com/image-photo/happy-puppy-welsh-corgi-14-600nw-2270841247.jpg' },
-    { name: 'Bella', image: 'https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg' },
-  ];
+  const pets = JSON.parse(localStorage.getItem('userPets') || '[]');
+
 
   //Pentru a inchide side barul cand apesi inafara lui
   //------> {nam cod inca}
@@ -48,13 +45,13 @@ const Sidebar = () => {
 
         {/* Display each pet */}
         {pets.map((pet, index) => (
-          <div className="iconUserProfileContainer" key={index} onClick={goToPetProfile}>
+          <div className="iconUserProfileContainer" key={index}  onClick={() => goToPetProfile(pet._id)}>
             <div className="ImageBoxSidebar">
               {/* Replace icon with the pet's image */}
               <img src={pet.image} className="pet-image" />
             </div>
             <div className="textInSideBar">
-              {pet.name}
+              {pet.petName}
             </div>
           </div>
         ))}

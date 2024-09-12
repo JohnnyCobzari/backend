@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaDog, FaSyringe, FaPhone, FaClinicMedical, FaDollarSign, FaVenusMars, FaCalendarAlt, FaAllergies, FaUser } from "react-icons/fa";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/SideBar";
 import Logo from "../components/Logo";
 import "../styles/ProfilePage.css";
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 function ProfilePage() {
 
@@ -13,26 +15,36 @@ function ProfilePage() {
   const goToHomePage2 = () =>{
     navigate('/Homepage')
   }
-  const petProfile = {
-    name: "Bobby",
-    image: "/path/to/image.png", // Update with the actual image path
-    gender: "Male",
-    breed: "Unknown",
-    age: "3 months",
-    owner: {
-      name: "John",
-      phoneNumber: "+37370000000",
-    },
-    vaccinated: "Yes",
-    allergies: "None",
-    veterinarianInfo: {
-      name: "Optim Vet Clinic",
-      location: "Ciocana, Chisinau",
-    },
-    readyForBreeding: "Yes",
-    breedingPrice: "0$",
-  };
+  const { id } = useParams(); // Get the pet ID from the URL
+  const [petProfile, setPetProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
+  useEffect(() => {
+    const fetchPetProfile = async () => {
+      try {
+        const token = localStorage.getItem('authToken');
+        
+        const response = await axios.get(`http://localhost:3002/pets/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Send JWT token for authorization
+          },
+        });
+        
+        setPetProfile(response.data); // Assuming the backend sends the pet object
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load pet profile.");
+        setLoading(false);
+      }
+    };
+
+    fetchPetProfile();
+  }, [id]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
   return (
     <>
       <Sidebar />
@@ -44,16 +56,16 @@ function ProfilePage() {
           <img src="https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg" alt="Pet"></img>
         </div>
        
-        <h2 className="profile-name">{petProfile.name}</h2>
+        <h2 className="profile-name">{petProfile.petName}</h2>
         <div className="Pet-Info">
           <p><FaVenusMars /> Gender: {petProfile.gender}</p>
           <p><FaDog /> Breed: {petProfile.breed}</p>
           <p><FaCalendarAlt /> Age: {petProfile.age}</p>
-          <p><FaUser /> Owner: {petProfile.owner.name}</p>
-          <p><FaPhone /> Phone: {petProfile.owner.phoneNumber}</p>
+          <p><FaUser /> Owner: {petProfile.ownerName}</p>
+          <p><FaPhone /> Phone: {petProfile.ownerNumber}</p>
           <p><FaSyringe /> Vaccinated: {petProfile.vaccinated}</p>
           <p><FaAllergies /> Allergies: {petProfile.allergies}</p>
-          <p><FaClinicMedical /> Vet: {petProfile.veterinarianInfo.name}, {petProfile.veterinarianInfo.location}</p>
+          <p><FaClinicMedical /> Vet: {petProfile.vetInfo}</p>
           <p><FaDollarSign /> Breeding Price: {petProfile.breedingPrice}</p>
         </div>
         <p id='edit-infoProfile'>Edit Profile</p>
