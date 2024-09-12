@@ -19,7 +19,19 @@ const MainPage = () => {
       try {
         const token = localStorage.getItem('authToken');
         const userId = localStorage.getItem('userId');
-        // Fetch pets from the API
+  
+        // Check if data is available in localStorage
+        const storedAllPets = localStorage.getItem('allPets');
+        const storedUserPets = localStorage.getItem('userPets');
+  
+        if (storedAllPets && storedUserPets) {
+          setAllPets(JSON.parse(storedAllPets));
+          setUserPets(JSON.parse(storedUserPets));
+          setLoading(false);
+          return; // Skip the fetch if data is in localStorage
+        }
+  
+        // Fetch pets from the API if not in localStorage
         const response = await axios.get('http://localhost:3002/pets', {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -28,9 +40,13 @@ const MainPage = () => {
             userId, // Pass the userId as a query parameter
           },
         });
-
+  
         setAllPets(response.data.allPets);
         setUserPets(response.data.userPets);
+  
+        // Save fetched data to localStorage
+        localStorage.setItem('allPets', JSON.stringify(response.data.allPets));
+        localStorage.setItem('userPets', JSON.stringify(response.data.userPets));
       } catch (err) {
         console.error(err);
         setError("Failed to fetch pets.");
@@ -38,9 +54,10 @@ const MainPage = () => {
         setLoading(false);
       }
     };
-
+  
     fetchPets();
   }, [navigate]);
+  
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;

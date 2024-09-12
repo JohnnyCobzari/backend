@@ -4,7 +4,7 @@ import { User } from "../../auth/schemas/user.schema";
 export class CreatePetDto {
      @IsNotEmpty()
      @IsString()
-    readonly name: string;
+    readonly petName: string;
     
     @IsNotEmpty()
     @IsString()
@@ -20,15 +20,15 @@ export class CreatePetDto {
 
     @IsNotEmpty()
     @IsString()
-    readonly  owner_name: string;
+    readonly  ownerName: string;
 
     @IsNotEmpty()
     @IsString()
-    readonly phone_number: string;
+    readonly ownerPhone: string;
 
     @IsNotEmpty()
-    @IsBoolean()
-    readonly vaccinated: boolean;
+    @IsString()
+    readonly vaccinated: string;
 
     @IsNotEmpty()
     @IsString()
@@ -36,19 +36,19 @@ export class CreatePetDto {
 
     @IsNotEmpty()
     @IsString()
-    readonly alergies: string;
+    readonly allergies: string;
 
     @IsNotEmpty()
     @IsString()
-    readonly veterinar: string;
+    readonly vetInfo: string;
 
     @IsNotEmpty()
     @IsBoolean()
-    readonly ready: boolean;
+    readonly readyForBreeding: boolean;
 
     @IsNotEmpty()
     @IsNumber()
-    readonly breed_price: number;
+    readonly breedingPrice: number;
    
     @IsEmpty({ message: "You cannot pass user id"})
     readonly user: User;

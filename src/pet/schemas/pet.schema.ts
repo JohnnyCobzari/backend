@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 })
 export class Pet {
     @Prop() 
-    name: string;
+    petName: string;
     
     @Prop() 
     gender: string;
@@ -19,28 +19,28 @@ export class Pet {
     age: number;
 
     @Prop() 
-    owner_name: string;
+    ownerName: string;
 
     @Prop() 
-    phone_number: string;
+    ownerPhone: string;
 
     @Prop() 
-    vaccinated: boolean;
+    vaccinated: string;
 
     @Prop() 
     vaccinated_date: string;
 
     @Prop() 
-    alergies: string;
+    allergies: string;
 
     @Prop() 
-    veterinar: string;
+    vetInfo: string;
 
     @Prop() 
-    ready: boolean;
+    readyForBreeding: boolean;
 
     @Prop() 
-    breed_price: number;
+    breedingPrice: number;
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User'}) 
     user: User;

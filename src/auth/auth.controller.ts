@@ -12,16 +12,17 @@ export class AuthController {
     constructor(
         private authService:AuthService
     ) {}
-
+//+
     @Post('/signup')
     signUp(@Body() signUpDto: SignUpDto): Promise<{token: string}> {
         return this.authService.signUp(signUpDto)
     } 
-
+//+
     @Post('/login')
     login(@Body() loginDto: LoginDto): Promise<{token: string}> {
         return this.authService.login(loginDto)
     } 
+    
     @Post('reset-password')
     @HttpCode(HttpStatus.OK)
     async postReset(@Body('email') email: string) {

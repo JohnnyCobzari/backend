@@ -4,7 +4,7 @@ import { User } from "src/auth/schemas/user.schema";
 export class UpdatePetDto {
      @IsOptional()
      @IsString()
-    readonly name: string;
+    readonly petName: string;
     
     @IsOptional()
     @IsString()
@@ -20,15 +20,15 @@ export class UpdatePetDto {
 
     @IsOptional()
     @IsString()
-    readonly  owner_name: string;
+    readonly  ownerName: string;
 
     @IsOptional()
     @IsString()
-    readonly phone_number: string;
+    readonly ownerPhone: string;
 
     @IsOptional()
-    @IsBoolean()
-    readonly vaccinated: boolean;
+    @IsString()
+    readonly vaccinated: string;
 
     @IsOptional()
     @IsString()
@@ -36,19 +36,19 @@ export class UpdatePetDto {
 
     @IsOptional()
     @IsString()
-    readonly alergies: string;
+    readonly allergies: string;
 
     @IsOptional()
     @IsString()
-    readonly veterinar: string;
+    readonly vetInfo: string;
 
     @IsOptional()
     @IsBoolean()
-    readonly ready: boolean;
+    readonly readyForBreeding: boolean;
 
     @IsOptional()
     @IsNumber()
-    readonly breed_price: number;
+    readonly breedingPrice: number;
 
     @IsEmpty({ message: "You cannot pass user id"})
     readonly user: User;
