@@ -43,6 +43,7 @@ function ProfilePage() {
         <div className="Profile-ImageContainer">
           <img src="https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg" alt="Pet"></img>
         </div>
+       
         <h2 className="profile-name">{petProfile.name}</h2>
         <div className="Pet-Info">
           <p><FaVenusMars /> Gender: {petProfile.gender}</p>
@@ -55,6 +56,7 @@ function ProfilePage() {
           <p><FaClinicMedical /> Vet: {petProfile.veterinarianInfo.name}, {petProfile.veterinarianInfo.location}</p>
           <p><FaDollarSign /> Breeding Price: {petProfile.breedingPrice}</p>
         </div>
+        <p id='edit-infoProfile'>Edit Profile</p>
       </div>
       <Footer />
     </>

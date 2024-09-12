@@ -17,7 +17,6 @@
   
   .Profile-ImageContainer {
     text-align: center;
-    margin-bottom: 10px;
   }
   
   .Profile-ImageContainer img {
@@ -53,4 +52,25 @@
     color: #666;
     font-size: 20px;
   }
+
+  #edit-infoProfile{
+    margin: 0 auto;
+    text-align: center;
+    font-size: 11px;
+    text-decoration: underline;
+    cursor: pointer;
+    color: #888;
+  }
+
+#edit-infoProfile:hover{
+  color: #d1d1d1;
+}
+
+@media (max-width: 480px) {
+  .Profile-info{
+    transform: translateX(0);
+  }
+}
+
+
   
