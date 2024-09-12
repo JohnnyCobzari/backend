@@ -45,14 +45,22 @@ async login(loginDto:LoginDto): Promise<{token: string}> {
 
     if(!user) {
       console.log('invalid email');
-        throw new UnauthorizedException('Invalid email')
+        throw new UnauthorizedException({
+          statusCode: 401,
+          message: 'Invalid email',
+          error: 'Unauthorized',
+        });
     }
 
     const isPassCorect = await bcrypt.compare(password, user.password)
 
     if(!isPassCorect) {
       console.log('incorect pass');
-        throw new UnauthorizedException('Invalid password')
+        throw new UnauthorizedException({
+          statusCode: 401,
+          message: 'Invalid password',
+          error: 'Unauthorized',
+        });
     }
     const token = this.jwtService.sign({id: user._id })
 
@@ -63,7 +71,11 @@ async sendResetLink(email: string): Promise<void> {
 
     const user = await this.usermodel.findOne({ email });
     if (!user) {
-      throw new NotFoundException('No account with this email');
+      throw new NotFoundException({
+        statusCode: 401,
+        message: 'Not account with this email',
+        error: 'Unauthorized',
+      });
     }
 
     user.resetToken = token;
@@ -101,7 +113,11 @@ async sendResetLink(email: string): Promise<void> {
     });
 
     if (!user) {
-      throw new BadRequestException('Invalid token or user not found.');
+      throw new BadRequestException({
+        statusCode: 401,
+        message: 'Invalid token or no such user',
+        error: 'Unauthorized',
+      });;
     }
 
     // Hash the new password

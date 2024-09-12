@@ -72,8 +72,13 @@ function LoginPage() {
       
     })
     .catch((err) => {
-      // Handle errors
-      setError("An error occurred while loging up.");
+      // Check if the error has a response and a message
+      if (err.response.data.message) {
+        console.log('Error message from backend:', err.response.data.message); // Check in the console
+        setError(err.response.data.message);  // Set the backend message as the error
+      } else {
+        setError("An error occurred while logging in.");  // Fallback message
+      }
     });
   };
 
@@ -113,7 +118,7 @@ function LoginPage() {
             required
           />
         </div>
-
+        {error && <p className="error-message">{error}</p>} {/* Afișează mesajul de eroare */}
         <a href="#" className="forgot">
           <p>Forgot password</p>
         </a>

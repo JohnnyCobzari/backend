@@ -113,7 +113,13 @@ function SignUpPage() {
       navigate('/HomePage'); //<============================================
     })
     .catch((err) => {
-      setError("An error occurred while signing up.");
+      // Check if the error has a response and a message
+      if (err.response.data.message) {
+        console.log('Error message from backend:', err.response.data.message); // Check in the console
+        setError(err.response.data.message);  // Set the backend message as the error
+      } else {
+        setError("An error occurred while logging in.");  // Fallback message
+      }
     });
   };
 
