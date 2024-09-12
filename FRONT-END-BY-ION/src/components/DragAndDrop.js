@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FaCamera } from 'react-icons/fa'; // Importăm o iconiță de cameră
 
-const ImageUpload = () => {
-  const [imageSrc, setImageSrc] = useState(''); // Stocăm URL-ul imaginii
+const ImageUpload = ({ setImageSrc, imageSrc }) => {
+
   const [fileName, setFileName] = useState(''); // Stocăm numele fișierului selectat
 
   const handleFileChange = (e) => {
@@ -15,7 +15,7 @@ const ImageUpload = () => {
 
       reader.onload = (event) => {
         const base64Image = event.target.result;
-        console.log('Conținutul imaginii în Base64:', base64Image); // TRIMITEM CATRE SERVER
+        //console.log('Conținutul imaginii în Base64:', base64Image); // TRIMITEM CATRE SERVER
         setImageSrc(base64Image); // Actualizăm starea pentru a afișa imaginea
       };
 

@@ -7,6 +7,8 @@ import Logo from "../components/Logo";
 
 function AddPetPage() {
 
+    
+
     const navigate = useNavigate();
 
     const goToHomePage3 = () => {

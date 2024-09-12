@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ImageUpload from './DragAndDrop';
 import "../styles/LogInPage.css";
 import { useNavigate } from "react-router-dom";
 
 
 const PetForm = () => {
+
+  const [imageSrc, setImageSrc] = useState(''); // Stare pentru imaginea în format base64
+
+  useEffect(() => {
+    if (imageSrc) {
+      console.log('Image received in parent component:', imageSrc); // Verificăm imaginea încărcată
+    }
+  }, [imageSrc]); // Se declanșează atunci când se schimbă `imageSrc`
+
+
   const [formData, setFormData] = useState({
     petName: '',
     gender: '',
@@ -17,13 +27,14 @@ const PetForm = () => {
     vetInfo: '',
     readyForBreeding: false,
     breedingPrice: '',
+    image: '' // Adăugăm aici imaginea în format base64
   });
 
   const navigate = useNavigate();
 
-  const goToHomePage1 = () =>{
-      navigate('/HomePage');
-  }
+  const goToHomePage1 = () => {
+    //navigate('/HomePage');
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -35,9 +46,30 @@ const PetForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form data submitted:', formData);
-  };
 
+    const updatedFormData = { 
+      ...formData, 
+      image: imageSrc,  // Atribuim `imageSrc` în câmpul `image`
+      userId: localStorage.getItem('UserId') 
+    };
+
+    // Trimitem datele către server
+    console.log('Form data submitted:', updatedFormData);
+
+    // Exemplu de trimitere a datelor către server
+    // fetch('/api/pets', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(updatedFormData),
+    // }).then((response) => {
+    //   if (response.ok) {
+    //     console.log('Pet profile created successfully!');
+    //     goToHomePage1();
+    //   }
+    // });
+  };
   return (
     <form id="login-form" onSubmit={handleSubmit}>
       <p className="writingFromPetLogIn">Pet name</p>
@@ -127,8 +159,7 @@ const PetForm = () => {
           <option value="" disabled>
             Tap to select
           </option>
-          <option value="Yes, all">Yes, all</option>
-          <option value="Yes, some">Yes, some</option>
+          <option value="Yes, all">Yes</option>
           <option value="No">No</option>
         </select>
       </div>
@@ -184,7 +215,7 @@ const PetForm = () => {
         </>
       )}
 
-      <ImageUpload />
+      <ImageUpload setImageSrc={setImageSrc} /> {/* Transmitem setImageSrc către componenta copil */}
 
       <button type="submit" className="login" onClick={goToHomePage1}>
         Create Pet Profile
