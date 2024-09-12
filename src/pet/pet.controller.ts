@@ -7,6 +7,7 @@ import { AuthGuard } from '@nestjs/passport';
 @Controller('pets')
 export class PetController {
     constructor(private petService: PetService) {}
+
       @Get()  
       @UseGuards(AuthGuard('jwt'))
       async getAllPets(@Query('userId') userId?: string){
@@ -31,7 +32,9 @@ export class PetController {
         @Req() req
 
     ): Promise<Pet> {
-
+        console.log("createPet endpoint reached");  // Add this to ensure the route is hit
+        console.log("Request user:", req.user);  // Check if the user data is coming in
+        
         console.log(req.user);
         return this.petService.create(pet, req.user);
     }

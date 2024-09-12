@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsNumber,IsBoolean, IsEmpty } from "class-validator";
+import { IsNotEmpty, IsString, IsNumber,IsBoolean, IsEmpty,IsOptional } from "class-validator";
 import { User } from "../../auth/schemas/user.schema";
 
 export class CreatePetDto {
@@ -15,8 +15,8 @@ export class CreatePetDto {
     readonly  breed: string;
     
     @IsNotEmpty()
-    @IsNumber()
-    readonly age: number;
+    @IsString()
+    readonly age: string;
 
     @IsNotEmpty()
     @IsString()
@@ -30,11 +30,11 @@ export class CreatePetDto {
     @IsString()
     readonly vaccinated: string;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     readonly vaccinated_date: string;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     readonly allergies: string;
 
@@ -46,10 +46,14 @@ export class CreatePetDto {
     @IsBoolean()
     readonly readyForBreeding: boolean;
 
+    @IsOptional()
+    @IsString()
+    readonly breedingPrice: string;
+
     @IsNotEmpty()
-    @IsNumber()
-    readonly breedingPrice: number;
+    @IsString()
+    readonly image: string;
    
     @IsEmpty({ message: "You cannot pass user id"})
-    readonly user: User;
+    readonly userId: User;
 }

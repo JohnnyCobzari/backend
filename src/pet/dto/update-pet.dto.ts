@@ -15,8 +15,8 @@ export class UpdatePetDto {
     readonly  breed: string;
     
     @IsOptional()
-    @IsNumber()
-    readonly age: number;
+    @IsString()
+    readonly age: string;
 
     @IsOptional()
     @IsString()
@@ -47,9 +47,13 @@ export class UpdatePetDto {
     readonly readyForBreeding: boolean;
 
     @IsOptional()
-    @IsNumber()
-    readonly breedingPrice: number;
+    @IsString()
+    readonly breedingPrice: string;
+
+    @IsOptional()
+    @IsString()
+    readonly image: string;
 
     @IsEmpty({ message: "You cannot pass user id"})
-    readonly user: User;
+    readonly userId: User;
 }
