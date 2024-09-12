@@ -34,7 +34,7 @@ function App() {
         <Route path="/SignUp" element={<SignUpPage/>} />
         <Route path="/AddPet" element={<ProtectedRoute><AddPetPage/></ProtectedRoute>} />
         <Route path="/HomePage" element={<ProtectedRoute><MainPage/></ProtectedRoute>} />
-        <Route path="/ProfilePage" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
+        <Route path="/ProfilePage/:id" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
 
       </Routes>
 
