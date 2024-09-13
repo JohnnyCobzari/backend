@@ -31,17 +31,6 @@ function ProfilePage() {
      
   const [showModal, setShowModal] = useState(false);
 
-  const handleDelete = () => {
-    // Aici adaugi logica de ștergere a profilului <========Pentru Ion===========
-    console.log('Profil șters');
-    setShowModal(false);
-  };
-
-  const handleCancel = () => {
-    setShowModal(false);
-  };
-
-  //============================================================
 
   const navigate = useNavigate();
 
@@ -75,6 +64,27 @@ function ProfilePage() {
 
     fetchPetProfile();
   }, [id]);
+  const handleDelete = async () => {
+    try {
+      const token = localStorage.getItem('authToken');
+      await axios.delete(`http://localhost:3002/pets/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // JWT token for authorization
+        },
+      });
+      console.log('Pet profile deleted');
+      setShowModal(false);
+      navigate('/Homepage'); // Redirect to homepage after deletion
+    } catch (error) {
+      console.error('Error deleting profile:', error);
+    }
+  };
+
+  const handleCancel = () => {
+    setShowModal(false);
+  };
+
+
 
   if (loading) return (<Loading/>);// tre de adaugat un loading animation <=====================
   if (error) return <p>{error}</p>;
