@@ -47,6 +47,12 @@ export class Pet {
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User'}) 
     userId: User;
+
+    @Prop() 
+    longitude: number;
+
+    @Prop() 
+    latitude: number;
 }
 
 export const PetSchema = SchemaFactory.createForClass(Pet)
