@@ -3,15 +3,21 @@ import ImageUpload from './DragAndDrop';
 import "../styles/LogInPage.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import myString from './DefaultImage';
 
 const PetForm = () => {
-  const [imageSrc, setImageSrc] = useState('');
+useEffect(() => {
+    if (imageSrc) {
+      console.log('Image received in parent component:', imageSrc); // Verificăm imaginea încărcată
+    }
+  }, [imageSrc]); // Se declanșează atunci când se schimbă `imageSrc`
+
+  const [imageSrc, setImageSrc] = useState('myString');
   const [error, setError] = useState('');
   const [coordinates, setCoordinates] = useState(null); // State to store fetched coordinates
   const [currentCountry, setCurrentCountry] = useState(''); 
   const [latitude, setLatitude] = useState(null); // State to store latitude
   const [longitude, setLongitude] = useState(null); // State to store longitude
-
 
   const [formData, setFormData] = useState({
     petName: '',

@@ -17,8 +17,8 @@ const PetProfileDeleteModal = ({ petName, onDelete, onCancel }) => {
       <div className="modal-content">
         <h3>Are you sure you want to delete {petName}'s profile?</h3>
         <div className="modal-actions">
-          <button className="confirm-button" onClick={onDelete}>Șterge</button>
-          <button className="cancel-button" onClick={onCancel}>Anulează</button>
+          <button className="confirm-button" onClick={onDelete}>Delete</button>
+          <button className="cancel-button" onClick={onCancel}>Cancel</button>
         </div>
       </div>
     </div>
@@ -112,7 +112,9 @@ function ProfilePage() {
           <p><FaDollarSign /> Breeding Price: {petProfile.breedingPrice}</p>
         </div>
         <div className="EditAndDeleteProfile">
-          <div>
+        <div onClick={() => { 
+          navigate(`/EditProfilePage/${id}`, { state: { petProfile, image: petProfile.image, id } });
+          }}>
             <MdEdit/><p id='edit-infoProfile'>Edit Profile</p>
           </div>
           <div onClick={() => setShowModal(true)}>

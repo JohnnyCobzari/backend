@@ -8,6 +8,7 @@ import AddPetPage from './Pages/AddPetPage';
 import MainPage from './Pages/MainPage';
 import { Navigate } from 'react-router-dom';
 import ProfilePage from './Pages/ProfilePage';
+import EditProfilePage from './Pages/EditProfilePage';
 
 const ProtectedRoute = ({ children }) => {
   const authToken = localStorage.getItem('authToken');
@@ -35,6 +36,7 @@ function App() {
         <Route path="/AddPet" element={<ProtectedRoute><AddPetPage/></ProtectedRoute>} />
         <Route path="/HomePage" element={<ProtectedRoute><MainPage/></ProtectedRoute>} />
         <Route path="/ProfilePage/:id" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
+        <Route path="/EditProfilePage/:id" element={<ProtectedRoute><EditProfilePage/></ProtectedRoute>} />
 
       </Routes>
 
