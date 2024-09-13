@@ -6,6 +6,7 @@ import Logo from "../components/Logo"
 import MapBox from "../components/MapBox";
 import "../styles/HomePage.css"
 import axios from "axios";
+import Loading from "../components/LoadingAnimation";
 
 const MainPage = () => {
   const [allPets, setAllPets] = useState([]);
@@ -49,7 +50,7 @@ const MainPage = () => {
   }, [navigate]);
   
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return (<Loading/>);
   if (error) return <p>{error}</p>;
   
   return (

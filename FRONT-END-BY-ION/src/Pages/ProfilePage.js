@@ -7,8 +7,41 @@ import Logo from "../components/Logo";
 import "../styles/ProfilePage.css";
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Loading from "../components/LoadingAnimation";
+import { MdDelete,  MdEdit } from 'react-icons/md';
+
+
+const PetProfileDeleteModal = ({ petName, onDelete, onCancel }) => {
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h3>Are you sure you want to delete {petName}'s profile?</h3>
+        <div className="modal-actions">
+          <button className="confirm-button" onClick={onDelete}>Șterge</button>
+          <button className="cancel-button" onClick={onCancel}>Anulează</button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 function ProfilePage() {
+  
+  // pentru edit si delete ==============================>
+     
+  const [showModal, setShowModal] = useState(false);
+
+  const handleDelete = () => {
+    // Aici adaugi logica de ștergere a profilului <========Pentru Ion===========
+    console.log('Profil șters');
+    setShowModal(false);
+  };
+
+  const handleCancel = () => {
+    setShowModal(false);
+  };
+
+  //============================================================
 
   const navigate = useNavigate();
 
@@ -43,7 +76,7 @@ function ProfilePage() {
     fetchPetProfile();
   }, [id]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return (<Loading/>);// tre de adaugat un loading animation <=====================
   if (error) return <p>{error}</p>;
   return (
     <>
@@ -53,7 +86,7 @@ function ProfilePage() {
       </div>
       <div className="Profile-info">
         <div className="Profile-ImageContainer">
-          <img src="https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg" alt="Pet"></img>
+          <img src={petProfile.image} alt="Pet"></img>
         </div>
        
         <h2 className="profile-name">{petProfile.petName}</h2>
@@ -68,8 +101,25 @@ function ProfilePage() {
           <p><FaClinicMedical /> Vet: {petProfile.vetInfo}</p>
           <p><FaDollarSign /> Breeding Price: {petProfile.breedingPrice}</p>
         </div>
-        <p id='edit-infoProfile'>Edit Profile</p>
+        <div className="EditAndDeleteProfile">
+          <div>
+            <MdEdit/><p id='edit-infoProfile'>Edit Profile</p>
+          </div>
+          <div onClick={() => setShowModal(true)}>
+            <MdDelete/><p id='edit-infoProfile'>Delete Profile</p>
+          </div>
+        </div>
+        
+        
+        
       </div>
+      {showModal && (
+        <PetProfileDeleteModal 
+          petName={petProfile.petName} 
+          onDelete={handleDelete} 
+          onCancel={handleCancel} 
+        />
+      )}
       <Footer />
     </>
   );
