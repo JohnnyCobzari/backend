@@ -39,7 +39,7 @@ function LoginPage() {
       setAuthToken(token);
       navigate('/HomePage'); // Redirecționează către dashboard sau altă pagină
     }
-  }, []);
+  }, [navigate]);
 
   // Handler pentru schimbarea valorii email
   const handleEmailChange = (event) => {
