@@ -18,6 +18,15 @@ const Sidebar = () => {
   const goToPetProfile = (id) => {
     navigate(`/ProfilePage/${id}`);
   };
+  const handleLogout = () => {
+    // Clear authToken and userId from localStorage
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userPets');
+    // Redirect to the homepage
+    navigate('/');
+  };
+
 
   // Array to store pet information (name and image link)
   //!!!!!!!!!!!!!! PENTRU ION ---> in asa gen de tabel doar ca cu toata info o sa trebuiasca sa primim de la back
@@ -66,6 +75,14 @@ const Sidebar = () => {
               Add Pet
             </div>
           </div>
+
+           {/* Logout Button */}
+          {/* Logout Button - Positioned below the sidebar */}
+      <div className="logout-container">
+        <button className="logout-btn" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
         </div>
       </div>
   );

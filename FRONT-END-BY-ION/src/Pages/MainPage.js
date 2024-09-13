@@ -35,7 +35,6 @@ const MainPage = () => {
         setUserPets(response.data.userPets);
   
         // Save fetched data to localStorage
-        localStorage.setItem('allPets', JSON.stringify(response.data.allPets));
         localStorage.setItem('userPets', JSON.stringify(response.data.userPets));
       } catch (err) {
         console.error(err);
