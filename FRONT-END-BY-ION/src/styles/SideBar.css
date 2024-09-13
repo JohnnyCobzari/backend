@@ -7,6 +7,9 @@
 
 /* Smooth transition for the sidebar */
 .sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 80px;
   height: 100vh;
   background-color: var(--lowColor);
@@ -76,6 +79,7 @@
   width: 40px;
   font-size: 7px;
   background-color: var(--highColor);
+  color: var(--lowColor);
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -173,6 +177,59 @@
 }
 
 
+.logout-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px; /* Pushes the button to the bottom */
+  padding: 10px;
+}
+
+.logout-btn {
+height: 45px;
+width: 45px;
+background-color: var(--midColor);
+color: var(--lowColor);
+border: none;
+border-radius: 50%;
+cursor: pointer;
+font-size: 24px;
+transition: background-color 0.3s ease;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.logout-btn:hover {
+background-color: darkred;
+}
+
+.logout-text {
+  width: 0; /* Initially hidden */
+  font-size: 0;
+  overflow: hidden;
+  transition: max-width 0.5s ease-in-out, font-size 0.5s ease-in-out;
+  color: var(--lowColor);
+  text-align: center;
+}
+
+.sidebar.expanded .logout-text {
+  width: 70%;
+  font-size: 16px; /* Larger font size when expanded */
+}
+
+.sidebar.expanded .logout-btn{
+  border-radius: 5px;
+  width: 200px;
+  height: 40px;
+  font-size: 16px;
+  transition: max-width 0.5s ease-in-out, font-size 0.5s ease-in-out;
+  overflow: hidden;
+}
+
+
+
 @media (max-width: 480px) {
   .sidebar {
     width: 0px;
@@ -191,6 +248,7 @@
   }
   .textInSideBar{
     background-color: var(--lowColor);
+    color: var(--highColor);
   }
 
   .sidebar.expanded .textInSideBar{
@@ -214,32 +272,14 @@
     top:10px
   }
 
+  .logout-btn{
+    visibility: hidden;
+  }
 
-  .ImageBoxSidebar:hover{
-    filter: brightness(1.2);
-}
-
-.logout-container {
-  margin-top: auto; /* Pushes the button to the bottom */
-  padding: 10px;
-  text-align: center;
-}
-
-.logout-btn {
-  background-color: red;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
-
-.logout-btn:hover {
-  background-color: darkred;
-}
-
+  .sidebar.expanded .logout-btn{
+    visibility:visible;
+    color: var(--lowColor);
+  }
 }
 
 

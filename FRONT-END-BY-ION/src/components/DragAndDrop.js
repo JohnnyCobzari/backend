@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaCamera } from 'react-icons/fa'; // Importăm o iconiță de cameră
+import myString from './DefaultImage';
 
 const ImageUpload = ({ setImageSrc, imageSrc }) => {
 
@@ -60,6 +61,8 @@ const ImageUpload = ({ setImageSrc, imageSrc }) => {
     color: '#6b5e49', // Culoare personalizată pentru h3
   };
 
+  const shouldDisplayImage = imageSrc !== myString;
+
   return (
     <div>
       <div style={containerStyle}>
@@ -82,7 +85,7 @@ const ImageUpload = ({ setImageSrc, imageSrc }) => {
       {imageSrc && (
         <div style={imageContainerStyle}>
           <h3 style={h3Style}>Selected Image:</h3>
-          <img src={imageSrc} alt="Selected" style={{ maxWidth: '300px', maxHeight: '300px' }} />
+          {shouldDisplayImage ? (<img src={imageSrc} alt="Selected" style={{ maxWidth: '300px', maxHeight: '300px' }} />) : null}
         </div>
       )}
     </div>

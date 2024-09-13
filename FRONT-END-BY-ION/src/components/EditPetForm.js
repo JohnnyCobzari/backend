@@ -3,38 +3,26 @@ import ImageUpload from './DragAndDrop';
 import "../styles/LogInPage.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import myString from './DefaultImage';
 
-
-const PetForm = () => {
-
-  const [imageSrc, setImageSrc] = useState(myString);
-  const [error, setError] = useState(''); // Stare pentru imaginea în format base64
-
-  useEffect(() => {
-    if (imageSrc) {
-      console.log('Image received in parent component:', imageSrc); // Verificăm imaginea încărcată
-    }
-  }, [imageSrc]); // Se declanșează atunci când se schimbă `imageSrc`
-
-
+const EditPetForm = ({ petProfile, image, id }) => {
+  const [imageSrc, setImageSrc] = useState(image); // Initialize with received image
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
-    petName: '',
-    gender: '',
-    breed: '',
-    age: '',
-    ownerName: '',
-    ownerPhone: '',
-    vaccinated: '',
-    allergies: '',
-    vetInfo: '',
-    readyForBreeding: false,
-    breedingPrice: '',
-    image: '' // Adăugăm aici imaginea în format base64
+    petName: petProfile.petName,
+    gender: petProfile.gender,
+    breed: petProfile.breed,
+    age: petProfile.age,
+    ownerName: petProfile.ownerName,
+    ownerPhone: petProfile.ownerPhone,
+    vaccinated: petProfile.vaccinated,
+    allergies: petProfile.allergies,
+    vetInfo: petProfile.vetInfo,
+    readyForBreeding: petProfile.readyForBreeding,
+    breedingPrice: petProfile.breedingPrice,
+    image: image
   });
 
   const navigate = useNavigate();
-
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -43,6 +31,7 @@ const PetForm = () => {
       [name]: type === 'checkbox' ? checked : value,
     }));
   };
+  console.log(id);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,41 +39,32 @@ const PetForm = () => {
     // Construct the updated form data
     const updatedFormData = {
       ...formData,
-      image: imageSrc // Keep the image data
+      image: imageSrc // Include updated image
     };
   
-    // Retrieve the userId from localStorage
-    const user = localStorage.getItem('userId');
-    
-    // Log the form data to check if it's correctly structured
-    console.log('Form data submitted:', updatedFormData, user);
-    
     try {
-      // Make the POST request to the server, sending userId as a query parameter
-      const response = await axios.post(`http://localhost:3002/pets?userId=${user}`, updatedFormData, {
+      // Make the PUT request to update the pet profile
+      const response = await axios.put(`http://localhost:3002/pets/${id}`, updatedFormData, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`, // Use token from localStorage for authorization
-          'Content-Type': 'application/json', // Set content type to JSON
+          'Content-Type': 'application/json',
         },
       });
   
-      // Check the response status and handle success
-      if (response.status === 201) {
-        console.log('Pet profile created successfully!');
+      // Check if the update was successful
+      if (response.status === 200) {
+        console.log('Pet profile updated successfully!');
         navigate('/HomePage'); // Redirect to home page on success
       } else {
-        setError('Failed to create pet profile.'); // Set error message if status is not 201
+        setError('Failed to update pet profile.');
       }
     } catch (error) {
       // Log error and set error message if request fails
-      console.error('Error creating pet profile:', error);
-      setError('Failed to create pet profile.');
+      console.error('Error updating pet profile:', error);
+      setError('Failed to update pet profile.');
     }
   };
-  
-  
-    
-  
+
   return (
     <form id="login-form" onSubmit={handleSubmit}>
       <p className="writingFromPetLogIn">Pet name</p>
@@ -229,15 +209,15 @@ const PetForm = () => {
           </div>
         </>
       )}
-      {error && <p className="error-message">{error}</p>} {/* Afișează mesajul de eroare */}
+      {error && <p className="error-message">{error}</p>} {/* Show error message */}
 
-      <ImageUpload setImageSrc={setImageSrc} imageSrc={imageSrc} /> {/* Transmitem setImageSrc către componenta copil */}
+      <ImageUpload setImageSrc={setImageSrc} imageSrc={imageSrc} /> {/* Pass image upload logic */}
 
-      <button type="submit" className="login" >
-        Create Pet Profile
+      <button type="submit" className="login">
+        Edit Profile
       </button>
     </form>
   );
 };
 
-export default PetForm;
+export default EditPetForm;
