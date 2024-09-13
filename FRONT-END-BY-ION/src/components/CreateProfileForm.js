@@ -6,13 +6,8 @@ import axios from "axios";
 import myString from './DefaultImage';
 
 const PetForm = () => {
-useEffect(() => {
-    if (imageSrc) {
-      console.log('Image received in parent component:', imageSrc); // Verificăm imaginea încărcată
-    }
-  }, [imageSrc]); // Se declanșează atunci când se schimbă `imageSrc`
 
-  const [imageSrc, setImageSrc] = useState('myString');
+  const [imageSrc, setImageSrc] = useState(myString);
   const [error, setError] = useState('');
   const [coordinates, setCoordinates] = useState(null); // State to store fetched coordinates
   const [currentCountry, setCurrentCountry] = useState(''); 
