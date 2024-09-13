@@ -34,9 +34,6 @@ const PetForm = () => {
 
   const navigate = useNavigate();
 
-  const goToHomePage1 = () => {
-    navigate('/HomePage');
-  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -235,7 +232,7 @@ const PetForm = () => {
 
       <ImageUpload setImageSrc={setImageSrc} imageSrc={imageSrc} /> {/* Transmitem setImageSrc către componenta copil */}
 
-      <button type="submit" className="login" onClick={goToHomePage1}>
+      <button type="submit" className="login" >
         Create Pet Profile
       </button>
     </form>
