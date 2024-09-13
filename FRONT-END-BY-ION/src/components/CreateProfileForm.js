@@ -4,17 +4,13 @@ import "../styles/LogInPage.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
 const PetForm = () => {
-
   const [imageSrc, setImageSrc] = useState('');
-  const [error, setError] = useState(''); // Stare pentru imaginea în format base64
-
-  useEffect(() => {
-    if (imageSrc) {
-      console.log('Image received in parent component:', imageSrc); // Verificăm imaginea încărcată
-    }
-  }, [imageSrc]); // Se declanșează atunci când se schimbă `imageSrc`
+  const [error, setError] = useState('');
+  const [coordinates, setCoordinates] = useState(null); // State to store fetched coordinates
+  const [currentCountry, setCurrentCountry] = useState(''); 
+  const [latitude, setLatitude] = useState(null); // State to store latitude
+  const [longitude, setLongitude] = useState(null); // State to store longitude
 
 
   const [formData, setFormData] = useState({
@@ -29,11 +25,21 @@ const PetForm = () => {
     vetInfo: '',
     readyForBreeding: false,
     breedingPrice: '',
-    image: '' // Adăugăm aici imaginea în format base64
+    address: '', // New field for pet's address
+    image: ''
   });
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (imageSrc) {
+      console.log('Image received in parent component:', imageSrc);
+    }
+  }, [imageSrc]);
+
+  useEffect(() => {
+    getCurrentLocation(); // Get current location when component mounts
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -46,46 +52,130 @@ const PetForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // Construct the updated form data
     const updatedFormData = {
       ...formData,
-      image: imageSrc // Keep the image data
+      image: imageSrc,
+      latitude,  // Include latitude separately
+      longitude  // Include longitude separately
     };
   
-    // Retrieve the userId from localStorage
     const user = localStorage.getItem('userId');
-    
-    // Log the form data to check if it's correctly structured
+  
     console.log('Form data submitted:', updatedFormData, user);
-    
+  
     try {
-      // Make the POST request to the server, sending userId as a query parameter
       const response = await axios.post(`http://localhost:3002/pets?userId=${user}`, updatedFormData, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`, // Use token from localStorage for authorization
-          'Content-Type': 'application/json', // Set content type to JSON
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+          'Content-Type': 'application/json',
         },
       });
   
-      // Check the response status and handle success
       if (response.status === 201) {
         console.log('Pet profile created successfully!');
-        navigate('/HomePage'); // Redirect to home page on success
+        navigate('/HomePage');
       } else {
-        setError('Failed to create pet profile.'); // Set error message if status is not 201
+        setError('Failed to create pet profile.');
       }
     } catch (error) {
-      // Log error and set error message if request fails
       console.error('Error creating pet profile:', error);
       setError('Failed to create pet profile.');
     }
   };
   
+  // Function to get current location
+  const getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          console.log(`Current Location: Latitude: ${lat}, Longitude: ${lng}`);
+          
+          setLatitude(lat); // Set latitude state
+          setLongitude(lng); // Set longitude state
+          
+          await getCurrentCountry(lat, lng);
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+          alert('Unable to retrieve your location. Please ensure location services are enabled.');
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+      alert('Geolocation is not supported by your browser.');
+    }
+  };
   
+
+  // Function to get the current country using reverse geocoding
+  const getCurrentCountry = async (latitude, longitude) => {
+    const accessToken = 'pk.eyJ1IjoiY29zbWFrLTQ3IiwiYSI6ImNtMHhoczZsejA3ZjgyanF6YWpzMDV4cDAifQ.LiwxPafEUZs60SWhAMCpdg';
+    const baseUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
     
+    try {
+      const response = await fetch(`${baseUrl}${longitude},${latitude}.json?access_token=${accessToken}&types=country`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch country: ${response.status} ${response.statusText}`);
+      }
+
+
+      const data = await response.json();
+      if (data.features.length > 0) {
+        const country = data.features[0].place_name;
+        console.log(`Detected Country: ${country}`);
+        setCurrentCountry(country);
+      } else {
+        throw new Error('No country found for the current location.');
+      }
+    } catch (error) {
+      console.error('Error fetching country:', error);
+    }
+  };
+
+  // Updated function to get coordinates from an address using Mapbox Geocoding API
+  const getCoordinates = async () => {
+    const accessToken = 'your_mapbox_access_token'; // Your Mapbox access token
+    const baseUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
+    let address = formData.address;
   
+    if (!address) {
+      alert('Please enter an address.');
+      return;
+    }
+  
+    // Automatically add the current country if not present in the address
+    if (currentCountry && !address.includes(currentCountry)) {
+      address += `, ${currentCountry}`;
+    }
+  
+    try {
+      const response = await fetch(`${baseUrl}${encodeURIComponent(address)}.json?access_token=${accessToken}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch coordinates: ${response.status} ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      if (data.features.length === 0) {
+        throw new Error('No coordinates found for this address');
+      }
+  
+      const coords = data.features[0].geometry.coordinates;
+      setLatitude(coords[1]); // Set latitude state
+      setLongitude(coords[0]); // Set longitude state
+      
+      console.log(`Coordinates: Latitude: ${coords[1]}, Longitude: ${coords[0]}`);
+    } catch (error) {
+      console.error('Error fetching coordinates:', error);
+      setError(`Error fetching coordinates: ${error.message}`);
+    }
+  };
+  
+
   return (
     <form id="login-form" onSubmit={handleSubmit}>
+      {/* Existing form fields */}
       <p className="writingFromPetLogIn">Pet name</p>
       <div className="input_filed">
         <input
@@ -98,6 +188,7 @@ const PetForm = () => {
         />
       </div>
 
+      {/* Gender Input */}
       <p className="writingFromPetLogIn">Gender</p>
       <div className="input_filed">
         <select
@@ -162,6 +253,7 @@ const PetForm = () => {
         />
       </div>
 
+
       <p className="writingFromPetLogIn">Vaccinated</p>
       <div className="input_filed">
         <select
@@ -190,18 +282,33 @@ const PetForm = () => {
         />
       </div>
 
-      <p className="writingFromPetLogIn">Veterinarian Information</p>
+      <p className="writingFromPetLogIn">Veterinarian information</p>
       <div className="input_filed">
         <input
           type="text"
           name="vetInfo"
           value={formData.vetInfo}
-          placeholder="ex: Vet clinic, Veterinarian's name"
+          placeholder="Ex: Name and Address"
           onChange={handleChange}
           required
         />
       </div>
 
+      {/* Moved Address Field */}
+      <p className="writingFromPetLogIn">Your Pet's Address</p>
+      <div className="input_filed">
+        <input
+          type="text"
+          name="address"
+          value={formData.address}
+          placeholder="Enter your pet's address"
+          onChange={handleChange}
+          onBlur={getCoordinates} // Fetch coordinates when input loses focus
+          required
+        />
+      </div>
+
+      {/* "Ready for Breeding" Section */}
       <div id="ReadyForBeeding">
         <p>Ready for breeding?</p>
         <input
@@ -215,22 +322,21 @@ const PetForm = () => {
 
       {formData.readyForBreeding && (
         <>
-          <p className="writingFromPetLogIn">Price for breeding</p>
+          <p className="writingFromPetLogIn">Breeding Price</p>
           <div className="input_filed">
             <input
               type="number"
               name="breedingPrice"
               value={formData.breedingPrice}
-              placeholder="ex: 100$"
+              placeholder="ex: 150"
               onChange={handleChange}
-              required
             />
           </div>
         </>
       )}
-      {error && <p className="error-message">{error}</p>} {/* Afișează mesajul de eroare */}
 
-      <ImageUpload setImageSrc={setImageSrc} imageSrc={imageSrc} /> {/* Transmitem setImageSrc către componenta copil */}
+
+      <ImageUpload setImageSrc={setImageSrc} />
 
       <button type="submit" className="login" >
         Create Pet Profile
