@@ -337,7 +337,7 @@ const PetForm = () => {
       )}
 
 
-      <ImageUpload setImageSrc={setImageSrc} />
+      <ImageUpload setImageSrc={setImageSrc} imageSrc={imageSrc} />
 
       <button type="submit" className="login" >
         Create Pet Profile

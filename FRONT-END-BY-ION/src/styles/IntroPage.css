@@ -1,15 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 body {
-
-  background: #DAD5CD;
+  background: #dad5cd;
 }
 
 /*Pentru header ===============================================>*/
@@ -89,7 +88,6 @@ body {
   text-align: center;
 }
 
-
 /* Imaginea mare din centru */
 
 .firstPageImagecontainer {
@@ -133,7 +131,6 @@ body {
   filter: brightness(1.3);
 }
 
-
 @media (max-width: 768px) {
   .headerBox img {
     height: 37px;
@@ -144,19 +141,19 @@ body {
   .headerBox img {
     height: 33px;
   }
-  
+
   .headerBox p {
-  font-size: 10px;
-  margin-right: 5px;
+    font-size: 10px;
+    margin-right: 5px;
   }
 
   .logo p {
-  font-size: 28px;
+    font-size: 28px;
   }
 
   .FrontBigTextFromFirstPage {
-  margin: 50px auto 10px;
-  font-size: 26px;
+    margin: 50px auto 10px;
+    font-size: 26px;
   }
 
   .buttonBox img {
@@ -167,5 +164,4 @@ body {
     margin: 40px auto 60px;
     font-size: 10px;
   }
-
 }

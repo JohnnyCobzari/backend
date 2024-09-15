@@ -1,194 +1,189 @@
 :root {
-    --highColor: #F3EDE4;
-    --midColor: #DAD5CD;
-    --lowColor: #6b5e49;
-  }
-  
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-  }
-  
-  body {
-    background: var(--highColor);
-  }
-
-  html, body {
-    overflow-x: hidden; /* Ascunde scroll-ul pe orizontală */
+  --highColor: #f3ede4;
+  --midColor: #dad5cd;
+  --lowColor: #6b5e49;
 }
 
-  
-  /*=================================================*/
-  /* General styling for larger screens (default) */
-  .uperContainerForImagesPage2 {
-    width: 90%;
-    max-width: 600px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 40px;
-  }
-  
-  /*.writingFromPetLogIn {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: var(--highColor);
+}
+
+html,
+body {
+  overflow-x: hidden; /* Ascunde scroll-ul pe orizontală */
+}
+
+/*=================================================*/
+/* General styling for larger screens (default) */
+.uperContainerForImagesPage2 {
+  width: 90%;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+}
+
+/*.writingFromPetLogIn {
     font-size: 24px;
     font-family: 'Neuton', serif;
     transform: translateX(2px);
     color: var(--lowColor);
   }*/
-  
-  .logInPet {
-    height: auto;
-    width: 25%;
-  }
-  
-  #welcome {
-    height: auto;
-    width:50%;
-  }
-  
-  /* Form styling ==========================> */
-  #login-form {
-    width: 90%;
-    max-width: 600px; /* Set a max width */
-    margin: 0 auto; /* Center the form horizontally */
-    padding: 20px;
-    background-color: var(--midColor); /* Adjust the background to match */
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
-    text-align: left;
-  }
-  
-  /* Input fields styling */
-  .input_filed input,
-  .input_filed select {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #d6cfc7;
-    border-radius: 5px;
-    font-size: 16px;
-    background-color: var(--highColor);
-    color: var(--lowColor);
-  }
 
-  .emailAndpasword{
-    color: var(--lowColor);
-    font-size: 21px;
-  }
+.logInPet {
+  height: auto;
+  width: 25%;
+}
 
-  .writingFromPetLogIn{
-    color: var(--lowColor);
-    font-size: 21px;
-  }
+#welcome {
+  height: auto;
+  width: 50%;
+}
 
-  .forgot{
-    color: var(--lowColor);
-    font-size: 14px;
-  }
+/* Form styling ==========================> */
+#login-form {
+  width: 90%;
+  max-width: 600px; /* Set a max width */
+  margin: 0 auto; /* Center the form horizontally */
+  padding: 20px;
+  background-color: var(--midColor); /* Adjust the background to match */
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  text-align: left;
+}
 
-  .paragraf{
-    margin-top: 10px;
-    color: var(--lowColor);
-    font-size: 14px;
-  }
+/* Input fields styling */
+.input_filed input,
+.input_filed select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #d6cfc7;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: var(--highColor);
+  color: var(--lowColor);
+}
 
-  .sign-up{
-    color: var(--lowColor);
-    font-size: 14px;
-  }
+.emailAndpasword {
+  color: var(--lowColor);
+  font-size: 21px;
+}
 
+.writingFromPetLogIn {
+  color: var(--lowColor);
+  font-size: 21px;
+}
 
-  
-  /* Checkbox styling */
-  #ReadyForBeeding {
-    width: 100%;
-    padding: 5px 10px 20px 0;
-    margin: 10px 0;
-    border-radius: 5px;
-    color: var(--lowColor);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  #ReadyForBeeding input[type="checkbox"] {
-    transform: scale(2);
-  }
-  
-  #ReadyForBeeding p {
-    font-family: 'Neuton', serif;
-    font-size: 24px;
-  }
-  
-  /* Button styling */
-  button.login {
-    width: 100%;
-    padding: 10px;
-    background-color: #83735a;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 12px;
-  }
-  
-  button.login:hover {
-    background-color: #6b5b48; /* Darker shade on hover */
-  }
-  
-  /* Error message styling */
-  .error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: 10px;
-  }
-  
-  /* Footer styling */
-  .FooterImageBoxPage2{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .FooterImageBoxPage2 img {
-    width: 100%;
-    max-width: 675px;
-    margin: 92px 0 0;
-  }
+.forgot {
+  color: var(--lowColor);
+  font-size: 14px;
+}
 
-  @media (max-width: 1200px) {
-    
-  }
-  
-  @media (max-width: 768px) {
-    
-  }
-  
-  @media (max-width: 480px) {
+.paragraf {
+  margin-top: 10px;
+  color: var(--lowColor);
+  font-size: 14px;
+}
+
+.sign-up {
+  color: var(--lowColor);
+  font-size: 14px;
+}
+
+/* Checkbox styling */
+#ReadyForBeeding {
+  width: 100%;
+  padding: 5px 10px 20px 0;
+  margin: 10px 0;
+  border-radius: 5px;
+  color: var(--lowColor);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#ReadyForBeeding input[type='checkbox'] {
+  transform: scale(2);
+}
+
+#ReadyForBeeding p {
+  font-family: 'Neuton', serif;
+  font-size: 24px;
+}
+
+/* Button styling */
+button.login {
+  width: 100%;
+  padding: 10px;
+  background-color: #83735a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+button.login:hover {
+  background-color: #6b5b48; /* Darker shade on hover */
+}
+
+/* Error message styling */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Footer styling */
+.FooterImageBoxPage2 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.FooterImageBoxPage2 img {
+  width: 100%;
+  max-width: 675px;
+  margin: 92px 0 0;
+}
+
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 480px) {
   .uperContainerForImagesPage2 {
     margin-top: 30px;
   }
   body {
     background: var(--highColor) !important;
   }
-  .emailAndpasword{
+  .emailAndpasword {
     font-size: 18px;
   }
 
   .input_filed select {
     height: 50px;
   }
-
 }
 
 /*Oleaca ratacita*/
 
-#CREATEYOURPETPROFILE{
+#CREATEYOURPETPROFILE {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -196,8 +191,20 @@
   margin: 80px 0 0px;
 }
 
-#CREATEYOURPETPROFILE img{
- width: 80%;
- max-width: 500px;
+#CREATEYOURPETPROFILE img {
+  width: 80%;
+  max-width: 500px;
 }
-  
+
+/*De la edit page ===>*/
+
+.uperContainerForImagesEditPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.uperContainerForImagesEditPage img {
+  width: 280px;
+  transform: translateY(38px);
+}

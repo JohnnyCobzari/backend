@@ -37,7 +37,6 @@ function App() {
         <Route path="/HomePage" element={<ProtectedRoute><MainPage/></ProtectedRoute>} />
         <Route path="/ProfilePage/:id" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
         <Route path="/EditProfilePage/:id" element={<ProtectedRoute><EditProfilePage/></ProtectedRoute>} />
-
       </Routes>
 
     </Router>
