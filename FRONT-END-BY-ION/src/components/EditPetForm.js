@@ -3,6 +3,9 @@ import ImageUpload from './DragAndDrop';
 import "../styles/LogInPage.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css"; // Import default styles
+
 
 const EditPetForm = ({ petProfile, image, id }) => {
   const [imageSrc, setImageSrc] = useState(image); // Initialize with received image
@@ -32,7 +35,13 @@ const EditPetForm = ({ petProfile, image, id }) => {
       [name]: type === 'checkbox' ? checked : value,
     }));
   };
-  console.log(id);
+  
+  const handlePhoneChange = (value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      ownerPhone: value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -132,17 +141,16 @@ const EditPetForm = ({ petProfile, image, id }) => {
         />
       </div>
 
-      <p className="writingFromPetLogIn">Owner Phone Number</p>
-      <div className="input_filed">
-        <input
-          type="text"
-          name="ownerPhone"
-          value={formData.ownerPhone}
-          placeholder="ex: +373 079 000 000"
-          onChange={handleChange}
-          required
-        />
-      </div>
+        <p className="writingFromPetLogIn">Owner Phone Number</p>
+        <div className="input_filed">
+          <PhoneInput
+            name="ownerPhone"
+            value={formData.ownerPhone}
+            placeholder="ex: +373 079 000 000"
+            onChange={handlePhoneChange}
+            required
+          />
+        </div>
 
       <p className="writingFromPetLogIn">Vaccinated</p>
       <div className="input_filed">

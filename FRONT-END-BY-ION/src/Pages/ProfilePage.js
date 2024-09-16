@@ -54,7 +54,7 @@ function ProfilePage() {
         });
         
         setPetProfile(response.data); // Assuming the backend sends the pet object
-        console.log(petProfile)
+        //console.log(petProfile)
         setLoading(false);
       } catch (err) {
         console.error(err);
@@ -106,11 +106,11 @@ function ProfilePage() {
           <p><FaDog /> Breed: {petProfile.breed}</p>
           <p><FaCalendarAlt /> Age: {petProfile.age}</p>
           <p><FaUser /> Owner: {petProfile.ownerName}</p>
-          <p><FaPhone /> Phone: {petProfile.ownerNumber}</p>
+          <p><FaPhone /> Phone: {petProfile.ownerPhone}</p>
           <p><FaSyringe /> Vaccinated: {petProfile.vaccinated}</p>
           <p><FaAllergies /> Allergies: {petProfile.allergies}</p>
           <p><FaClinicMedical /> Vet: {petProfile.vetInfo}</p>
-          <p><FaDollarSign /> Breeding Price: {petProfile.breedingPrice}</p>
+          {petProfile.readyForBreeding && (<p><FaDollarSign /> Breeding Price: {petProfile.breedingPrice}</p>)}
         </div>
         <div className="EditAndDeleteProfile">
         <div onClick={() => { 
