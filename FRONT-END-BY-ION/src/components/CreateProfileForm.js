@@ -137,7 +137,7 @@ const PetForm = () => {
 
   // Updated function to get coordinates from an address using Mapbox Geocoding API
   const getCoordinates = async () => {
-    const accessToken = 'your_mapbox_access_token'; // Your Mapbox access token
+    const accessToken = 'pk.eyJ1IjoiY29zbWFrLTQ3IiwiYSI6ImNtMHhoczZsejA3ZjgyanF6YWpzMDV4cDAifQ.LiwxPafEUZs60SWhAMCpdg'; // Your Mapbox access token
     const baseUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
     let address = formData.address;
   
