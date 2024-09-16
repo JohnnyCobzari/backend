@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import mapboxgl from 'mapbox-gl';
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiam9ueWlka2siLCJhIjoiY20wbWZqM3ZsMDF0MzJzc2JoN2pmMGpxeSJ9.YsuGCrjUvQVDNqMM-n14bg';
@@ -7,7 +8,6 @@ const locations = [
     { name: 'Vet Clinic "Nicoleta Lux"', type: 'Veterinarian', coordinates: [28.848006560444432, 47.04577197844606] },
     { name: 'Vet Pharmacy "Nicoleta Lux"', type: 'Veterinarian', coordinates: [28.830326863280124, 47.01747724213654] },
     { name: 'Vet Pharmacy', type: 'Veterinarian', coordinates: [28.780102397299974, 47.02954706729542] },
-    { name: 'Vet Clinic "Nicoleta Lux"', type: 'Veterinarian', coordinates: [28.830322596029887, 47.01748528599031] },
     { name: 'Pet Shop', type: 'Pet Shop', coordinates: [28.778997346183186, 47.03111022566327] },
     { name: 'Zoo', type: 'Pet Shop', coordinates: [28.85911096985874, 47.04426874781966] },
     { name: 'Planeta ZOO K9', type: 'Pet Shop', coordinates: [28.86271048994743, 47.04983646460499] },
@@ -19,17 +19,17 @@ const locations = [
     { name: 'Hotel Diplomat Club', type: 'Pet Hotel', coordinates: [28.822975670083377, 47.01240999881395] },
     { name: 'Shadow Hotel', type: 'Pet Hotel', coordinates: [28.850135932529522, 47.03524991313651] },
     { name: 'Farmacie Veterinara Proneros', type: 'Veterinarian', coordinates: [28.619373, 47.153004] },
-    { name: 'Farmacie Veterinara', type: 'Veterinarian', coordinates: [28.617119276009248, 47.14834894044488] },
-
-
+    { name: 'Farmacie Veterinara', type: 'Veterinarian', coordinates: [28.617119276009248, 47.14834894044488] }
 ];
 
-const App = () => {
+const Mapbox = ({ pets }) => {
     const mapContainerRef = useRef(null);
     const lngRef = useRef(null);
     const latRef = useRef(null);
     const zoomRef = useRef(null);
     const markersRef = useRef([]);
+    const navigate = useNavigate();
+    const [hoveredPet, setHoveredPet] = useState(null); // Stare pentru pet-ul hoverat
 
     const createCustomMarker = (type) => {
         const el = document.createElement('div');
@@ -54,12 +54,49 @@ const App = () => {
         return el;
     };
 
+    const createCustomMarkers = (image, petName) => {
+        const el = document.createElement('div');
+        el.className = 'marker-icon';
+        el.style.width = '30px'; // Dimensiuni pentru marker
+        el.style.height = '30px';
+        el.style.backgroundSize = 'cover'; // Imaginea să fie redimensionată corect
+        el.style.borderRadius = '50%'; // Marker rotund
+        el.style.backgroundImage = `url(${image})`; // Afișarea imaginii
+
+        // Evenimente pentru hover
+        el.addEventListener('mouseenter', () => {
+            setHoveredPet(petName); // Setăm pet-ul curent când mouse-ul este pe marker
+        });
+        el.addEventListener('mouseleave', () => {
+            setHoveredPet(null); // Resetăm pet-ul curent când mouse-ul pleacă de pe marker
+        });
+
+        return el;
+    };
+
     useEffect(() => {
         const map = new mapboxgl.Map({
             container: mapContainerRef.current,
             style: 'mapbox://styles/mapbox/streets-v12',
             center: [28.8336, 47.0105],
-            zoom: 12
+            zoom: 12,
+        });
+
+        pets.forEach((pet) => {
+            if (pet.latitude && pet.longitude && pet.image) {
+                const popupText = pet.name || 'Pet'; // Dacă numele nu există, fallback la "Pet"
+                const popup = new mapboxgl.Popup({ offset: 25 }).setText(pet.petName);
+
+                const markerElements = createCustomMarkers(pet.image, pet.petName); // Imaginea animalului de companie
+                const marker = new mapboxgl.Marker({ element: markerElements })
+                    .setLngLat([pet.longitude, pet.latitude])
+                    .setPopup(popup)
+                    .addTo(map);
+                
+                marker.getElement().addEventListener('click', () => {
+                    navigate(`/ProfilePage/${pet._id}`);
+                });
+            }
         });
 
         const updateMarkers = () => {
@@ -70,6 +107,7 @@ const App = () => {
 
             locations.forEach(location => {
                 const markerElement = createCustomMarker(location.type);
+                markerElement.className = 'marker-icon';
                 const marker = new mapboxgl.Marker({ element: markerElement })
                     .setLngLat(location.coordinates)
                     .setPopup(
@@ -103,23 +141,37 @@ const App = () => {
                 }
             );
         } else {
-            console.error('Geolocation is not supported by this browser.');
             alert('Geolocation is not supported by your browser.');
         }
 
         updateMarkers();
 
         return () => map.remove();
-    }, []);
+    }, [pets]);
 
     return (
-        <div id='MapBox-BigContainer'>
-            <div className='MapBoxSidebar'>
+        <div id="MapBox-BigContainer" style={{ position: 'relative' }}>
+            <div className="MapBoxSidebar">
                 Longitude: <span ref={lngRef}>28.8336</span> | Latitude: <span ref={latRef}>47.0105</span> | Zoom: <span ref={zoomRef}>12</span>
             </div>
-            <div ref={mapContainerRef} className='map-container' />
+            <div ref={mapContainerRef} className="map-container" />
+
+            {/* Afișăm numele pet-ului dacă mouse-ul este deasupra markerului */}
+            {hoveredPet && (
+                <div
+                    style={{
+                        
+                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                        color: 'white',
+                        padding: '10px',
+                        borderRadius: '5px',
+                    }}
+                >
+                    {hoveredPet}
+                </div>
+            )}
         </div>
     );
 };
 
-export default App;
+export default Mapbox;

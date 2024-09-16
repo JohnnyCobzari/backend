@@ -17,6 +17,7 @@ const EditPetForm = ({ petProfile, image, id }) => {
     vaccinated: petProfile.vaccinated,
     allergies: petProfile.allergies,
     vetInfo: petProfile.vetInfo,
+    address:petProfile.address,
     readyForBreeding: petProfile.readyForBreeding,
     breedingPrice: petProfile.breedingPrice,
     image: image

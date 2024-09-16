@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/SideBar";
 import Footer from "../components/Footer";
-import Logo from "../components/Logo"
+import Logo from "../components/Logo";
 import MapBox from "../components/MapBox";
-import "../styles/HomePage.css"
+import "../styles/HomePage.css";
 import axios from "axios";
 import Loading from "../components/LoadingAnimation";
 import ErrorPage from "../components/ErrorPage";
@@ -15,15 +15,14 @@ const MainPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const fetchPets = async () => {
       try {
         const token = localStorage.getItem('authToken');
         const userId = localStorage.getItem('userId');
-  
-       
-        // Fetch pets from the API if not in localStorage
+
+        // Fetch pets from the API
         const response = await axios.get('http://localhost:3002/pets', {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -32,10 +31,16 @@ const MainPage = () => {
             userId, // Pass the userId as a query parameter
           },
         });
-  
-        setAllPets(response.data.allPets);
+
+        // Filter pets that have valid coordinates (latitude and longitude)
+        const petsWithCoordinates = response.data.allPets.filter(
+          (pet) => pet.latitude && pet.longitude
+        );
+        
+
+        setAllPets(petsWithCoordinates); // Send only pets with coordinates to state
         setUserPets(response.data.userPets);
-  
+
         // Save fetched data to localStorage
         localStorage.setItem('userPets', JSON.stringify(response.data.userPets));
       } catch (err) {
@@ -45,10 +50,9 @@ const MainPage = () => {
         setLoading(false);
       }
     };
-  
+
     fetchPets();
   }, [navigate]);
-  
 
   if (loading) return (<Loading/>);
   if (error) return (<ErrorPage/>);
@@ -57,7 +61,7 @@ const MainPage = () => {
       <>
         <Sidebar />
         <Logo />
-        <MapBox />
+        <MapBox pets={allPets}/>
         <Footer/>
       </>
     );
