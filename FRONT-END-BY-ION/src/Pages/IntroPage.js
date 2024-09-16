@@ -38,37 +38,44 @@ function IntroPage() {
 
 
     return (
-        <>
-            <div className="header">
-                <div className="logo">
-                    <p>PawPaw</p>
-                    <img src="/images/paw.png" alt="PawPaw logo" />
-                </div>
-                
-                <div className="headerBox">
-                    <p>Who We Are</p>
-                    <img src="/images/Cart button.png" alt="Cart button" onClick={GoToLogIn}/>
-                </div>
-            </div>
-
-            <p className="FrontBigTextFromFirstPage">
-                Connecting pet owners for breeding and services with interactive maps
-            </p>
-
-            <div className="buttonBox">
-                <img src="/images/Button.png" alt="Button"  onClick={GoToLogIn} />
-            </div>
-
-            <div className="firstPageImagecontainer">
-                <img className="firstPageImage" src="/images/firstPageImage.png" alt="First page image" />
-            </div>
-
-            <p className="smallTextAtTheButton">
+      <>
+        <section>
+          <div className="container">
+            <header>
+              <a href="#" className="logo">
+                <img src="/images/logo.png" alt="Logo" />
+              </a>
+              
+              <ul>
+                <li><a href="#" className="active">Home</a></li>
+                <li><a href="#">About us</a></li>
+                <li><a href="#" onClick={GoToLogIn}>Login</a></li>
+              </ul>
+            </header>
+            
+            <div className="content">
+              <h2>Connecting pet owners for breeding and services with interactive maps</h2>
+              <a href="#"><img src="/images/img1.png" alt="Image 1" /></a>
+              <p>
                 In today's world, pet ownership is at an all-time high, with dogs and cats becoming integral members of many households. However, finding suitable partners for breeding and accessing essential pet services like veterinary care, grooming, and pet shops remains a challenge for many pet owners. PawPaw provides you the solution. Find here a match for your pet!
-            </p>
-            <Footer/>
-        </>
+              </p>
+            </div>
+    
+            <div className="imgBox">
+              <img src="/images/dog1.png" alt="Dog Image" />
+              <a href="#" className="btn" onClick={GoToLogIn}>Create Profile Now</a>
+            </div>
+    
+            <ul className="sci">
+              <li><a href="#"><img src="/images/facebook.png" alt="Facebook" /></a></li>
+              <li><a href="#"><img src="/images/instagram.png" alt="Instagram" /></a></li>
+            </ul>
+          </div>
+        </section>
+        <Footer />
+      </>
     );
+    
 }
 
 export default IntroPage;
