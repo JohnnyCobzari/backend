@@ -1,42 +1,47 @@
-
 .map-container {
-    margin: 0 auto;
-    position: relative;
-    width: 80%;
-    height: 60vh;
+  margin: 0 auto;
+  position: relative;
+  width: 80%;
+  max-width: 1020px;
+  height: 75vh;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-#MapBox-BigContainer{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    transform: translateX(40px);
+#MapBox-BigContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transform: translateX(40px);
+  margin: 20px 0 60px;
 }
 
 .MapBoxSidebar {
-    width: 80%;
-    background-color: rgb(35 55 75 / 90%);
-    color: #fff;
-    font-family: monospace;
-    z-index: 1;
-    margin: 10px;
-    border-radius: 4px;
-
+  width: 80%;
+  max-width: 1020px;
+  background-color: rgb(35 55 75 / 90%);
+  color: #fff;
+  font-family: monospace;
+  z-index: 1;
+  margin: 0;
+  border-radius: 4px 4px 0 0;
+  font-size: 13px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .marker-icon {
-    width: 30px;
-    height: 30px;
-    background-size: cover;
-    border-radius: 50%;
-    transition: opacity 0.5s; /* Smooth transition for opacity */
-    cursor: pointer;
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+  border-radius: 50%;
+  transition: opacity 0.5s; /* Smooth transition for opacity */
+  cursor: pointer;
 }
 
 @media (max-width: 480px) {
-    #MapBox-BigContainer{
-        margin: 60px auto;
-        transform: translate(0);
-    }
+  #MapBox-BigContainer {
+    margin: 60px auto;
+    transform: translate(0);
+  }
 }

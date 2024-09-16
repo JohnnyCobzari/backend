@@ -7,6 +7,7 @@ import MapBox from "../components/MapBox";
 import "../styles/HomePage.css"
 import axios from "axios";
 import Loading from "../components/LoadingAnimation";
+import ErrorPage from "../components/ErrorPage";
 
 const MainPage = () => {
   const [allPets, setAllPets] = useState([]);
@@ -50,14 +51,14 @@ const MainPage = () => {
   
 
   if (loading) return (<Loading/>);
-  if (error) return <p>{error}</p>;
+  if (error) return (<ErrorPage/>);
   
   return (
       <>
         <Sidebar />
         <Logo />
         <MapBox />
-        
+        <Footer/>
       </>
     );
   };

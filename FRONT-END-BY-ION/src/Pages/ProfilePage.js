@@ -54,6 +54,7 @@ function ProfilePage() {
         });
         
         setPetProfile(response.data); // Assuming the backend sends the pet object
+        console.log(petProfile)
         setLoading(false);
       } catch (err) {
         console.error(err);
