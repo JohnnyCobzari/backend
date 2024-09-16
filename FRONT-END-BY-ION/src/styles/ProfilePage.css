@@ -150,3 +150,19 @@
     transform: translateX(0);
   }
 }
+
+/* de la numarul de telefon din create profile*/
+.PhoneInputCountry {
+    display: none;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
