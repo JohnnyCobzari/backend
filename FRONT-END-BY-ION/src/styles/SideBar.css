@@ -1,6 +1,6 @@
 :root {
-  --highColor: #F3EDE4;
-  --midColor: #DAD5CD;
+  --highColor: #f3ede4;
+  --midColor: #dad5cd;
   --lowColor: #6b5e49;
   --hoverColor: #eae4d1; /* Slightly brighter color for hover */
 }
@@ -66,12 +66,15 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 2px;
-  transition: width 0.5s ease-in-out, height 0.5s ease-in-out; /* Smooth size change */
+  transition:
+    width 0.5s ease-in-out,
+    height 0.5s ease-in-out; /* Smooth size change */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for the profile image */
 }
 
 /* Hover effect to brighten the image */
-.ImageBoxSidebar:hover, .pet-image:hover {
+.ImageBoxSidebar:hover,
+.pet-image:hover {
   filter: brightness(1.2); /* Makes the image slightly brighter */
 }
 
@@ -85,7 +88,9 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: width 0.0s ease-in-out, font-size 0.0s ease-in-out; /* Smooth size and font change */
+  transition:
+    width 0s ease-in-out,
+    font-size 0s ease-in-out; /* Smooth size and font change */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for text boxes */
 }
 
@@ -124,7 +129,10 @@
   color: var(--lowColor);
   font-size: 28px;
   cursor: pointer;
-  transition: width 0.5s ease-in-out, height 0.5s ease-in-out, font-size 0.5s ease-in-out; /* Smooth size and font change */
+  transition:
+    width 0.5s ease-in-out,
+    height 0.5s ease-in-out,
+    font-size 0.5s ease-in-out; /* Smooth size and font change */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for the button */
 }
 
@@ -146,7 +154,9 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  transition: width 0.5s ease-in-out, height 0.5s ease-in-out; /* Smooth image resize */
+  transition:
+    width 0.5s ease-in-out,
+    height 0.5s ease-in-out; /* Smooth image resize */
   cursor: pointer;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for pet images */
 }
@@ -163,19 +173,19 @@
   font-size: 7px;
   white-space: nowrap; /* Evită ruperea pe linii multiple */
   overflow: hidden; /* Ascunde textul care nu încape în dimensiunea restrânsă */
-  transition: max-width 0.5s ease-in-out, font-size 0.5s ease-in-out; /* Tranziție lină */
+  transition:
+    max-width 0.5s ease-in-out,
+    font-size 0.5s ease-in-out; /* Tranziție lină */
   display: inline-block;
   background-color: var(--highColor);
   border-radius: 10px;
   text-align: center;
-
 }
 
 .sidebar.expanded .textInSideBar {
   max-width: 200px; /* Dimensiunea extinsă */
   font-size: 16px; /* Dimensiune mai mare a textului */
 }
-
 
 .logout-container {
   display: flex;
@@ -187,29 +197,31 @@
 }
 
 .logout-btn {
-height: 45px;
-width: 45px;
-background-color: var(--midColor);
-color: var(--lowColor);
-border: none;
-border-radius: 50%;
-cursor: pointer;
-font-size: 24px;
-transition: background-color 0.3s ease;
-display: flex;
-justify-content: center;
-align-items: center;
+  height: 45px;
+  width: 45px;
+  background-color: var(--midColor);
+  color: var(--lowColor);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 24px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .logout-btn:hover {
-background-color: darkred;
+  background-color: darkred;
 }
 
 .logout-text {
   width: 0; /* Initially hidden */
   font-size: 0;
   overflow: hidden;
-  transition: max-width 0.5s ease-in-out, font-size 0.5s ease-in-out;
+  transition:
+    max-width 0.5s ease-in-out,
+    font-size 0.5s ease-in-out;
   color: var(--lowColor);
   text-align: center;
 }
@@ -219,16 +231,16 @@ background-color: darkred;
   font-size: 16px; /* Larger font size when expanded */
 }
 
-.sidebar.expanded .logout-btn{
+.sidebar.expanded .logout-btn {
   border-radius: 5px;
   width: 200px;
   height: 40px;
   font-size: 16px;
-  transition: max-width 0.5s ease-in-out, font-size 0.5s ease-in-out;
+  transition:
+    max-width 0.5s ease-in-out,
+    font-size 0.5s ease-in-out;
   overflow: hidden;
 }
-
-
 
 @media (max-width: 480px) {
   .sidebar {
@@ -243,44 +255,41 @@ background-color: darkred;
     color: white;
   }
 
-  .ImageBoxSidebar{
+  .ImageBoxSidebar {
     background-color: var(--lowColor);
   }
-  .textInSideBar{
+  .textInSideBar {
     background-color: var(--lowColor);
     color: var(--highColor);
   }
 
-  .sidebar.expanded .textInSideBar{
+  .sidebar.expanded .textInSideBar {
     background-color: var(--highColor);
   }
 
-  .sidebar.expanded .textInSideBar{
+  .sidebar.expanded .textInSideBar {
     color: var(--lowColor);
   }
 
-  .sidebar.expanded .ImageBoxSidebar{
+  .sidebar.expanded .ImageBoxSidebar {
     background-color: var(--hoverColor);
     color: var(--lowColor);
   }
 
-  .sidebar-content{
+  .sidebar-content {
     visibility: hidden;
   }
 
   .toggle-btn {
-    top:10px
+    top: 10px;
   }
 
-  .logout-btn{
+  .logout-btn {
     visibility: hidden;
   }
 
-  .sidebar.expanded .logout-btn{
-    visibility:visible;
+  .sidebar.expanded .logout-btn {
+    visibility: visible;
     color: var(--lowColor);
   }
 }
-
-
-

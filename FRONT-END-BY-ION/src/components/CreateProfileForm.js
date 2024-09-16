@@ -1,119 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import ImageUpload from './DragAndDrop';
+import React, { useState, useEffect } from "react";
+import ImageUpload from "./DragAndDrop";
 import "../styles/LogInPage.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import myString from './DefaultImage';
+import myString from "./DefaultImage";
+import SearchLogic from "./Recomandations/Dogs";
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css'; // Import default styles
+
 
 const PetForm = () => {
+	const [query, setQuery] = useState("");
+	const [results, setResults] = useState([]);
+	const [imageSrc, setImageSrc] = useState(myString);
+	const [error, setError] = useState("");
+	const [coordinates, setCoordinates] = useState(null); // State to store fetched coordinates
+	const [currentCountry, setCurrentCountry] = useState("");
+	const [latitude, setLatitude] = useState(null); // State to store latitude
+	const [longitude, setLongitude] = useState(null); // State to store longitude
 
-  const [imageSrc, setImageSrc] = useState(myString);
-  const [error, setError] = useState('');
-  const [coordinates, setCoordinates] = useState(null); // State to store fetched coordinates
-  const [currentCountry, setCurrentCountry] = useState(''); 
-  const [latitude, setLatitude] = useState(null); // State to store latitude
-  const [longitude, setLongitude] = useState(null); // State to store longitude
+	const [formData, setFormData] = useState({
+		petName: "",
+		gender: "",
+		breed: "",
+		age: "",
+		ownerName: "",
+		ownerPhone: "",
+		vaccinated: "",
+		allergies: "",
+		vetInfo: "",
+		readyForBreeding: false,
+		breedingPrice: "",
+		address: "", // New field for pet's address
+		image: "",
+	});
 
-  const [formData, setFormData] = useState({
-    petName: '',
-    gender: '',
-    breed: '',
-    age: '',
-    ownerName: '',
-    ownerPhone: '',
-    vaccinated: '',
-    allergies: '',
-    vetInfo: '',
-    readyForBreeding: false,
-    breedingPrice: '',
-    address: '', // New field for pet's address
-    image: ''
-  });
+	const navigate = useNavigate();
 
-  const navigate = useNavigate();
+	//am sters in console log don't worry
 
-  useEffect(() => {
-    if (imageSrc) {
-      console.log('Image received in parent component:', imageSrc);
-    }
-  }, [imageSrc]);
-
-  useEffect(() => {
-    getCurrentLocation(); // Get current location when component mounts
-  }, []);
-
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    const updatedFormData = {
-      ...formData,
-      image: imageSrc,
-      latitude,  // Include latitude separately
-      longitude  // Include longitude separately
-    };
-  
-    const user = localStorage.getItem('userId');
-  
-    console.log('Form data submitted:', updatedFormData, user);
-  
-    try {
-      const response = await axios.post(`http://localhost:3002/pets?userId=${user}`, updatedFormData, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      if (response.status === 201) {
-        console.log('Pet profile created successfully!');
-        navigate('/HomePage');
-      } else {
-        setError('Failed to create pet profile.');
-      }
-    } catch (error) {
-      console.error('Error creating pet profile:', error);
-      setError('Failed to create pet profile.');
-    }
-  };
-  
-  // Function to get current location
-  const getCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const lat = position.coords.latitude;
-          const lng = position.coords.longitude;
-          console.log(`Current Location: Latitude: ${lat}, Longitude: ${lng}`);
-          
-          setLatitude(lat); // Set latitude state
-          setLongitude(lng); // Set longitude state
-          
-          await getCurrentCountry(lat, lng);
-        },
-        (error) => {
-          console.error('Error getting location:', error);
-          alert('Unable to retrieve your location. Please ensure location services are enabled.');
-        }
-      );
-    } else {
-      console.error('Geolocation is not supported by this browser.');
-      alert('Geolocation is not supported by your browser.');
-    }
-  };
-  
-
-  // Function to get the current country using reverse geocoding
-  const getCurrentCountry = async (latitude, longitude) => {
-    const accessToken = 'pk.eyJ1IjoiY29zbWFrLTQ3IiwiYSI6ImNtMHhoczZsejA3ZjgyanF6YWpzMDV4cDAifQ.LiwxPafEUZs60SWhAMCpdg';
-    const baseUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
+    const handlePhoneChange = (value) => {
     
     try {
       const response = await fetch(`${baseUrl}${longitude},${latitude}.json?access_token=${accessToken}&types=country`);
