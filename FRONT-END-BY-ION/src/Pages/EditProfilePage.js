@@ -6,6 +6,7 @@ import EditPetForm from '../components/EditPetForm';
 import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
 
+
 function EditProfilePage() {
   const location = useLocation();
   const { petProfile, image, id } = location.state;
