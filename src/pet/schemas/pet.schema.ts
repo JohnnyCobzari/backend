@@ -2,6 +2,15 @@ import { Prop,Schema, SchemaFactory } from "@nestjs/mongoose";
 import { User } from "../../auth/schemas/user.schema";
 import mongoose from "mongoose";
 
+@Schema()
+class Vaccine {
+    @Prop({ required: true })
+    name: string;
+
+    @Prop({ required: true })
+    dateAdministered: Date;
+}
+const VaccineSchema = SchemaFactory.createForClass(Vaccine);
 @Schema({
     timestamps: true
 })
@@ -24,11 +33,8 @@ export class Pet {
     @Prop() 
     ownerPhone: string;
 
-    @Prop() 
-    vaccinated: string;
-
-    @Prop() 
-    vaccinated_date: string;
+    @Prop({ type: [VaccineSchema], default: [] }) 
+    vaccines: Vaccine[];
 
     @Prop() 
     allergies: string;

@@ -1,6 +1,7 @@
-import { IsOptional, IsString, IsNumber, IsBoolean, IsEmpty } from "class-validator";
-import { User } from "src/auth/schemas/user.schema";
-
+import { IsNotEmpty, IsString, IsNumber, IsBoolean, IsEmpty, IsOptional,IsArray, ValidateNested} from "class-validator";
+import { User } from "../../auth/schemas/user.schema";
+import { Type } from 'class-transformer';
+import { CreateVaccineDto } from './create-vaccine.dto';
 export class UpdatePetDto {
   @IsOptional()
   @IsString()
@@ -31,13 +32,15 @@ export class UpdatePetDto {
   readonly vaccinated: string;
 
   @IsOptional()
-  @IsString()
-  readonly vaccinated_date: string;
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CreateVaccineDto)
+  vaccines: CreateVaccineDto[];
 
   @IsOptional()
   @IsString()
   readonly allergies: string;
-
+  
   @IsOptional()
   @IsString()
   readonly vetInfo: string;
