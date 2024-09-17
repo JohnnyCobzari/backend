@@ -9,18 +9,38 @@ import MainPage from './Pages/MainPage';
 import { Navigate } from 'react-router-dom';
 import ProfilePage from './Pages/ProfilePage';
 import EditProfilePage from './Pages/EditProfilePage';
+import { jwtDecode } from 'jwt-decode'; // Correct way to import named export
+
 
 const ProtectedRoute = ({ children }) => {
   const authToken = localStorage.getItem('authToken');
 
-  if (!authToken) {
+  if (authToken) {
+    try {
+      const { exp } = jwtDecode(authToken);
+
+      // Check if the token is expired
+      if (Date.now() >= exp * 1000) {
+        // Token is expired
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('userId'); // if you store userId separately
+        return <Navigate to="/LogIn" replace />;
+      }
+    } catch (error) {
+      // If token is invalid or cannot be decoded
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('userId');
+      return <Navigate to="/LogIn" replace />;
+    }
+  } else {
     // Redirect to login page if no token is found
     return <Navigate to="/LogIn" replace />;
   }
 
-  // Render the protected content if token exists
+  // Render the protected content if token exists and is valid
   return children;
 };
+
 
 
 function App() {
