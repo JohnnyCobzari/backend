@@ -1,295 +1,190 @@
 :root {
-  --highColor: #f3ede4;
-  --midColor: #dad5cd;
-  --lowColor: #6b5e49;
-  --hoverColor: #eae4d1; /* Slightly brighter color for hover */
+  --sidebar-bg-color: linear-gradient(180deg,  #fcf6ee, #6b5e49);
+  --text-color: #555;
+  --hover-bg-color: #f0f0f0;
+  --highlight-color: #000;
 }
 
-/* Smooth transition for the sidebar */
-.sidebar {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+/* Main container for app */
+.app {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  height: 100vh;
+  overflow: hidden; /* Ensure no extra scrolling */
+}
+
+/* Sidebar styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 80px;
   height: 100vh;
-  background-color: var(--lowColor);
-  position: fixed;
-  transition: width 0.5s ease-in-out; /* Smooth and slower transition */
-  z-index: 100;
-  box-shadow: 2px 0px 8px rgba(0, 0, 0, 0.1); /* Light shadow for the sidebar */
+  background: var(--sidebar-bg-color);
+  z-index: 1000;
+  transition: width 0.3s ease;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Push logout button to the bottom */
 }
 
 .sidebar.expanded {
-  width: 380px;
+  width: 256px;
+}
+
+/* Toggle button */
+.toggle-btn-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
 }
 
 .toggle-btn {
-  background-color: transparent;
-  border: none;
-  color: var(--lowColor);
-  font-size: 24px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 8px 16px;
   cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Sidebar content header */
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+
+
+.user-details .title {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.user-details .name {
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+/* Navigation menu */
+.nav {
+  flex-grow: 1;
+  padding-top: 20px;
+}
+
+.menu ul {
+  list-style-type: none;
+}
+
+.menu ul li {
+  margin-bottom: 10px;
+}
+
+.menu ul li a {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-size: 16px;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.menu ul li a:hover {
+  background-color: var(--hover-bg-color);
+}
+
+.menu ul li.active > a {
+  background-color: var(--hover-bg-color);
+}
+
+.icon {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.sub-menu {
+  padding-left: 20px;
+}
+
+.sub-menu img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+/* Sidebar behavior when collapsed */
+.sidebar.expanded .text {
+  display: inline;
+}
+
+.sidebar .text {
+  display: none;
+}
+
+/* Logout button at the bottom */
+.logout-menu {
+  margin-top: auto; /* Push logout menu to the bottom */
+}
+
+/* Adjustments for main content when sidebar is collapsed */
+.main-content {
+  margin-left: 256px;
+  padding: 20px;
+  height: 100vh;
+  overflow-y: auto;
+  transition: margin-left 0.3s ease;
+}
+
+.sidebar.expanded ~ .main-content {
+  margin-left: 80px;
+}
+
+/* Styling for Logout button container */
+.logout-container {
   position: absolute;
-  top: 30px;
-  left: 20px;
-  z-index: 10;
-}
-
-.sidebar-content {
-  margin-top: 140px;
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out; /* Smooth fade in/out */
-}
-
-.sidebar.expanded .sidebar-content {
-  visibility: visible;
-  opacity: 1;
-}
-
-.iconUserProfileContainer {
+  bottom: 20px; /* Adjust for desired spacing */
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 10px;
-  transition: width 0.5s ease-in-out; /* Smooth size adjustment */
 }
 
-.ImageBoxSidebar {
-  width: 40px;
-  background-color: var(--highColor);
-  height: 40px;
-  border-radius: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 2px;
-  transition:
-    width 0.5s ease-in-out,
-    height 0.5s ease-in-out; /* Smooth size change */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for the profile image */
-}
-
-/* Hover effect to brighten the image */
-.ImageBoxSidebar:hover,
-.pet-image:hover {
-  filter: brightness(1.2); /* Makes the image slightly brighter */
-}
-
-.textInSideBar {
-  width: 40px;
-  font-size: 7px;
-  background-color: var(--highColor);
-  color: var(--lowColor);
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition:
-    width 0s ease-in-out,
-    font-size 0s ease-in-out; /* Smooth size and font change */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for text boxes */
-}
-
-.sidebar.expanded .iconUserProfileContainer {
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.sidebar.expanded .ImageBoxSidebar {
-  width: 60px;
-  height: 60px;
-}
-
-.sidebar.expanded .textInSideBar {
-  width: 200px;
-  height: 40px;
-  margin-left: 10px;
-  font-size: 16px;
-}
-
-/* Hover effect for text */
-.textInSideBar:hover {
-  filter: brightness(1.2);
-}
-
-.BoxSidebarButton {
-  width: 40px;
-  background-color: var(--highColor);
-  height: 40px;
-  border-radius: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 2px;
-  color: var(--lowColor);
-  font-size: 28px;
-  cursor: pointer;
-  transition:
-    width 0.5s ease-in-out,
-    height 0.5s ease-in-out,
-    font-size 0.5s ease-in-out; /* Smooth size and font change */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for the button */
-}
-
-.sidebar.expanded .BoxSidebarButton {
-  width: 60px;
-  height: 60px;
-  font-size: 32px;
-}
-
-/* Hover effect for Add Pet button */
-.BoxSidebarButton:hover {
-  background-color: var(--hoverColor); /* Slightly brighter background */
-  filter: brightness(1.2); /* Make it pop a little more */
-  cursor: pointer;
-}
-
-.pet-image {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  transition:
-    width 0.5s ease-in-out,
-    height 0.5s ease-in-out; /* Smooth image resize */
-  cursor: pointer;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for pet images */
-}
-
-.sidebar.expanded .pet-image {
-  width: 60px;
-  height: 60px;
-}
-
-/*NU stiu ce e mai jos da o facut chatul si merge , nu atingeti!!!!!!!!!!!!! */
-
-.textInSideBar {
-  max-width: 40px; /* Setează dimensiunea inițială mică */
-  font-size: 7px;
-  white-space: nowrap; /* Evită ruperea pe linii multiple */
-  overflow: hidden; /* Ascunde textul care nu încape în dimensiunea restrânsă */
-  transition:
-    max-width 0.5s ease-in-out,
-    font-size 0.5s ease-in-out; /* Tranziție lină */
-  display: inline-block;
-  background-color: var(--highColor);
-  border-radius: 10px;
-  text-align: center;
-}
-
-.sidebar.expanded .textInSideBar {
-  max-width: 200px; /* Dimensiunea extinsă */
-  font-size: 16px; /* Dimensiune mai mare a textului */
-}
-
-.logout-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px; /* Pushes the button to the bottom */
-  padding: 10px;
-}
-
+/* Styling for the Logout button */
 .logout-btn {
-  height: 45px;
-  width: 45px;
-  background-color: var(--midColor);
-  color: var(--lowColor);
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 24px;
-  transition: background-color 0.3s ease;
   display: flex;
-  justify-content: center;
   align-items: center;
-}
-
-.logout-btn:hover {
-  background-color: darkred;
-}
-
-.logout-text {
-  width: 0; /* Initially hidden */
-  font-size: 0;
-  overflow: hidden;
-  transition:
-    max-width 0.5s ease-in-out,
-    font-size 0.5s ease-in-out;
-  color: var(--lowColor);
-  text-align: center;
-}
-
-.sidebar.expanded .logout-text {
-  width: 70%;
-  font-size: 16px; /* Larger font size when expanded */
-}
-
-.sidebar.expanded .logout-btn {
-  border-radius: 5px;
-  width: 200px;
-  height: 40px;
+  gap: 10px;
   font-size: 16px;
-  transition:
-    max-width 0.5s ease-in-out,
-    font-size 0.5s ease-in-out;
-  overflow: hidden;
+  background-color: #f0f0f0; /* Light background */
+  color: #555; /* Text color */
+  padding: 10px 20px; /* Padding to make it feel like a button */
+  border-radius: 8px; /* Smooth corners */
+  border: 1px solid #ddd; /* Light border for a soft look */
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition on hover */
+  cursor: pointer; /* Pointer cursor to indicate action */
 }
 
-@media (max-width: 480px) {
-  .sidebar {
-    width: 0px;
-  }
-
-  .toggle-btn {
-    color: var(--highColor);
-  }
-
-  .sidebar.expanded button {
-    color: white;
-  }
-
-  .ImageBoxSidebar {
-    background-color: var(--lowColor);
-  }
-  .textInSideBar {
-    background-color: var(--lowColor);
-    color: var(--highColor);
-  }
-
-  .sidebar.expanded .textInSideBar {
-    background-color: var(--highColor);
-  }
-
-  .sidebar.expanded .textInSideBar {
-    color: var(--lowColor);
-  }
-
-  .sidebar.expanded .ImageBoxSidebar {
-    background-color: var(--hoverColor);
-    color: var(--lowColor);
-  }
-
-  .sidebar-content {
-    visibility: hidden;
-  }
-
-  .toggle-btn {
-    top: 10px;
-  }
-
-  .logout-btn {
-    visibility: hidden;
-  }
-
-  .sidebar.expanded .logout-btn {
-    visibility: visible;
-    color: var(--lowColor);
-  }
+/* Hover effect for Logout button */
+.logout-btn:hover {
+  background-color: #ddd; /* Darker hover background */
+  color: #000; /* Darker text color on hover */
 }
+
+/* Icon within the Logout button */
+.logout-btn .icon {
+  font-size: 18px;
+}
+
