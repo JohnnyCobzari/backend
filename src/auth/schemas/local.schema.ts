@@ -5,7 +5,7 @@ import { Role } from '../enums/role.enum';
 @Schema({
   timestamps: true, // Automatically adds createdAt and updatedAt fields
 })
-export class User extends Document {
+export class Local extends Document {
   @Prop()
   name: string;
 
@@ -18,15 +18,10 @@ export class User extends Document {
   password: string;
 
   @Prop()
-  res: string;
+  docImage: string;
 
-  // Add the resetToken field to the schema
   @Prop()
-  resetToken?: string;
-
-  // Add the resetTokenExpiration field to the schema
-  @Prop()
-  resetTokenExpiration?: Date;
+  hisImage: string;
 
   @Prop({
     type: [{ type: String, enum: Role }],
@@ -36,4 +31,4 @@ export class User extends Document {
 
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const LocalSchema = SchemaFactory.createForClass(Local);

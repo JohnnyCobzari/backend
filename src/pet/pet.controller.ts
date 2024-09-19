@@ -4,12 +4,17 @@ import { Pet } from './schemas/pet.schema'
 import { CreatePetDto } from './dto/create-pet.dto';
 import { UpdatePetDto } from './dto/update-pet.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/enums/role.enum';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+
 @Controller('pets')
 export class PetController {
     constructor(private petService: PetService) {}
 
       @Get()  
-      @UseGuards(AuthGuard('jwt'))
+      @Roles(Role.User,Role.Admin)
+      @UseGuards(AuthGuard('jwt'), RolesGuard)
       async getAllPets(@Query('userId') userId?: string){
         const allPets = await this.petService.findAll();
     let userPets = [];
@@ -25,7 +30,8 @@ export class PetController {
     };
     }
     @Post()
-    @UseGuards(AuthGuard('jwt'))
+    @Roles(Role.User)
+    @UseGuards(AuthGuard('jwt'), RolesGuard)
     async createPet(
         @Body()
         pet: CreatePetDto,
@@ -40,7 +46,8 @@ export class PetController {
     }
 
     @Get(':id')
-    @UseGuards(AuthGuard('jwt'))  
+    @Roles(Role.User, Role.Admin)
+    @UseGuards(AuthGuard('jwt'), RolesGuard)  
     async getPet(
         @Param('id')
         id:string
@@ -49,7 +56,8 @@ export class PetController {
     }
    
     @Put(':id')
-    @UseGuards(AuthGuard('jwt'))
+    @Roles(Role.User, Role.Admin)
+    @UseGuards(AuthGuard('jwt'), RolesGuard)
     async updatePet(
         @Param('id')
         id:string,
@@ -60,7 +68,8 @@ export class PetController {
     }
 
     @Delete(':id')
-    @UseGuards(AuthGuard('jwt'))
+    @Roles(Role.User, Role.Admin)
+    @UseGuards(AuthGuard('jwt'), RolesGuard)
     async deletePet(
         @Param('id')
         id:string,

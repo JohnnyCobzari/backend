@@ -40,17 +40,9 @@ input:focus {
 	gap: 10px; /* Spațiu între imagine și nume */
 }
 
-.MapBoxSidebar {
-	width: 80%;
-	max-width: 1020px;
-	background-color: rgb(35 55 75 / 90%);
-	color: #fff;
-	font-family: monospace;
-	z-index: 1;
-	margin: 0;
-	border-radius: 4px 4px 0 0;
-	font-size: 13px;
-	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+.mapboxgl-ctrl-bottom-left,
+.mapboxgl-ctrl-bottom-right {
+    display: none !important;
 }
 
 .marker-icon {
@@ -62,9 +54,44 @@ input:focus {
 	cursor: pointer;
 }
 
+
 @media (max-width: 480px) {
 	#MapBox-BigContainer {
 		margin: 60px auto;
 		transform: translate(0);
 	}
 }
+
+.notification-icon-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .notification-icon {
+    cursor: pointer;
+    color: #007bff; /* Schimbă culoarea iconiței după preferințe */
+  }
+  
+  .notification-popup {
+    position: absolute;
+    top: 50px; /* Ajustează după necesitate */
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 250px;
+  }
+  
+  .notification-popup ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .notification-popup li {
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  

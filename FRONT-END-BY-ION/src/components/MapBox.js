@@ -31,7 +31,9 @@ const Mapbox = ({ pets }) => {
 	const zoomRef = useRef(null);
 	const markersRef = useRef([]);
 	const navigate = useNavigate();
-	const [hoveredPet, setHoveredPet] = useState(null); 
+
+	const [hoveredPet, setHoveredPet] = useState(null); // Stare pentru pet-ul hoverat
+	const [activePopup, setActivePopup] = useState(null); 
     
     const applyFilters = (filters) => {
         const { types, breed, priceRange, genders } = filters;
@@ -51,8 +53,6 @@ const Mapbox = ({ pets }) => {
         setFilteredPets(filtered); // Update filtered pets
     };
       
-      
-
 	const createCustomMarker = (type) => {
 		const el = document.createElement("div");
 		el.className = "marker-icon";
@@ -61,7 +61,7 @@ const Mapbox = ({ pets }) => {
 				el.style.backgroundImage = "url(/icons/vet.png)";
 				break;
 			case "Pet Shop":
-				el.style.backgroundImage = "url(/icons/pet-shops.webp)";
+				el.style.backgroundImage = "url(/icons/pet-shops.png)";
 				break;
 			case "Pet Hotel":
 				el.style.backgroundImage = "url(/icons/hotel.png)";
@@ -96,16 +96,191 @@ const Mapbox = ({ pets }) => {
 		return el;
 	};
 
+	// Funcție pentru gruparea animalelor după coordonate
+	const groupPetsByCoordinates = () => {
+		const groupedPets = {};
+		pets.forEach((pet) => {
+		  const coords = `${pet.latitude},${pet.longitude}`;
+		  if (!groupedPets[coords]) {
+			groupedPets[coords] = [];
+		  }
+		  groupedPets[coords].push(pet);
+		});
+	
+		return groupedPets;
+	  };
+
+	  const handlePetClick = (petId) => {
+		navigate(`/ProfilePage/${petId}`);
+	  };
+
 	useEffect(() => {
 		const map = new mapboxgl.Map({
 			container: mapContainerRef.current,
 			style: "mapbox://styles/mapbox/streets-v12",
 			center: [28.8336, 47.0105],
 			zoom: 12,
+			attributionControl: false, // Dezactivează logo-ul Mapbox din colț
+			logoPosition: 'bottom-left',
 		});
 
-		filteredPets.forEach((pet) => {
+
+		map.removeControl(new mapboxgl.NavigationControl(), 'bottom-right');
+
+		const displayMarkers = () => {
+			const groupedPets = groupPetsByCoordinates();
+	  
+			// Iterăm prin fiecare grup de animale de companie
+			Object.entries(groupedPets).forEach(([coords, petsAtLocation]) => {
+			  const [latitude, longitude] = coords.split(",").map(Number);
+			  
+			  if (latitude && longitude) {
+				// Popup pentru lista de animale
+				const popupContent = petsAtLocation.map(pet => `
+			    <div 
+			  style="display: flex; align-items: center; cursor: pointer;" 
+			  class="pet-popup-item" 
+			  data-pet-id="${pet._id}">
+			  <img 
+				src="${pet.image}" 
+				alt="${pet.name}" 
+				style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;" 
+			  />
+			  <div>
+				<p>${pet.petName}</p>
+				<p><small>${pet.breed}</small></p>
+			  </div>
+		  </div>
+		`).join('');
+	  
+				const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(popupContent);
+	  
+				const markerElements = createCustomMarkers(petsAtLocation[0].image, petsAtLocation[0].petName, petsAtLocation[0].breed);
+				const marker = new mapboxgl.Marker({ element: markerElements })
+				  .setLngLat([longitude, latitude])
+				  .setPopup(popup)
+				  .addTo(map);
+	  
+				// Eveniment pentru clic pe popup
+		marker.getElement().addEventListener("click", () => {
+			popup.on('open', () => {
+			  // Selectăm toate elementele din popup-ul deschis
+			  const petItems = document.querySelectorAll(".pet-popup-item");
+			  petItems.forEach(item => {
+				item.addEventListener("click", (e) => {
+				  const petId = e.currentTarget.getAttribute("data-pet-id");
+				  navigate(`/ProfilePage/${petId}`); // Navigăm către profilul animalului de companie
+				});
+			  });
+			});
+		  });
+		}
+	  });
+  };
+
+        map.on('load', () => {
+
+			
+			const layers = map.getStyle().layers;
+			layers.forEach((layer) => {
+				console.log(layer.id); // Verificăm toate straturile disponibile
+			});
+			const bisqueColor = '#ffe4c4'; // Set bisque color
+			const peruColor = '#cd853f' //peru color
+			const layersToStyle = [
+				'landuse',         // Posibil strat pentru landuse (terenuri)
+				'landuse-park',    // Parcuri
+			
+				'landscape',       // Peisaj general
+				'landscape-natural', // Natural features (păduri, munți)
+				'park',            // Straturi pentru parcuri
+			];
+
+			const layersToStyle2 = [
+		
+				'landuse-park',    // Parcuri
+				'landuse-forest',  // Păduri
+				'landscape',       // Peisaj general
+				'landscape-natural', // Natural features (păduri, munți)
+				'park',            // Straturi pentru parcuri
+			];
+
+			layersToStyle.forEach(layer => {
+				if (map.getLayer(layer)) {
+					map.setPaintProperty(layer, 'fill-color', bisqueColor);
+				}
+			});
+			
+			layersToStyle2.forEach(layer => {
+				if (map.getLayer(layer)) {
+					map.setPaintProperty(layer, 'fill-color', peruColor);
+				}
+			});
+			
+				
+
+
+            // Dezactivează straturile de etichete
+            const layersToHide = [
+				'road-label',        // Etichetele drumurilor (străzi, rute etc.)
+				'place-label',       // Denumirile localităților
+				'poi-label',         // Denumirile punctelor de interes (POI)
+				'transit-label',     // Denumirile stațiilor de transport în comun
+				'waterway-label',    // Denumirile cursurilor de apă
+				'admin-label',       // Denumirile sectoarelor/zonelor administrative
+				'road-number-shield',// Numere de drumuri sau indicatoare (de exemplu R1, R6 etc.)
+				'place-neighbourhood', // Nume de cartiere și sectoare (de ex. Sectorul Ciocana)
+				'place-suburb',      // Suburbii sau mici localități
+				'place-city',        // Nume de orașe (precum Chișinău)
+				'road-motorway-shield', // Indicative pentru autostrăzi sau drumuri mari
+				'aerialway',
+				'road-label',
+				'road-number-shield',
+				'road-exit-shield',
+				'state-label',
+				'country-label',
+				'continent-label',
+			//	'admin-0-boundary',     // International boundaries (may contain labels)
+        		'admin-1-boundary',     // National/subnational boundaries
+        	//	'admin-0-boundary-bg',  // Background for international boundaries
+        		'admin-1-boundary-bg',
+				'admin-o-boundary-disputed',
+				'settlement-major-label', // Major settlements (cities)
+        		'settlement-minor-label', // Minor settlements (villages, towns)
+        		'settlement-subdivision-label',
+				'road-pedestrian',      // Pedestrian streets (adjust this based on actual layer name)
+				'road-path',            // Walking paths
+				'road-pedestrian-label',
+				'road-pedestrian-polygon-pattern',
+				'road-pedestrian-polygon-fill',
+				'crosswalks',
+				'road-street-case',
+				'road-minor-case',
+				'road-intersection',
+				'building-number-label',
+				'block-number-label',
+				'ferry-auto',
+				'ferry',
+				'road-steps-bg',
+				'road-pedestrian-case',
+				'road-construction',
+				'crosswalks',
+				'water-line-label',
+				'waterway-label',
+				'water-point-label',
+			];
+            layersToHide.forEach((layer) => {
+                if (map.getLayer(layer)) {
+                    map.setLayoutProperty(layer, 'visibility', 'none');
+                }
+            });
+        });
+
+
+		pets.forEach((pet) => {
             //console.log(pet)
+			const coords = `${pet.latitude},${pet.longitude}`;
+			
 			if (pet.latitude && pet.longitude && pet.image) {
 				const popupText = pet.name || "Pet"; // Dacă numele nu există, fallback la "Pet"
 				const popup = new mapboxgl.Popup({ offset: 25 }).setText(pet.petName);
@@ -138,9 +313,7 @@ const Mapbox = ({ pets }) => {
 
 		map.on("zoomend", updateMarkers);
 		map.on("move", () => {
-			lngRef.current.textContent = map.getCenter().lng.toFixed(4);
-			latRef.current.textContent = map.getCenter().lat.toFixed(4);
-			zoomRef.current.textContent = map.getZoom().toFixed(2);
+			
 		});
 
 		if (navigator.geolocation) {
@@ -149,8 +322,6 @@ const Mapbox = ({ pets }) => {
 					const userLat = position.coords.latitude;
 					const userLng = position.coords.longitude;
 					map.setCenter([userLng, userLat]);
-					latRef.current.textContent = userLat.toFixed(4);
-					lngRef.current.textContent = userLng.toFixed(4);
 				},
 				(error) => {
 					console.error("Error getting location:", error);
@@ -161,10 +332,11 @@ const Mapbox = ({ pets }) => {
 			alert("Geolocation is not supported by your browser.");
 		}
 
+		displayMarkers();
 		updateMarkers();
 
 		return () => map.remove();
-	}, [filteredPets]);
+}, [filteredPets]);
 
 
 
@@ -172,9 +344,6 @@ const Mapbox = ({ pets }) => {
 
 	return (
 		<div id="MapBox-BigContainer">
-			<div className="MapBoxSidebar">
-				Longitude: <span ref={lngRef}>28.8336</span> | Latitude: <span ref={latRef}>47.0105</span> | Zoom: <span ref={zoomRef}>12</span>
-			</div>
 			<div ref={mapContainerRef} className="map-container">
             <FilterSidebar applyFilters={applyFilters} />
 				{hoveredPet && (
@@ -197,5 +366,7 @@ const Mapbox = ({ pets }) => {
 		</div>
 	);
 };
+
+
 
 export default Mapbox;
