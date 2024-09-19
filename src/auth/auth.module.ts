@@ -7,6 +7,8 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { JwTStrategy } from './jwt.strategy';
+import { LocalSchema } from './schemas/local.schema';
+import { WaitingUserSchema } from './schemas/waiting.schema';
 
 
 @Module({
@@ -21,7 +23,9 @@ import { JwTStrategy } from './jwt.strategy';
         }
       }
     }),
-    MongooseModule.forFeature([{name: 'User', schema: UserSchema}])
+    MongooseModule.forFeature([{name: 'User', schema: UserSchema}]),
+    MongooseModule.forFeature([{name: 'Local', schema: LocalSchema}]),
+    MongooseModule.forFeature([{name: 'WaitingLocal', schema: WaitingUserSchema}])
   ],
   controllers: [AuthController],
   providers: [AuthService, JwTStrategy],

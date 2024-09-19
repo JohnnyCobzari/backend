@@ -10,16 +10,20 @@ import { NewPasswordDto } from './dto/new-password.dto';
 import * as crypto from 'crypto';
 import * as nodemailer from 'nodemailer';
 import * as sendgridTransport from 'nodemailer-sendgrid-transport';
+import { CreateLocalDto } from './dto/local-signup.dto';
+import { WaitingLocal } from './schemas/waiting.schema';
 
 @Injectable()
 export class AuthService {
     constructor(
         @InjectModel(User.name)
         private usermodel: Model<User>,
-        private jwtService: JwtService
+        private jwtService: JwtService,
+        @InjectModel(WaitingLocal.name)
+        private waitingUserModel: Model<WaitingLocal>,
     ) {}
     async signUp(signUpDto: SignUpDto): Promise<{ token: string; userId: string }> {
-      const { name, email, password } = signUpDto;
+      const { name, email, password, role } = signUpDto;
     
       // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -28,7 +32,8 @@ export class AuthService {
       const user = await this.usermodel.create({
         name,
         email,
-        password: hashedPassword
+        password: hashedPassword,
+        role
       });
     
       // Generate JWT token
@@ -150,5 +155,16 @@ async sendResetLink(email: string): Promise<void> {
 
     return user;
   }
+
+  async addToWaitingList(createUserDto: CreateLocalDto): Promise<WaitingLocal> {
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+    const waitingUser = new this.waitingUserModel({
+      ...createUserDto,
+      password: hashedPassword,
+      status: 'pending',
+    });
+    return await waitingUser.save();
+  }
+
 
 }
