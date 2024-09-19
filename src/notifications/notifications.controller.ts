@@ -1,4 +1,4 @@
-import { Controller , Get, UseGuards, Query} from '@nestjs/common';
+import { Controller , Get, UseGuards, Query, Delete, Param} from '@nestjs/common';
 import { Cron} from "@nestjs/schedule";
 import { NotificationService } from './notifications.service'; // Adjust path as needed
 import { AuthGuard } from '@nestjs/passport';
@@ -15,10 +15,17 @@ export class NotificationController {
 
   @Get()  
   @UseGuards(AuthGuard('jwt'))
-  async getAllPets(@Query('userId') userId?: string){
+  async getAllNotifications(@Query('userId') userId?: string){
     const userNotifications = await this.notificationService.findById(userId);
 
 return userNotifications;
+}
+
+@Delete(':notificationId')
+@UseGuards(AuthGuard('jwt'))
+async deleteNotification(@Param('notificationId') notificationId: string) {
+  const deletedNotification = await this.notificationService.deleteNotification(notificationId);
+  return { message: 'Notification deleted successfully', deletedNotification };
 }
 
 
