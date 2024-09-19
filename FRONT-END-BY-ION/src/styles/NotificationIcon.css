@@ -1,0 +1,74 @@
+.notification-icon-container {
+    position: fixed;
+    top: 20px;
+    right: 35px;
+    z-index: 1000; /* Asigură-te că iconița stă deasupra altor elemente */
+  }
+
+  .icon-wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  } 
+
+  .notification-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    height: 20px;
+    width: 20px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  
+  .notification-popup {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    width: 300px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .notification-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+    .notification-item:last-child {
+    border-bottom: none;
+  }
+
+  .delete-icon {
+    color: red;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+  .notification-icon {
+  cursor: pointer;
+}
+ 
+  
+  .notification-popup ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .notification-popup ul li {
+    padding: 5px 0;
+  }
+  

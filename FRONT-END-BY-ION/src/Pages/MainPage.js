@@ -8,6 +8,8 @@ import "../styles/HomePage.css";
 import axios from "axios";
 import Loading from "../components/LoadingAnimation";
 import ErrorPage from "../components/ErrorPage";
+import "../styles/NotificationIcon.css";
+import NotificationIcon from "../components/NotificationIcon";
 
 const MainPage = () => {
   const [allPets, setAllPets] = useState([]);
@@ -63,6 +65,7 @@ const MainPage = () => {
         <Logo />
         <MapBox pets={allPets}/>
         <Footer/>
+        <NotificationIcon />
       </>
     );
   };
