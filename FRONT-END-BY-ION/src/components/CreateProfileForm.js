@@ -8,6 +8,7 @@ import SearchLogic from "./Recomandations/Dogs";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css"; // Import default styles
 import GeolocationComponent from "./Geolocation"; // Import the geolocation logic
+import VaccinationForm from "./VaccinationForm";
 
 const PetForm = () => {
 	const [query, setQuery] = useState("");
@@ -17,6 +18,9 @@ const PetForm = () => {
 	const [coordinates, setCoordinates] = useState(null); // State to store fetched coordinates
 	const [latitude, setLatitude] = useState(null); // Latitude
 	const [longitude, setLongitude] = useState(null); // Longitude
+    const [vaccines, setVaccines] = useState([]); // Pentru vaccine
+
+    console.log(vaccines);
 
 	const [formData, setFormData] = useState({
 		petName: "",
@@ -67,6 +71,7 @@ const PetForm = () => {
 		const updatedFormData = {
 			...formData,
 			image: imageSrc,
+            vaccines: vaccines,
 			latitude, // Include latitude separately
 			longitude, // Include longitude separately
 		};
@@ -166,17 +171,12 @@ const PetForm = () => {
 			<div className="input_filed">
 				<PhoneInput name="ownerPhone" value={formData.ownerPhone} placeholder="ex: +373 079 000 000" onChange={handlePhoneChange} required />
 			</div>
+{/*======================================vaccines=====================================================*/}
 
-			<p className="writingFromPetLogIn">Vaccinated</p>
-			<div className="input_filed">
-				<select name="vaccinated" value={formData.vaccinated} onChange={handleChange} required>
-					<option value="" disabled>
-						Tap to select
-					</option>
-					<option value="Yes, all">Yes</option>
-					<option value="No">No</option>
-				</select>
-			</div>
+            <VaccinationForm setVaccines={setVaccines} vaccines={vaccines}/>
+
+{/*======================================vaccines=====================================================*/}
+
 
 			<p className="writingFromPetLogIn">Allergies</p>
 			<div className="input_filed">
