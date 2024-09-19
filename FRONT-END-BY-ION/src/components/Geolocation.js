@@ -11,6 +11,8 @@ const GeolocationComponent = ({address, onLocationFetched}) => {
     }
   }, [address]);
 
+
+ //functie care se apeleaza la inceput daca nu este adresa ===>
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -31,6 +33,7 @@ const GeolocationComponent = ({address, onLocationFetched}) => {
     }
   };
 
+  // functie care returneaza orasul si tara in care te afli===>
   const getCityFromCoordinates = async (latitude, longitude) => {
     const accessToken = 'pk.eyJ1IjoiY29zbWFrLTQ3IiwiYSI6ImNtMHhoczZsejA3ZjgyanF6YWpzMDV4cDAifQ.LiwxPafEUZs60SWhAMCpdg';
     const baseUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
@@ -49,6 +52,7 @@ const GeolocationComponent = ({address, onLocationFetched}) => {
     }
   };
 
+  //functie care face toata logica la partea cu gasitul locatiei
   const getCoordinates = async () => {
     const accessToken = 'pk.eyJ1IjoiY29zbWFrLTQ3IiwiYSI6ImNtMHhoczZsejA3ZjgyanF6YWpzMDV4cDAifQ.LiwxPafEUZs60SWhAMCpdg';
     const baseUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';

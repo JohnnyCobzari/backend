@@ -1,0 +1,51 @@
+:root {
+	--highColor: #f3ede4;
+	--midColor: #dad5cd;
+	--lowColor: #6b5e49;
+}
+.VaccinationButton {
+	margin: 10px 0;
+}
+
+.VaccinationButton button {
+	font-size: 16px;
+	width: 100%;
+	background-color: #b5a791;
+	padding: 10px 0;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.vaccine_details {
+	margin-top: 5px;
+	display: flex;
+}
+
+.VaccinationInfoContainer {
+	width: 80%;
+	margin-left: 10px;
+}
+
+.vaccine_details button {
+	width: 20%;
+	background-color: var(--midColor);
+	border: none;
+	outline: none;
+	cursor: pointer;
+	color: #6b4949;
+	font-size: 16px;
+}
+.input_field_vaccines {
+	font-size: 14px;
+	color: var(--lowColor);
+}
+
+.input_field_vaccines input {
+	background-color: var(--highColor);
+	border: none;
+	border-radius: 5px;
+	margin: 5px;
+}
+

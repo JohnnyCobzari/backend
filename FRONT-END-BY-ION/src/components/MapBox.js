@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import mapboxgl from "mapbox-gl";
+import FilterSidebar from "./FilterSideBar";
 
 mapboxgl.accessToken = "pk.eyJ1Ijoiam9ueWlka2siLCJhIjoiY20wbWZqM3ZsMDF0MzJzc2JoN2pmMGpxeSJ9.YsuGCrjUvQVDNqMM-n14bg";
 
@@ -23,13 +24,34 @@ const locations = [
 ];
 
 const Mapbox = ({ pets }) => {
+    const [filteredPets, setFilteredPets] = useState(pets);
 	const mapContainerRef = useRef(null);
 	const lngRef = useRef(null);
 	const latRef = useRef(null);
 	const zoomRef = useRef(null);
 	const markersRef = useRef([]);
 	const navigate = useNavigate();
-	const [hoveredPet, setHoveredPet] = useState(null); // Stare pentru pet-ul hoverat
+	const [hoveredPet, setHoveredPet] = useState(null); 
+    
+    const applyFilters = (filters) => {
+        const { types, breed, priceRange, genders } = filters;
+      
+        // Filter pets based on selected filters, but ignore filters with default values
+        const filtered = pets.filter(pet => {
+          const matchesType = types.length === 0 || types.includes(pet.type); // Only apply if some types are selected
+          const matchesBreed = breed === "" || pet.breed.toLowerCase().includes(breed.toLowerCase()); // Only apply if breed is not empty
+          const matchesGender = genders.length === 0 || genders.includes(pet.gender); // Only apply if some genders are selected
+          const matchesPrice = 
+            (priceRange.from === "" || pet.price >= parseFloat(priceRange.from)) && // Only apply if from price is specified
+            (priceRange.to === "" || pet.price <= parseFloat(priceRange.to));       // Only apply if to price is specified
+      
+          return matchesType && matchesBreed && matchesGender && matchesPrice;
+        });
+      
+        setFilteredPets(filtered); // Update filtered pets
+    };
+      
+      
 
 	const createCustomMarker = (type) => {
 		const el = document.createElement("div");
@@ -82,7 +104,7 @@ const Mapbox = ({ pets }) => {
 			zoom: 12,
 		});
 
-		pets.forEach((pet) => {
+		filteredPets.forEach((pet) => {
             //console.log(pet)
 			if (pet.latitude && pet.longitude && pet.image) {
 				const popupText = pet.name || "Pet"; // Dacă numele nu există, fallback la "Pet"
@@ -142,7 +164,11 @@ const Mapbox = ({ pets }) => {
 		updateMarkers();
 
 		return () => map.remove();
-	}, [pets]);
+	}, [filteredPets]);
+
+
+
+
 
 	return (
 		<div id="MapBox-BigContainer">
@@ -150,6 +176,7 @@ const Mapbox = ({ pets }) => {
 				Longitude: <span ref={lngRef}>28.8336</span> | Latitude: <span ref={latRef}>47.0105</span> | Zoom: <span ref={zoomRef}>12</span>
 			</div>
 			<div ref={mapContainerRef} className="map-container">
+            <FilterSidebar applyFilters={applyFilters} />
 				{hoveredPet && (
 					<div className="HoverEfetForPetsOnTheMap">
 						<img
