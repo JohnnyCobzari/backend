@@ -211,6 +211,8 @@ const PetForm = () => {
 				</>
 			)}
 
+
+
 			<ImageUpload setImageSrc={setImageSrc} imageSrc={imageSrc} />
 
 			<button type="submit" className="login">
