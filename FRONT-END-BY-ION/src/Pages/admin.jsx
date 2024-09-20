@@ -115,7 +115,7 @@ function Admin() {
                     </ul>
                 </div>
                 <div className="Admin_Notification">
-                    <h2>Notifications</h2>
+                    <h2>User Notifications</h2>
                     <ul>
                         {userNotifications.map((notification, index) => (
                             <PetItem
