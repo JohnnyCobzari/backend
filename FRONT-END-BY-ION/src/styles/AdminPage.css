@@ -1,0 +1,49 @@
+:root {
+    --highColor: #f3ede4;
+    --midColor: #dad5cd;
+    --lowColor: #6b5e49;
+}
+
+.Admin_Container {
+    margin-top: 40px;
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.Pet_Services, .NewUser_AdminApprove, .Admin_Notification {
+    width: 33%;
+    height: 100%;
+    border: 1px solid var(--lowColor);
+    border-radius: 8px;
+    background-color: var(--highColor);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    overflow-y: auto; /* Scroll if content overflows */
+}
+
+.Pet_Services h2, .NewUser_AdminApprove h2, .Admin_Notification h2 {
+    color: var(--lowColor);
+    margin-bottom: 10px;
+}
+
+.Pet_Services ul, .NewUser_AdminApprove ul, .Admin_Notification ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+}
+
+.Pet_Services li, .NewUser_AdminApprove li, .Admin_Notification li{
+    background-color: var(--midColor);
+    margin: 5px 0; /* Spacing between items */
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s; /* Smooth transition for hover */
+}
+
+.Pet_Services li:hover, .NewUser_AdminApprove li:hover, .Admin_Notification li:hover{
+    background-color: var(--lowColor); /* Change background on hover */
+    color: white; /* Change text color on hover */
+}

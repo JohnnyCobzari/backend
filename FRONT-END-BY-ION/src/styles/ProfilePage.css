@@ -1,168 +1,194 @@
 :root {
-  --highColor: #f3ede4;
-  --midColor: #dad5cd;
-  --lowColor: #6b5e49;
+	--highColor: #f3ede4;
+	--midColor: #dad5cd;
+	--lowColor: #6b5e49;
 }
 
 .Profile-info {
-  transform: translateX(40px);
-  margin: 30px auto;
-  width: 80%;
-  max-width: 900px;
-  padding: 20px;
-  background-color: #f9f9f9; /*var(--midColor);*/
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	transform: translateX(40px);
+	margin: 30px auto;
+	width: 80%;
+	max-width: 900px;
+	padding: 20px;
+	background-color: #f9f9f9; /*var(--midColor);*/
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .Profile-ImageContainer {
-  text-align: center;
+	text-align: center;
 }
 
 .Profile-ImageContainer img {
-  width: 160px;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 2px solid #ddd;
+	width: 160px;
+	height: 160px;
+	object-fit: cover;
+	border-radius: 50%;
+	border: 2px solid #ddd;
 }
 
 .profile-name {
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20px;
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+	color: #333;
+	margin-bottom: 20px;
 }
 
 .Pet-Info {
-  font-size: 18px;
-  color: #555;
-  line-height: 1.6;
+	font-size: 18px;
+	color: #555;
+	line-height: 1.6;
 }
 
 .Pet-Info p {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+/* CSS for Vaccine List */
+.Pet-Info ul {
+    transform: translateY(-10px);
+	list-style-type: none; /* Remove bullet points */
+	padding: 0; /* Remove default padding */
+	margin: 0; /* Remove default margin */
+    margin-left: 30px;
+}
+
+.Pet-Info ul li {
+	margin-bottom: 2px; /* Space between each list item */
+	border-radius: 2px; /* Rounded corners */
+	font-size: 16px; /* Adjust text size */
+	display: flex;
+	align-items: center;
+}
+
+.Pet-Info ul li::before {
+	content: "-"; /* Add custom bullet */
+	color: #999; /* Color of the bullet */
+	font-weight: 500;
+	display: inline-block;
+	width: 5px; /* Space for bullet */
+	margin-right: 10px; /* Space between bullet and text */
 }
 
 .Pet-Info p svg {
-  margin-right: 10px;
-  color: #666;
-  font-size: 20px;
+	margin-right: 10px;
+	color: #666;
+	font-size: 20px;
 }
 
 #edit-infoProfile {
-  margin: 0 auto;
-  text-align: center;
-  font-size: 11px;
-  text-decoration: underline;
-  cursor: pointer;
-  color: #888;
+	margin: 0 auto;
+	text-align: center;
+	font-size: 11px;
+	text-decoration: underline;
+	cursor: pointer;
+	color: #888;
 }
 
 #edit-infoProfile:hover {
-  color: #d1d1d1;
+	color: #d1d1d1;
 }
 
 .EditAndDeleteProfile {
-  margin: 30px 0 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	margin: 30px 0 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .EditAndDeleteProfile div {
-  color: #888;
-  display: flex;
-  flex-direction: row;
-  cursor: pointer;
+	color: #888;
+	display: flex;
+	flex-direction: row;
+	cursor: pointer;
 }
 
 .EditAndDeleteProfile div:hover {
-  color: #d1d1d1;
+	color: #d1d1d1;
 }
 
 /*Pentru edit si delete Profile=====================*/
 .modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(128, 128, 128, 0.7); /* Culoare sură transparentă */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(128, 128, 128, 0.7); /* Culoare sură transparentă */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
 }
 
 .modal-content {
-  background-color: var(--midColor);
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  width: 70%;
-  max-width: 560px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	background-color: var(--midColor);
+	padding: 20px;
+	border-radius: 10px;
+	text-align: center;
+	width: 70%;
+	max-width: 560px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .modal-actions {
-  margin-top: 20px;
+	margin-top: 20px;
 }
 
 .confirm-button {
-  background-color: #ff4d4d;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  margin-right: 10px;
-  cursor: pointer;
-  width: 40%;
-  font-weight: bold;
+	background-color: #ff4d4d;
+	color: white;
+	border: none;
+	padding: 10px;
+	border-radius: 5px;
+	margin-right: 10px;
+	cursor: pointer;
+	width: 40%;
+	font-weight: bold;
 }
 
 .modal-content h3 {
-  color: var(--lowColor);
+	color: var(--lowColor);
 }
 
 .cancel-button {
-  background-color: var(--lowColor);
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 40%;
-  font-weight: bold;
+	background-color: var(--lowColor);
+	color: white;
+	border: none;
+	padding: 10px;
+	border-radius: 5px;
+	cursor: pointer;
+	width: 40%;
+	font-weight: bold;
 }
 
 .confirm-button:hover,
 .cancel-button:hover {
-  opacity: 0.8;
+	opacity: 0.8;
 }
 /*===========================================================*/
 
 @media (max-width: 480px) {
-  .Profile-info {
-    transform: translateX(0);
-  }
+	.Profile-info {
+		transform: translateX(0);
+	}
 }
 
 /* de la numarul de telefon din create profile*/
 .PhoneInputCountry {
-    display: none;
-  }
+	display: none;
+}
 
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  
-  /* Firefox */
-  input[type=number] {
-    -moz-appearance: textfield;
-  }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+	-moz-appearance: textfield;
+}

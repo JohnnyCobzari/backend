@@ -10,7 +10,7 @@ import { Navigate } from 'react-router-dom';
 import ProfilePage from './Pages/ProfilePage';
 import EditProfilePage from './Pages/EditProfilePage';
 import { jwtDecode } from 'jwt-decode'; // Correct way to import named export
-
+import Admin from './Pages/admin';
 
 const ProtectedRoute = ({ children }) => {
   const authToken = localStorage.getItem('authToken');
@@ -51,6 +51,7 @@ function App() {
       
       <Routes>
         <Route path="/" element={<IntroPage />} />
+        <Route path="/Admin" element={<Admin />} />
         <Route path="/LogIn" element={<LoginPage />  } />
         <Route path="/SignUp" element={<SignUpPage/>} />
         <Route path="/AddPet" element={<ProtectedRoute><AddPetPage/></ProtectedRoute>} />

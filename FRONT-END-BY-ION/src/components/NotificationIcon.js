@@ -7,7 +7,6 @@ const NotificationIcon = () => {
   const [showNotifications, setShowNotifications] = useState(false);
 
   const [notifications, setNotifications] = useState([
-    { text: "Notificare 1: Ai un nou prieten!", read: false },
     { text: "Notificare 2: O nouă potrivire pentru animalul tău!", read: false },
     { text: "Notificare 3: Întâlnire programată mâine la 15:00!", read: false },
 ]);
