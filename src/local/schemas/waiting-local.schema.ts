@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
+import { User } from 'src/auth/schemas/user.schema';
 
 @Schema({
     timestamps: true, // Automatically adds createdAt and updatedAt fields
@@ -32,6 +33,9 @@ import { Document } from 'mongoose';
 
   @Prop({ default: 'pending' })
   status: 'pending' | 'approved' | 'rejected';
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User'}) 
+  userId: User;
 }
 
 export const WaitingAddLocalSchema = SchemaFactory.createForClass(WaitingAddLocal);

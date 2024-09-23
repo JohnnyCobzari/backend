@@ -4,7 +4,7 @@ import { User } from "../../auth/schemas/user.schema";
 import mongoose from "mongoose";
 
 @Schema()
-export class Notification extends Document {
+export class LocalNotification extends Document {
   @Prop()
   message: string;
 
@@ -14,9 +14,9 @@ export class Notification extends Document {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User'}) 
   userId: User;
 
-  @Prop()
-  destination: String;
+  @Prop({ default: 'pending' })
+  status: 'pending' | 'approved' | 'rejected';
 
 }
 
-export const NotificationSchema = SchemaFactory.createForClass(Notification);
+export const LocalNotificationSchema = SchemaFactory.createForClass(LocalNotification);

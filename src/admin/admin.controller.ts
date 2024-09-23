@@ -7,6 +7,8 @@ import { Role } from 'src/auth/enums/role.enum';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { WaitingAddLocal } from 'src/local/schemas/waiting-local.schema';
 import { AddLocal } from 'src/local/schemas/create-local.schema';
+import { LocalNotification } from 'src/local/schemas/create-local-ntification.schema';
+import { Notification } from 'src/notifications/schemas/notifications.schema';
 
 @Controller('admin')
 export class AdminController {
@@ -61,5 +63,31 @@ export class AdminController {
       throw new NotFoundException('User not found or could not be rejected');
     }
     return user;
+  }
+
+  
+  @Get('waiting-list-notification')
+  async getWaitingListNotification(): Promise<LocalNotification[]> {
+    return this.adminService.getWaitingListNotifciation();
+  }
+//   @Roles(Role.User)
+//   @UseGuards( RolesGuard)
+  @Post('approve-notification/:id')
+  async approveNotification(@Param('id') id: string): Promise<Notification> {
+    const Notification = await this.adminService.approveNotification(id);
+    if (!Notification) {
+      throw new NotFoundException('User not found or could not be approved');
+    }
+    return Notification;
+  }
+//   @Roles(Role.User)
+//   @UseGuards( RolesGuard)
+  @Post('reject-notification/:id')
+  async rejectNotification(@Param('id') id: string): Promise<LocalNotification> {
+    const notification = await this.adminService.rejectNotification(id);
+    if (!notification) {
+      throw new NotFoundException('User not found or could not be rejected');
+    }
+    return notification;
   }
 }
