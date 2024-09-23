@@ -33,23 +33,23 @@ const Mapbox = ({ pets }) => {
 	const navigate = useNavigate();
 
 	const [hoveredPet, setHoveredPet] = useState(null); // Stare pentru pet-ul hoverat
-	const [activePopup, setActivePopup] = useState(null); 
     
     const applyFilters = (filters) => {
+		
         const { types, breed, priceRange, genders } = filters;
-      
-        // Filter pets based on selected filters, but ignore filters with default values
+
+        // Filter pets based on selected filters, ignore filters with default values
         const filtered = pets.filter(pet => {
-          const matchesType = types.length === 0 || types.includes(pet.type); // Only apply if some types are selected
-          const matchesBreed = breed === "" || pet.breed.toLowerCase().includes(breed.toLowerCase()); // Only apply if breed is not empty
-          const matchesGender = genders.length === 0 || genders.includes(pet.gender); // Only apply if some genders are selected
-          const matchesPrice = 
-            (priceRange.from === "" || pet.price >= parseFloat(priceRange.from)) && // Only apply if from price is specified
-            (priceRange.to === "" || pet.price <= parseFloat(priceRange.to));       // Only apply if to price is specified
-      
-          return matchesType && matchesBreed && matchesGender && matchesPrice;
+            const matchesType = types.length === 0 || types.includes(pet.type);
+            const matchesBreed = breed === "" || pet.breed.toLowerCase().includes(breed.toLowerCase());
+            const matchesGender = genders.length === 0 || genders.includes(pet.gender);
+            const matchesPrice =
+                (priceRange.from === "" || pet.price >= parseFloat(priceRange.from)) &&
+                (priceRange.to === "" || pet.price <= parseFloat(priceRange.to));
+
+            return matchesType && matchesBreed && matchesGender && matchesPrice;
         });
-      
+        
         setFilteredPets(filtered); // Update filtered pets
     };
       
@@ -183,7 +183,7 @@ const Mapbox = ({ pets }) => {
 			
 			const layers = map.getStyle().layers;
 			layers.forEach((layer) => {
-				console.log(layer.id); // Verificăm toate straturile disponibile
+				 // Verificăm toate straturile disponibile
 			});
 			const bisqueColor = '#ffe4c4'; // Set bisque color
 			const peruColor = '#cd853f' //peru color
@@ -277,7 +277,7 @@ const Mapbox = ({ pets }) => {
         });
 
 
-		pets.forEach((pet) => {
+		filteredPets.forEach((pet) => {
             //console.log(pet)
 			const coords = `${pet.latitude},${pet.longitude}`;
 			
@@ -336,7 +336,7 @@ const Mapbox = ({ pets }) => {
 		updateMarkers();
 
 		return () => map.remove();
-}, [filteredPets]);
+    }, [filteredPets]);
 
 
 
