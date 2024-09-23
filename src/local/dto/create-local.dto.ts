@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsNumber, IsArray, IsOptional, IsLongitude, IsLatitude } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber, IsArray, IsOptional, IsLongitude, IsLatitude, IsMongoId } from 'class-validator';
 
 export class AddLocalDto {
   @IsNotEmpty()
@@ -33,4 +33,8 @@ export class AddLocalDto {
   @IsArray()
   @IsString({ each: true })
   images?: string[];
+
+  @IsMongoId()
+  @IsNotEmpty()
+  userId: string;
 }

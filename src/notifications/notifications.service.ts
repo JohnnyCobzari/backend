@@ -42,18 +42,26 @@ export class NotificationService {
 
   async findById(userId: string): Promise<Notification[]> {
     const isValidId = mongoose.isValidObjectId(userId);
-    console.log(userId);
+    
     if (!isValidId) {
-        throw new BadRequestException('Please enter a correct user ID');
+      throw new BadRequestException('Please enter a correct user ID');
     }
-
-    const notifications = await this.notificationModel.find({ userId: userId });
+  
+    // Using $or to find notifications for either the user or where the destination is 'all'
+    const notifications = await this.notificationModel.find({
+      $or: [
+        { userId: userId },
+        { destination: 'all' }
+      ]
+    }).exec();
+  
     if (notifications.length === 0) {
-        throw new NotFoundException('No notifications found for this user');
+      throw new NotFoundException('No notifications found for this user');
     }
-
+  
     return notifications;
-}
+  }
+  
 
 async deleteNotification(notificationId: string): Promise<Notification> {
     const deletedNotification = await this.notificationModel.findByIdAndDelete(notificationId);
