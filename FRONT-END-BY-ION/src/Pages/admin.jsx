@@ -1,7 +1,8 @@
 import Logo from "../components/Logo";
 import "../styles/AdminPage.css";
-import React, { useState } from 'react';
 import { FaTrash, FaCheck } from "react-icons/fa";
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 
 function PetItem({ item, onDelete, onApprove }) {
     return (
@@ -44,29 +45,31 @@ const styles = {
 };
 
 function Admin() {
-    const [petShops, setPetShops] = useState([
-        "Happy Paws Pet Store",
-        "Purrfect Pets Supplies",
-        "Furry Friends Market",
-        "The Pet Palace",
-        "Tail Waggers Pet Emporium"
-    ]);
+    
+    const [petShops, setPetShops] = useState([]);
+    const [shopCertificates, setShopCertificates] = useState([]);
+    const [userNotifications, setUserNotifications] = useState([]);
 
-    const [shopCertificates, setShopCertificates] = useState([
-        "Certified Pet Care Excellence",
-        "Animal Welfare Compliance",
-        "Veterinary Health Standards",
-        "Pet Product Safety Certification",
-        "Ethical Pet Business Accreditation"
-    ]);
+    
 
-    const [userNotifications, setUserNotifications] = useState([
-        "Your pet grooming appointment is confirmed for tomorrow at 10 AM.",
-        "New vaccination reminder for Bella: Rabies shot due on October 1st.",
-        "Your order of pet food has been shipped and will arrive in 3 days.",
-        "Your review for Furry Friends Market has been approved.",
-        "Special offer: Get 20% off on all pet accessories this weekend!"
-    ]);
+     // Fetch data from the server using Axios
+     useEffect(() => {
+        // Fetch pending pet shops
+        axios.get("http://localhost:3002/admin/waiting-list-add")
+            .then(response => {
+                console.log('Pet Shops:', response.data);  // Afișează datele primite în consolă
+                setPetShops(response.data);
+            })
+            .catch(error => console.error('Error fetching pet shops:', error));
+
+        // Fetch pending certificates
+        axios.get('http://localhost:3002/admin/waiting-list')
+            .then(response => {
+                console.log('Certificates:', response.data);  // Afișează datele primite în consolă
+                setShopCertificates(response.data);
+            })
+            .catch(error => console.error('Error fetching certificates:', error));
+    }, []);
 
     const handleDeleteShop = (shop) => {
         setPetShops(petShops.filter(item => item !== shop));
