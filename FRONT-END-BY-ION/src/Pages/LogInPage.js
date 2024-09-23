@@ -26,64 +26,62 @@ function LoginPage() {
   
   const navigate = useNavigate();
   
-  // State pentru câmpurile de input
+  // State for input fields
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");  // Definește error și setError
+  const [error, setError] = useState("");
   const [authToken, setAuthToken] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem('authToken');
     if (token) {
-      // Dacă tokenul există, setează header-ul și redirecționează utilizatorul
       setAuthToken(token);
-      navigate('/HomePage'); // Redirecționează către dashboard sau altă pagină
+      navigate('/HomePage'); // Redirect to the home page if already logged in
     }
   }, [navigate]);
 
-  // Handler pentru schimbarea valorii email
+  // Handler for changing email
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
 
-  // Handler pentru schimbarea valorii password
+  // Handler for changing password
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
 
-  // Handler pentru trimiterea formularului
+  // Handler for form submission
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Previne reîncărcarea paginii
+    event.preventDefault();
     axios.post('http://localhost:3002/auth/login', {
-      email: email,
-      password: password,
+      email,
+      password,
     })
     .then((response) => {
-
       const { token, userId } = response.data;
-    localStorage.setItem('authToken', token);
-    localStorage.setItem('userId', userId);
+      localStorage.setItem('authToken', token);
+      localStorage.setItem('userId', userId);
 
-    // Update Axios default headers
-    setAuthToken(token);
-      // Reset fields after successful submission
+      // Set Axios default headers
+      setAuthToken(token);
       setEmail("");
       setPassword("");
       setError("");
-      navigate('/HomePage'); 
-      
+      navigate('/HomePage');
     })
     .catch((err) => {
-      // Check if the error has a response and a message
       if (err.response.data.message) {
-        console.log('Error message from backend:', err.response.data.message); // Check in the console
-        setError(err.response.data.message);  // Set the backend message as the error
+        setError(err.response.data.message);
       } else {
-        setError("An error occurred while logging in.");  // Fallback message
+        setError("An error occurred while logging in.");
       }
     });
   };
 
+  // Redirect user to the password reset request page
+  const handleForgotPassword = () => {
+    navigate('/request-password');
+  };
 
   return (
     <div>
@@ -120,11 +118,15 @@ function LoginPage() {
             required
           />
         </div>
-        {error && <p className="error-message">{error}</p>} {/* Afișează mesajul de eroare */}
-        <a href="#" className="forgot">
-  <p>Forgot password?</p>
-  <a href="/change-password" className="change-password">Change Password</a>
-</a>
+
+        {error && <p className="error-message">{error}</p>}
+
+        <div className="forgot">
+          <p>Forgot password?</p>
+          <button type="button" className="change-password" onClick={handleForgotPassword}>
+            Change Password
+          </button>
+        </div>
 
         <button type="submit" className="login">Login</button>
         <p className="paragraf">

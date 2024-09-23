@@ -1,54 +1,107 @@
-import React, { useState } from 'react';
-import '../styles/ChangePassword.css'; // Import the CSS file for styling
+import React, { useState } from "react";
+import "../styles/ChangePassword.css";
+import Footer from "../components/Footer";
+import Logo from "../components/Logo";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+
+const api = axios.create({
+  baseURL: 'http://localhost:3002', // Your backend URL
+  headers: {
+    'Content-Type': 'application/json',
+  }
+});
 
 function ChangePassword() {
-  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+  const { resetToken } = useParams(); // Get the token from the URL
+
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleSubmit = (event) => {
+  // Handler for new password input change
+  const handleNewPasswordChange = (event) => {
+    setNewPassword(event.target.value);
+  };
+
+  // Handler for confirm password input change
+  const handleConfirmPasswordChange = (event) => {
+    setConfirmPassword(event.target.value);
+  };
+
+  // Handler for form submission
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    
-    // Add logic to handle password change, e.g., calling API
-    if (newPassword === confirmPassword) {
-      setMessage("Password changed successfully.");
-    } else {
-      setMessage("Passwords do not match.");
+
+    // Check if passwords match
+    if (newPassword !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
     }
+
+    // API call to reset password
+    api.post(`/auth/reset-password/${resetToken}`, { password: newPassword })
+      .then((response) => {
+        setMessage("Your password has been successfully changed.");
+        setError("");
+        setNewPassword("");
+        setConfirmPassword("");
+        navigate('/login'); // Redirect to login page after success
+      })
+      .catch((err) => {
+        if (err.response.data.message) {
+          console.log('Error from backend:', err.response.data.message);
+          setError(err.response.data.message);
+        } else {
+          setError("An error occurred while resetting your password.");
+        }
+        setMessage(""); // Clear any previous success messages
+      });
   };
 
   return (
-    <div className="change-password-container">
-      <h2>Change Password</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Email</label>
-        <input 
-          type="email" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-          placeholder="Enter your email"
-          required
-        />
-        <label>New Password</label>
-        <input 
-          type="password" 
-          value={newPassword} 
-          onChange={(e) => setNewPassword(e.target.value)} 
-          placeholder="Enter new password"
-          required
-        />
-        <label>Confirm Password</label>
-        <input 
-          type="password" 
-          value={confirmPassword} 
-          onChange={(e) => setConfirmPassword(e.target.value)} 
-          placeholder="Confirm new password"
-          required
-        />
-        {message && <p className="message">{message}</p>}
-        <button type="submit">Change Password</button>
+    <div>
+      <Logo />
+      <div className="uperContainerForImagesPage2">
+        <img src="images/ChangePasswordDog.png" className="logInPet" alt="Change Password Dog" />
+        <img src="images/WELCOME!.png" id="welcome" alt="Welcome" />
+        <img src="images/ChangePasswordCat.png" className="logInPet" alt="Change Password Cat" />
+      </div>
+
+      <form id="change-password-form" onSubmit={handleSubmit}>
+        <p className="emailAndpasword">New Password</p>
+        <div className="input_filed">
+          <input
+            type="password"
+            id="newPassword"
+            placeholder="Enter new password"
+            value={newPassword}
+            onChange={handleNewPasswordChange}
+            required
+          />
+        </div>
+
+        <p className="emailAndpasword">Confirm Password</p>
+        <div className="input_filed">
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm new password"
+            value={confirmPassword}
+            onChange={handleConfirmPasswordChange}
+            required
+          />
+        </div>
+
+        {error && <p className="error-message">{error}</p>}
+        {message && <p className="success-message">{message}</p>}
+
+        <button type="submit" className="reset-password">Reset Password</button>
       </form>
+
+      <Footer />
     </div>
   );
 }

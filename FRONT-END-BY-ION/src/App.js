@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react
 import IntroPage from './Pages/IntroPage';
 import LoginPage from './Pages/LogInPage';
 import ChangePassword from './Pages/ChangePassword';
+import ChangePasswordRequest from './Pages/ChangePasswordRequest'; // Import the password reset request page
 import SignUpPage from './Pages/SignUpPage';
 import ImageUpload from './components/DragAndDrop';
 import AddPetPage from './Pages/AddPetPage';
@@ -42,27 +43,24 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
-
-
 function App() {
-  
   return (
-    
     <Router>
-      
       <Routes>
         <Route path="/" element={<IntroPage />} />
         <Route path="/Admin" element={<Admin />} />
-        <Route path="/LogIn" element={<LoginPage />  } />
-        <Route path="/SignUp" element={<SignUpPage/>} />
+        <Route path="/LogIn" element={<LoginPage />} />
+        <Route path="/SignUp" element={<SignUpPage />} />
         <Route path="/AddPet" element={<ProtectedRoute><AddPetPage/></ProtectedRoute>} />
         <Route path="/HomePage" element={<ProtectedRoute><MainPage/></ProtectedRoute>} />
         <Route path="/ProfilePage/:id" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
         <Route path="/EditProfilePage/:id" element={<ProtectedRoute><EditProfilePage/></ProtectedRoute>} />
+        
+        {/* Add these routes for password reset functionality */}
+        <Route path="/request-password" element={<ChangePasswordRequest />} />
+        <Route path="/change-password/:resetToken" element={<ChangePassword />} />
       </Routes>
-
     </Router>
-    
   );
 }
 
