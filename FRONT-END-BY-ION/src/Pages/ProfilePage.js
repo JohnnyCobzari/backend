@@ -88,7 +88,6 @@ function ProfilePage() {
 
   return (
     <>
-      <Sidebar />
       <div onClick={() => navigate('/Homepage')} style={{ cursor: "pointer" }}>
         <Logo />
       </div>

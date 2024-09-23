@@ -49,11 +49,11 @@
 
 /* CSS for Vaccine List */
 .Pet-Info ul {
-    transform: translateY(-10px);
+	transform: translateY(-10px);
 	list-style-type: none; /* Remove bullet points */
 	padding: 0; /* Remove default padding */
 	margin: 0; /* Remove default margin */
-    margin-left: 30px;
+	margin-left: 30px;
 }
 
 .Pet-Info ul li {
@@ -130,7 +130,7 @@
 	border-radius: 10px;
 	text-align: center;
 	width: 70%;
-	max-width: 560px;
+	max-width: 332px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -151,6 +151,7 @@
 }
 
 .modal-content h3 {
+	font-size: 24px;
 	color: var(--lowColor);
 }
 
@@ -174,6 +175,10 @@
 @media (max-width: 480px) {
 	.Profile-info {
 		transform: translateX(0);
+	}
+	.modal-content {
+		padding: 15px;
+        padding-bottom: 20px;
 	}
 }
 

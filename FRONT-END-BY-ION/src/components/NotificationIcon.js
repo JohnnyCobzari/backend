@@ -36,7 +36,7 @@ const NotificationIcon = () => {
           markAllAsRead(); // Marchează toate notificările ca citite la click
         }}
       >
-        <IoMdNotifications size={30} className="notification-icon" />
+        <IoMdNotifications size={24} className="notification-icon" />
         {/* Afișează numărul de notificări necitite, dacă există */}
         {unreadCount > 0 && <span className="notification-count">{unreadCount}</span>}
       </div>
