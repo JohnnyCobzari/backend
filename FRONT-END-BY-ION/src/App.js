@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
 import IntroPage from './Pages/IntroPage';
 import LoginPage from './Pages/LogInPage';
+import ChangePassword from './Pages/ChangePassword';
 import SignUpPage from './Pages/SignUpPage';
 import ImageUpload from './components/DragAndDrop';
 import AddPetPage from './Pages/AddPetPage';

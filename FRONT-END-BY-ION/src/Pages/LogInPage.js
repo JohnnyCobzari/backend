@@ -122,8 +122,10 @@ function LoginPage() {
         </div>
         {error && <p className="error-message">{error}</p>} {/* Afișează mesajul de eroare */}
         <a href="#" className="forgot">
-          <p>Forgot password</p>
-        </a>
+  <p>Forgot password?</p>
+  <a href="/change-password" className="change-password">Change Password</a>
+</a>
+
         <button type="submit" className="login">Login</button>
         <p className="paragraf">
           Don't have an account? <a href="SignUp" className="sign-up">sign-up</a>
