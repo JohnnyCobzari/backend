@@ -28,9 +28,15 @@ const Mapbox = ({ pets }) => {
 	const mapContainerRef = useRef(null);
 	const markersRef = useRef([]);
 	const navigate = useNavigate();
-
 	const [hoveredPet, setHoveredPet] = useState(null); // Stare pentru pet-ul hoverat
 	const [activePopup, setActivePopup] = useState(null);
+
+	const [isClicked, setIsClicked] = useState(false);
+
+	// Funcția pentru a schimba starea atunci când butonul este apăsat
+	const handleClick = () => {
+		setIsClicked(!isClicked);
+	};
 
 	const applyFilters = (filters) => {
 		const { types, breed, priceRange, genders } = filters;
@@ -73,11 +79,11 @@ const Mapbox = ({ pets }) => {
 		return el;
 	};
 
-	const createCustomMarkers = (image, petName, breed) => {
+	const createCustomMarkers = (image, petName, breed, iconSize) => {
 		const el = document.createElement("div");
 		el.className = "marker-icon";
-		el.style.width = "30px"; // Dimensiuni pentru marker
-		el.style.height = "30px";
+		el.style.width = `${iconSize}px`; // Dimensiune dinamică pentru marker
+		el.style.height = `${iconSize}px`;
 		el.style.backgroundSize = "cover"; // Imaginea să fie redimensionată corect
 		el.style.borderRadius = "50%"; // Marker rotund
 		el.style.backgroundImage = `url(${image})`; // Afișarea imaginii
@@ -123,7 +129,12 @@ const Mapbox = ({ pets }) => {
 
 		map.removeControl(new mapboxgl.NavigationControl(), "bottom-right");
 
-		const displayMarkers = () => {
+		// face display la pet-uri
+		const displayMarkers = (iconSize) => {
+            
+            markersRef.current.forEach((marker) => marker.remove());
+			markersRef.current = [];
+
 			const groupedPets = groupPetsByCoordinates();
 
 			// Iterăm prin fiecare grup de animale de companie
@@ -154,9 +165,10 @@ const Mapbox = ({ pets }) => {
 
 					const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(popupContent);
 
-					const markerElements = createCustomMarkers(petsAtLocation[0].image, petsAtLocation[0].petName, petsAtLocation[0].breed);
+					const markerElements = createCustomMarkers(petsAtLocation[0].image, petsAtLocation[0].petName, petsAtLocation[0].breed, iconSize);
 					const marker = new mapboxgl.Marker({ element: markerElements }).setLngLat([longitude, latitude]).setPopup(popup).addTo(map);
 
+                    markersRef.current.push(marker);
 					// Eveniment pentru clic pe popup
 					marker.getElement().addEventListener("click", () => {
 						popup.on("open", () => {
@@ -176,9 +188,9 @@ const Mapbox = ({ pets }) => {
 
 		map.on("load", () => {
 			const layers = map.getStyle().layers;
-			layers.forEach((layer) => {
-				console.log(layer.id); // Verificăm toate straturile disponibile
-			});
+			// layers.forEach((layer) => {
+			// 	console.log(layer.id); // Verificăm toate straturile disponibile
+			// });
 			const bisqueColor = "#ffe4c4"; // Set bisque color
 			const peruColor = "#cd853f"; //peru color
 			const layersToStyle = [
@@ -266,41 +278,60 @@ const Mapbox = ({ pets }) => {
 			});
 		});
 
-		filteredPets.forEach((pet) => {
-			//console.log(pet)
-			const coords = `${pet.latitude},${pet.longitude}`;
-
-			if (pet.latitude && pet.longitude && pet.image) {
-				const popupText = pet.name || "Pet"; // Dacă numele nu există, fallback la "Pet"
-				const popup = new mapboxgl.Popup({ offset: 25 }).setText(pet.petName);
-
-				const markerElements = createCustomMarkers(pet.image, pet.petName, pet.breed); // Imaginea animalului de companie
-				const marker = new mapboxgl.Marker({ element: markerElements }).setLngLat([pet.longitude, pet.latitude]).setPopup(popup).addTo(map);
-
-				marker.getElement().addEventListener("click", () => {
-					navigate(`/ProfilePage/${pet._id}`);
-				});
-			}
-		});
-
 		const updateMarkers = () => {
 			markersRef.current.forEach((marker) => marker.remove());
 			markersRef.current = [];
 
-			if (map.getZoom() <= 8) return;
+			const zoomLevel = map.getZoom();
+			let iconSize = 30; // Dimensiunea implicită
+			let petIconSize = 30;
 
-			locations.forEach((location) => {
-				const markerElement = createCustomMarker(location.type);
-				markerElement.className = "marker-icon";
-				const marker = new mapboxgl.Marker({ element: markerElement })
-					.setLngLat(location.coordinates)
-					.setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<h3>${location.name}</h3><p>${location.type}</p>`))
-					.addTo(map);
-				markersRef.current.push(marker);
-			});
+			if (zoomLevel <= 8) return;
+
+			if (zoomLevel > 14) {
+				iconSize = 40; // Zoom maxim, dimensiune iconițe maximă
+				petIconSize = 40;
+			} else if (zoomLevel > 13) {
+				iconSize = 35; // Zoom mare
+				petIconSize = 35; // Dimensiune mare pentru animale
+			} else if (zoomLevel > 12) {
+				iconSize = 30; // Zoom mediu-mare
+				petIconSize = 30; // Dimensiune medie pentru animale
+			} else if (zoomLevel > 11) {
+				iconSize = 25; // Zoom mediu
+				petIconSize = 25; // Dimensiune medie pentru animale
+			} else if (zoomLevel > 10) {
+				iconSize = 20; // Zoom mediu-mic
+				petIconSize = 20; // Dimensiune mică pentru animale
+			} else {
+				iconSize = 15;
+				petIconSize = 15;
+			}
+			//console.log(isClicked);
+			if (isClicked) {
+				locations.forEach((location) => {
+					const markerElement = createCustomMarker(location.type);
+					markerElement.className = "marker-icon";
+
+					// Aplicăm noua dimensiune la marker
+					markerElement.style.width = `${iconSize}px`;
+					markerElement.style.height = `${iconSize}px`;
+
+					const marker = new mapboxgl.Marker({ element: markerElement })
+						.setLngLat(location.coordinates)
+						.setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<h3>${location.name}</h3><p>${location.type}</p>`))
+						.addTo(map);
+
+					markersRef.current.push(marker);
+				});
+			} else {
+                
+                displayMarkers(iconSize);
+			}
 		};
 
 		map.on("zoomend", updateMarkers);
+
 		map.on("move", () => {});
 
 		if (navigator.geolocation) {
@@ -319,16 +350,24 @@ const Mapbox = ({ pets }) => {
 			alert("Geolocation is not supported by your browser.");
 		}
 
-		displayMarkers();
-		updateMarkers();
+        map.on("load", () => {
+            updateMarkers(); // Call the function once the map is loaded
+        });
 
 		return () => map.remove();
-	}, [filteredPets]);
+	}, [filteredPets, isClicked]);
 
 	return (
 		<div id="MapBox-BigContainer">
 			<div ref={mapContainerRef} className="map-container">
 				<FilterSidebar applyFilters={applyFilters} />
+
+				<button id="ChangeMapContentButton" onClick={handleClick}>
+					{!isClicked && <img src="./images/PetIconChangeButon.png"></img>}
+					{isClicked && <img src="./images/ServiceButtonChangeButton.png"></img>}
+					{isClicked ? "Show Locals" : "Show Pets"}
+				</button>
+
 				{hoveredPet && (
 					<div className="HoverEfetForPetsOnTheMap">
 						<img

@@ -1,6 +1,6 @@
 input:focus {
-    border-color:#6b5e49;
-    outline: none;
+	border-color: #6b5e49;
+	outline: none;
 }
 
 .map-container {
@@ -42,7 +42,7 @@ input:focus {
 
 .mapboxgl-ctrl-bottom-left,
 .mapboxgl-ctrl-bottom-right {
-    display: none !important;
+	display: none !important;
 }
 
 .marker-icon {
@@ -54,7 +54,6 @@ input:focus {
 	cursor: pointer;
 }
 
-
 @media (max-width: 480px) {
 	#MapBox-BigContainer {
 		margin: 60px auto;
@@ -63,35 +62,108 @@ input:focus {
 }
 
 .notification-icon-container {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .notification-icon {
-    cursor: pointer;
-    color: #007bff; /* Schimbă culoarea iconiței după preferințe */
-  }
-  
-  .notification-popup {
-    position: absolute;
-    top: 50px; /* Ajustează după necesitate */
-    right: 0;
-    background-color: white;
-    border: 1px solid #ddd;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    width: 250px;
-  }
-  
-  .notification-popup ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .notification-popup li {
-    padding: 5px 0;
-    border-bottom: 1px solid #ddd;
-  }
-  
+	position: relative;
+	display: inline-block;
+}
+
+.notification-icon {
+	cursor: pointer;
+	color: #007bff; /* Schimbă culoarea iconiței după preferințe */
+}
+
+.notification-popup {
+	position: absolute;
+	top: 50px; /* Ajustează după necesitate */
+	right: 0;
+	background-color: white;
+	border: 1px solid #ddd;
+	padding: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	z-index: 1000;
+	width: 250px;
+}
+
+.notification-popup ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.notification-popup li {
+	padding: 5px 0;
+	border-bottom: 1px solid #ddd;
+}
+
+/* for the service button to add locals==================================>*/
+
+.addLocalButton {
+	margin: 0 auto;
+	width: 80%;
+	max-width: 1020px;
+	height: 100px;
+	transform: translateX(30px) translateY(-130px);
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.addLocalButton img {
+	cursor: pointer;
+	width: 32px;
+	height: auto;
+}
+
+.AddLocalHover {
+	position: relative;
+	display: inline-block; /* Asigură-te că elementul ocupă doar spațiul necesar */
+}
+
+.tooltip {
+	position: absolute;
+	cursor: pointer;
+	transform: translateY(1px) translateX(-10%); /* Inițial textul este în interiorul butonului */
+	opacity: 0; /* Textul este ascuns inițial */
+	transition:
+		transform 0.5s ease,
+		opacity 0s ease; /* Tranziție pentru mișcare și vizibilitate */
+	white-space: nowrap;
+	background-color: var(--lowColor);
+	color: white;
+	padding: 2px 10px;
+	border-radius: 6px;
+}
+
+.AddLocalHover:hover .tooltip {
+	transform: translateY(1px) translateX(-124%); /* Textul se mișcă spre stânga la hover */
+	opacity: 1; /* Textul devine vizibil la hover */
+}
+
+/* <====================for the service button to add locals*/
+
+/* Pentru butonul de la change content*/
+
+#ChangeMapContentButton {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	width: 106px;
+	height: 32px;
+	z-index: 10;
+	background-color: transparent;
+	border: 1px solid #6b5e49;
+	border-radius: 5px;
+	cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#ChangeMapContentButton:hover{
+    background-color: #857966;
+    color: white;
+}
+
+#ChangeMapContentButton img{
+    width: 18px;
+    height: auto;
+}
