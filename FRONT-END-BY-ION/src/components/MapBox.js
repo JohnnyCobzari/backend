@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import mapboxgl from "mapbox-gl";
 import FilterSidebar from "./FilterSideBar";
+import LocalService from "./LocalService";
 
 mapboxgl.accessToken = "pk.eyJ1Ijoiam9ueWlka2siLCJhIjoiY20wbWZqM3ZsMDF0MzJzc2JoN2pmMGpxeSJ9.YsuGCrjUvQVDNqMM-n14bg";
 
@@ -30,6 +31,9 @@ const Mapbox = ({ pets }) => {
 	const navigate = useNavigate();
 	const [hoveredPet, setHoveredPet] = useState(null); // Stare pentru pet-ul hoverat
 	const [activePopup, setActivePopup] = useState(null);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(null);
+	const [locals, setLocals] = useState([]);
 
 	const [isClicked, setIsClicked] = useState(false);
 
@@ -69,7 +73,7 @@ const Mapbox = ({ pets }) => {
 			case "Pet Hotel":
 				el.style.backgroundImage = "url(/icons/hotel.png)";
 				break;
-			case "Grooming":
+			case "Pet Grooming":
 				el.style.backgroundImage = "url(/icons/grooming.png)";
 				break;
 			default:
@@ -118,6 +122,44 @@ const Mapbox = ({ pets }) => {
 	};
 
 	useEffect(() => {
+        const fetchLocals = async () => {
+          setLoading(true);
+          try {
+            const data = await LocalService.getAllLocals();
+            if (Array.isArray(data)) {
+              console.log("Locals fetched successfully: ", data);
+              
+              // Transform locals to include coordinates key
+              const transformedLocals = data.map((local) => ({
+                ...local,
+                coordinates: [local.longitude, local.latitude],
+              }));
+      
+              // Push each transformed local into locations
+              locations.push(...transformedLocals);
+              
+              console.log("Locations: ", locations);
+            
+              
+              // Update locals state
+              setLocals(transformedLocals); 
+            } else {
+              console.error("Unexpected data structure: ", data);
+              setError("Invalid data format.");
+            }
+          } catch (err) {
+            console.error("Error fetching locals:", err);
+            setError("Error loading locations.");
+          } finally {
+            setLoading(false);
+          }
+        };
+      
+        fetchLocals();
+      }, []); 
+      
+
+	useEffect(() => {
 		const map = new mapboxgl.Map({
 			container: mapContainerRef.current,
 			style: "mapbox://styles/mapbox/streets-v12",
@@ -131,8 +173,7 @@ const Mapbox = ({ pets }) => {
 
 		// face display la pet-uri
 		const displayMarkers = (iconSize) => {
-            
-            markersRef.current.forEach((marker) => marker.remove());
+			markersRef.current.forEach((marker) => marker.remove());
 			markersRef.current = [];
 
 			const groupedPets = groupPetsByCoordinates();
@@ -168,7 +209,7 @@ const Mapbox = ({ pets }) => {
 					const markerElements = createCustomMarkers(petsAtLocation[0].image, petsAtLocation[0].petName, petsAtLocation[0].breed, iconSize);
 					const marker = new mapboxgl.Marker({ element: markerElements }).setLngLat([longitude, latitude]).setPopup(popup).addTo(map);
 
-                    markersRef.current.push(marker);
+					markersRef.current.push(marker);
 					// Eveniment pentru clic pe popup
 					marker.getElement().addEventListener("click", () => {
 						popup.on("open", () => {
@@ -325,8 +366,7 @@ const Mapbox = ({ pets }) => {
 					markersRef.current.push(marker);
 				});
 			} else {
-                
-                displayMarkers(iconSize);
+				displayMarkers(iconSize);
 			}
 		};
 
@@ -350,9 +390,9 @@ const Mapbox = ({ pets }) => {
 			alert("Geolocation is not supported by your browser.");
 		}
 
-        map.on("load", () => {
-            updateMarkers(); // Call the function once the map is loaded
-        });
+		map.on("load", () => {
+			updateMarkers(); // Call the function once the map is loaded
+		});
 
 		return () => map.remove();
 	}, [filteredPets, isClicked]);
