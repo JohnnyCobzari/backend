@@ -6,7 +6,10 @@ const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: ${(props) => props.width || '100%'};
+   @media (max-width: 480px) {
+    transform: translateX(25%) scale(0.8); /* Aplicăm translate și scale */
+  }
 `;
 
 const LogoText = styled.p`
@@ -23,13 +26,13 @@ const LogoImage = styled.img`
   height: 32px;
 `;
 
-function Logo() {
-  return (
-    <LogoContainer>
-      <LogoText>PawPaw</LogoText>
-      <LogoImage src="/images/paw.png" alt="PawPaw Logo" />
-    </LogoContainer>
-  );
-}
-
-export default Logo;
+function Logo({ width }) {
+    return (
+      <LogoContainer width={width}>
+        <LogoText>PawPaw</LogoText>
+        <LogoImage src="/images/paw.png" alt="PawPaw Logo" />
+      </LogoContainer>
+    );
+  }
+  
+  export default Logo;

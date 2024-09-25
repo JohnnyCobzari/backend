@@ -77,6 +77,7 @@ const NotificationIcon = () => {
         console.error("Error deleting notification:", error.response.status);
         console.error("Error data:", error.response.data);
 
+
       } else if (error.request) {
         // Request was made but no response received
         console.error("No response received:", error.request);
@@ -108,7 +109,9 @@ const NotificationIcon = () => {
           markAllAsRead();
         }}
       >
-        <IoMdNotifications size={30} className="notification-icon" />
+        <IoMdNotifications size={24} className="notification-icon" />
+        {/* Afișează numărul de notificări necitite, dacă există */}
+
         {unreadCount > 0 && <span className="notification-count">{unreadCount}</span>}
       </div>
 

@@ -60,6 +60,7 @@ export class AuthController {
   async addToWaitingList(@Body() createLocalDto: CreateLocalDto) {
     return await this.authService.addToWaitingList(createLocalDto);
   }
+ 
 
-  
+
 }

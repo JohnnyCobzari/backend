@@ -43,6 +43,7 @@ const FilterSidebar = ({ applyFilters }) => {
       priceRange,
       genders: selectedGenders,
     };
+    
     applyFilters(filters); // Call the parent function with the selected filters
     toggleSidebar(); // Close the sidebar after applying filters
   };

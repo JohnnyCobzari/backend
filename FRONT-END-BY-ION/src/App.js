@@ -3,14 +3,16 @@ import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react
 import IntroPage from './Pages/IntroPage';
 import LoginPage from './Pages/LogInPage';
 import SignUpPage from './Pages/SignUpPage';
-import ImageUpload from './components/DragAndDrop';
 import AddPetPage from './Pages/AddPetPage';
-import MainPage from './Pages/MainPage';
+import MainPage from './Pages/HomePage';
 import { Navigate } from 'react-router-dom';
 import ProfilePage from './Pages/ProfilePage';
 import EditProfilePage from './Pages/EditProfilePage';
 import { jwtDecode } from 'jwt-decode'; // Correct way to import named export
-
+import Admin from './Admin_PetServices/admin';
+import ServiceLoginPage from './Admin_PetServices/ServicesLogIn';
+import ServiceSignUpPage from './Admin_PetServices/ServicesSignUp';
+import ServiceHomePage from './Admin_PetServices/ServicesHomePage';
 
 const ProtectedRoute = ({ children }) => {
   const authToken = localStorage.getItem('authToken');
@@ -51,6 +53,11 @@ function App() {
       
       <Routes>
         <Route path="/" element={<IntroPage />} />
+        <Route path="/ServiceLogin" element={<ServiceLoginPage />} />
+        <Route path="/ServiceSignUp" element={<ServiceSignUpPage />} />
+        <Route path="/ServiceHome" element={<ServiceHomePage/>}/>
+
+        <Route path="/Admin" element={<Admin />} />
         <Route path="/LogIn" element={<LoginPage />  } />
         <Route path="/SignUp" element={<SignUpPage/>} />
         <Route path="/AddPet" element={<ProtectedRoute><AddPetPage/></ProtectedRoute>} />
