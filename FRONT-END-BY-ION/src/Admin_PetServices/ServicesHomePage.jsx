@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../components/SideBar";
+import SidebarLocals from "./ServicesComponets/sideBarLocals";
 import Footer from "../components/Footer";
 import Logo from "../components/Logo";
 import MapBox from "../components/MapBox";
@@ -16,15 +16,15 @@ import AddLocalForm from "./ServicesComponets/AddLocalForm";
 
 const ServiceHomePage = () => {
 	const [isOpen, setIsOpen] = useState(false);
-    const [isOpenAdd, setIsOpenAdd] = useState(false);
+    const [isOpenForm, setIsOpenForm] = useState(false);
 	const [allPets, setAllPets] = useState([]);
 	const [userPets, setUserPets] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
 
-    const toggleSidebar = () => {
-        setIsOpenAdd(!isOpenAdd);
+    const toggleForm = () => {
+        setIsOpenForm(!isOpenForm);
     };
 
 	useEffect(() => {
@@ -68,15 +68,15 @@ const ServiceHomePage = () => {
 	return (
 		<>
 			<Header setIsOpen={setIsOpen} isOpen={isOpen} />
-			<Sidebar isOpen={isOpen} />
+			<SidebarLocals isOpen={isOpen} isOpenForm={isOpenForm} setIsOpenForm={setIsOpenForm} />
 			<MapBox pets={allPets} />
 			<div className="addLocalButton">
-				<div className="AddLocalHover" onClick={toggleSidebar}>
+				<div className="AddLocalHover" onClick={toggleForm}>
 					<img src="./Admin_services_foto/addLocalButton.png" alt="buton" />
 					<span className="tooltip">Add your local</span>
 				</div>
 			</div>
-            <AddLocalForm isOpen={isOpenAdd} setIsOpen={setIsOpenAdd}/>
+            <AddLocalForm isOpen={isOpenForm} setIsOpen={setIsOpenForm}/>
 			<Footer />
 		</>
 	);
