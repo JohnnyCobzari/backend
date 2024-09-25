@@ -9,18 +9,20 @@ import { WaitingAddLocal } from 'src/local/schemas/waiting-local.schema';
 import { AddLocal } from 'src/local/schemas/create-local.schema';
 import { LocalNotification } from 'src/local/schemas/create-local-ntification.schema';
 import { Notification } from 'src/notifications/schemas/notifications.schema';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('admin')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
-//   @Roles(Role.User)
-//   @UseGuards( RolesGuard)
+
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Get('waiting-list')
   async getWaitingListUsers(): Promise<WaitingLocal[]> {
     return this.adminService.getWaitingListUsers();
   }
-//   @Roles(Role.User)
-//   @UseGuards( RolesGuard)
+@Roles(Role.Admin)
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Post('approve/:id')
   async approveUser(@Param('id') id: string): Promise<Local> {
     const user = await this.adminService.approveUser(id);
@@ -29,8 +31,8 @@ export class AdminController {
     }
     return user;
   }
-//   @Roles(Role.User)
-//   @UseGuards( RolesGuard)
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Post('reject/:id')
   async rejectUser(@Param('id') id: string): Promise<WaitingLocal> {
     const user = await this.adminService.rejectUser(id);
@@ -40,12 +42,15 @@ export class AdminController {
     return user;
   }
 
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Get('waiting-list-add')
   async getWaitingListAddLocal(): Promise<WaitingAddLocal[]> {
     return this.adminService.getWaitingListAddLocal();
   }
-//   @Roles(Role.User)
-//   @UseGuards( RolesGuard)
+
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Post('approve-add/:id')
   async approveAddLocal(@Param('id') id: string): Promise<AddLocal> {
     const AddLocal = await this.adminService.approveAddLocal(id);
@@ -54,8 +59,8 @@ export class AdminController {
     }
     return AddLocal;
   }
-//   @Roles(Role.User)
-//   @UseGuards( RolesGuard)
+@Roles(Role.Admin)
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Post('reject-add/:id')
   async rejectAddLocal(@Param('id') id: string): Promise<WaitingAddLocal> {
     const user = await this.adminService.rejectAddLocal(id);
