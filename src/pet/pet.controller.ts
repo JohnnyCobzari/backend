@@ -79,27 +79,37 @@ export class PetController {
         return this.petService.deleteById(id);
     }
 
+    @Roles(Role.User)
+      @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Get('pending/:userId')
   async getPendingRequests(@Param('userId') userId: string) {
     return this.petService.getPendingRequestsByReceiver(userId);
   }
 
   // Endpoint to check approved matches for a user
+  @Roles(Role.User)
+    @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Get('approved/:userId')
   async checkApprovedMatches(@Param('userId') userId: string) {
     return this.petService.checkApprovedMatchesByUser(userId);
   }
 
+  @Roles(Role.User)
+     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Post('create-match')
   async createMatch(@Body() createMatchDto: MatchDto) {
     return this.petService.createMatch(createMatchDto);
   }
 
+  @Roles(Role.User)
+     @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Post('approve-match/:id')
   async approveMatch(@Param('id') matchId: string) {
     return this.petService.approveMatch(matchId);
   }
 
+  @Roles(Role.User)
+      @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Delete('reject-match/:id')
   async rejectMatch(@Param('id') matchId: string) {
     await this.petService.rejectMatch(matchId);

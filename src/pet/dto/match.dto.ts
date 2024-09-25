@@ -9,5 +9,4 @@ export class MatchDto {
   @IsMongoId()
   @IsNotEmpty()
   receiverPetId: string;
- // True for a match, false for a rejection or unmatched
 }
