@@ -20,7 +20,12 @@ export class NotificationController {
   @Roles(Role.User,Role.Admin, Role.local)
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   async getAllNotifications(@Query('userId') userId?: string){
+    
+    console.log(`Fetching notifications for user: ${userId}`);
+
     const userNotifications = await this.notificationService.findById(userId);
+
+    console.log(`Notifications found: ${JSON.stringify(userNotifications)}`);
 
 return userNotifications;
 }
