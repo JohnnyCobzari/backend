@@ -125,7 +125,7 @@ function LoginPage() {
         </a>
         <button type="submit" className="login">Login</button>
         <p className="paragraf">
-          Don't have an account? <a href="SignUp" className="sign-up">sign-up</a>
+          Don't have an account? <a href="ServiceSignUp" className="sign-up">sign-up</a>
         </p>
       </form>
 

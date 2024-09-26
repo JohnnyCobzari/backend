@@ -3,6 +3,7 @@ import "./AddLocalForm.css";
 import { FiX } from "react-icons/fi";
 import ImageUpload from "../../components/DragAndDrop";
 import GeolocationComponent from "../../components/Geolocation";
+import MultipleImageUpload from "./MultipleFileUpload";
 
 const SideBarAdd = ({ isOpen, setIsOpen }) => {
 	// State for form inputs
@@ -10,9 +11,9 @@ const SideBarAdd = ({ isOpen, setIsOpen }) => {
 	const [localName, setLocalName] = useState("");
 	const [localInfo, setLocalInfo] = useState("");
 	const [address, setAddress] = useState("");
-	const [documentImage, setDocumentImage] = useState(null);
 	const [latitude, setLatitude] = useState(null); // Latitude
 	const [longitude, setLongitude] = useState(null); // Longitude
+	const [ImagesUpload, onImagesUpload] = useState([]);
 
 	const handleCoordinatesFetched = (lat, lng) => {
 		setLatitude(lat);
@@ -23,24 +24,21 @@ const SideBarAdd = ({ isOpen, setIsOpen }) => {
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
 
+		const userId = localStorage.getItem("userId");
+
 		// Create an object with form data
 		const addLocalForm = {
+			userId,
 			localType,
 			localName,
 			localInfo,
 			address,
-			documentImage,
-			coordinates: {
-				latitude,
-				longitude,
-			},
+			latitude,
+			longitude,
+			images: ImagesUpload,
 		};
 
 		console.log(addLocalForm); // Replace with actual form submission logic
-	};
-
-	const handleImageUpload = (imageFile) => {
-		setDocumentImage(imageFile); // Capture image file from ImageUpload component
 	};
 
 	const toggleSidebar = () => {
@@ -52,7 +50,7 @@ const SideBarAdd = ({ isOpen, setIsOpen }) => {
 			<button className="toggle-button-add" onClick={toggleSidebar}>
 				<FiX size={24} />
 			</button>
-			<div className="content-add">
+			<div className="content-add" style={{ marginTop: "56px" }}>
 				<form onSubmit={handleFormSubmit}>
 					<p className="writingFromPetLogIn">Select the type of your local business</p>
 					<div className="input_filed">
@@ -74,20 +72,21 @@ const SideBarAdd = ({ isOpen, setIsOpen }) => {
 
 					<p className="writingFromPetLogIn">Info</p>
 					<div className="input_filed">
-						<input type="text" name="localInfo" placeholder="Enter info" value={localInfo} onChange={(e) => setLocalInfo(e.target.value)} required />
+						<textarea type="text" name="localInfo" placeholder="Enter info" value={localInfo} onChange={(e) => setLocalInfo(e.target.value)} required />
 					</div>
 
 					<p className="writingFromPetLogIn">Local's Address</p>
 					<div className="input_filed">
 						<input type="text" name="address" placeholder="Enter address" value={address} onChange={(e) => setAddress(e.target.value)} required />
 					</div>
-                    
+
 					<GeolocationComponent address={address} onLocationFetched={handleCoordinatesFetched} />
 
-					<p className="writingFromPetLogIn">Upload an image of a valid official document.</p>
-					<ImageUpload setImageSrc={setDocumentImage} imageSrc={documentImage} onImageUpload={handleImageUpload} />
-
-					<button type="submit">Submit</button>
+					<p className="writingFromPetLogIn">Upload Images of your local</p>
+					<MultipleImageUpload onImagesUpload={onImagesUpload} />
+					<button className="LocalUploadForm" type="submit">
+						Add your pet local
+					</button>
 				</form>
 			</div>
 		</div>

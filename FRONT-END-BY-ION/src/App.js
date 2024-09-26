@@ -13,6 +13,7 @@ import Admin from './Admin_PetServices/admin';
 import ServiceLoginPage from './Admin_PetServices/ServicesLogIn';
 import ServiceSignUpPage from './Admin_PetServices/ServicesSignUp';
 import ServiceHomePage from './Admin_PetServices/ServicesHomePage';
+import LocalProfile from './Admin_PetServices/LocalsProfile';
 
 const ProtectedRoute = ({ children }) => {
   const authToken = localStorage.getItem('authToken');
@@ -56,6 +57,7 @@ function App() {
         <Route path="/ServiceLogin" element={<ServiceLoginPage />} />
         <Route path="/ServiceSignUp" element={<ServiceSignUpPage />} />
         <Route path="/ServiceHome" element={<ServiceHomePage/>}/>
+        <Route path='/LocalProfile' element={<LocalProfile/>}/>
 
         <Route path="/Admin" element={<Admin />} />
         <Route path="/LogIn" element={<LoginPage />  } />

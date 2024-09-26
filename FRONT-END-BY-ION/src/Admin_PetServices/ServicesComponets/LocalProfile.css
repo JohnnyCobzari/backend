@@ -1,0 +1,43 @@
+.carouselContainer {
+    width: 10%; /* Make the carousel full width */
+    margin: 84px auto 30px; /* Center the carousel and add space below */
+    max-width: 800px; /* Set a maximum width */
+}
+
+.localProfileInfo {
+    max-width: 800px; /* Limit the width for better readability */
+    margin: 20px auto; /* Center the info section */
+    padding: 20px;
+    background-color: #ffffff; /* White background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center; /* Center align text */
+}
+
+.localProfileInfo h2 {
+    font-size: 2rem; /* Larger title */
+    color: #343a40; /* Dark color for better contrast */
+    margin-bottom: 10px; /* Space below title */
+}
+
+.localProfileInfo h3 {
+    font-size: 1.5rem; /* Subtitle size */
+    color: #6c757d; /* Muted color */
+    margin-bottom: 10px; /* Space below subtitle */
+}
+
+.address {
+    font-size: 1.1rem; /* Slightly larger for visibility */
+    color: #495057; /* Dark gray */
+    margin-bottom: 20px; /* Space below address */
+}
+
+.info {
+    font-size: 1rem; /* Standard size */
+    line-height: 1.6; /* Improve readability with line height */
+    color: #212529; /* Dark color */
+    background-color: #f8f9fa; /* Light gray background for info */
+    padding: 10px; /* Padding inside info box */
+    border-radius: 5px; /* Rounded corners for info box */
+    margin-top: 10px; /* Space above info */
+}
