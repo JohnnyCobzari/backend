@@ -25,6 +25,11 @@ export class AuthController {
         return this.authService.login(loginDto)
     } 
 
+    @Post('/login-local')
+    loginlocal(@Body() loginDto: LoginDto): Promise<{token: string}> {
+        return this.authService.loginlocal(loginDto)
+    } 
+
     @Post('reset-password')
     @HttpCode(HttpStatus.OK)
     async postReset(@Body('email') email: string) {

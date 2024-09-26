@@ -6,22 +6,20 @@ import { Role } from '../enums/role.enum';
   timestamps: true, // Automatically adds createdAt and updatedAt fields
 })
 export class Local extends Document {
-  @Prop()
-  name: string;
+  @Prop({ required: true })
+  companyDirector: string;
 
-  @Prop({
-    unique: [true, 'Duplicate email entered'],
-  })
+  @Prop({ required: true })
   email: string;
 
-  @Prop()
+  @Prop({ required: true })
   password: string;
 
   @Prop()
-  docImage: string;
+  documentImageUrl?: string;
 
   @Prop()
-  hisImage: string;
+  userPhotoUrls?: string[];
 
   @Prop({
     type: [{ type: String, enum: Role }],

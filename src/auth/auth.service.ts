@@ -12,6 +12,7 @@ import * as nodemailer from 'nodemailer';
 import * as sendgridTransport from 'nodemailer-sendgrid-transport';
 import { CreateLocalDto } from './dto/local-signup.dto';
 import { WaitingLocal } from './schemas/waiting.schema';
+import { Local } from './schemas/local.schema';
 
 @Injectable()
 export class AuthService {
@@ -21,6 +22,8 @@ export class AuthService {
         private jwtService: JwtService,
         @InjectModel(WaitingLocal.name)
         private waitingUserModel: Model<WaitingLocal>,
+        @InjectModel(Local.name)
+        private LocalModel: Model<Local>,
     ) {}
     async signUp(signUpDto: SignUpDto): Promise<{ token: string; userId: string }> {
       const { name, email, password, role } = signUpDto;
@@ -48,6 +51,40 @@ export class AuthService {
     
       // Find the user by email
       const user = await this.usermodel.findOne({ email });
+    
+      if (!user) {
+        console.log('Invalid email');
+        throw new UnauthorizedException({
+          statusCode: 401,
+          message: 'Invalid email',
+          error: 'Unauthorized',
+        });
+      }
+    
+      // Compare password
+      const isPassCorrect = await bcrypt.compare(password, user.password);
+    
+      if (!isPassCorrect) {
+        console.log('Incorrect password');
+        throw new UnauthorizedException({
+          statusCode: 401,
+          message: 'Invalid password',
+          error: 'Unauthorized',
+        });
+      }
+    
+      // Generate JWT token
+      const token = this.jwtService.sign({ id: user._id });
+    
+      // Return both token and user ID
+      return { token, userId: user._id.toString() };
+    }
+
+    async loginlocal(loginDto: LoginDto): Promise<{ token: string; userId: string }> {
+      const { email, password } = loginDto;
+    
+      // Find the user by email
+      const user = await this.LocalModel.findOne({ email });
     
       if (!user) {
         console.log('Invalid email');

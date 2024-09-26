@@ -14,7 +14,7 @@ export class PetController {
     constructor(private petService: PetService) {}
 
       @Get()  
-      @Roles(Role.User,Role.Admin)
+      @Roles(Role.User, Role.local)
       @UseGuards(AuthGuard('jwt'), RolesGuard)
       async getAllPets(@Query('userId') userId?: string){
         const allPets = await this.petService.findAll();
