@@ -5,6 +5,9 @@ import { FaSignOutAlt, FaCog } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { CgMenu } from "react-icons/cg";
+import { BsFillSendPlusFill } from "react-icons/bs";
+import NotificationPopup from "../Admin_PetServices/ServicesComponets/NotificationPopup";
+
 const AskIfUserWantsToLogOut = ({ onDelete, onCancel }) => {
 	return (
 		<div className="modal-overlay">
@@ -28,6 +31,12 @@ function Header({ setIsOpen, isOpen }) {
 
 	const navigate = useNavigate();
 	const [showModal, setShowModal] = useState(false);
+	const [isPopupOpen, setPopupOpen] = useState(false);
+
+	// Toggle the popup open/close state
+	const togglePopup = () => {
+		setPopupOpen((prevState) => !prevState);
+	};
 
 	//variabile ---------
 
@@ -62,12 +71,14 @@ function Header({ setIsOpen, isOpen }) {
 			<div className={styles.HeaderButtons}>
 				{" "}
 				{/* Accesare corectă a clasei CSS */}
+                <BsFillSendPlusFill size={21} onClick={togglePopup}/>
 				<NotificationIcon />
 				<FaCog size={21} title="Settings" />
 				<FaSignOutAlt size={21} title="Logout" onClick={() => setShowModal(true)} />
 			</div>
 			{/* pentru cortina sura care aparare cand apesi pe log out */}
 			{showModal && <AskIfUserWantsToLogOut onDelete={handleLogout} onCancel={handleCancel} />}
+            <NotificationPopup isOpen={isPopupOpen} onClose={togglePopup}/>
 		</header>
 	);
 }
