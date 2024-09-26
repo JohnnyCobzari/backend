@@ -9,6 +9,7 @@ import { AddLocalSchema } from 'src/local/schemas/create-local.schema';
 import { WaitingAddLocalSchema } from 'src/local/schemas/waiting-local.schema';
 import { LocalNotificationSchema } from 'src/local/schemas/create-local-ntification.schema';
 import { NotificationSchema } from 'src/notifications/schemas/notifications.schema';
+import { UserSchema } from 'src/auth/schemas/user.schema';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { NotificationSchema } from 'src/notifications/schemas/notifications.sche
     MongooseModule.forFeature([{name: 'AddLocal', schema: AddLocalSchema}]),
     MongooseModule.forFeature([{name: 'WaitingAddLocal', schema: WaitingAddLocalSchema}]),
     MongooseModule.forFeature([{name: 'Notification', schema: NotificationSchema}]),
+    MongooseModule.forFeature([{name: 'User', schema: UserSchema}]),
     MongooseModule.forFeature([{name: 'LocalNotification', schema: LocalNotificationSchema}])],
   controllers: [AdminController],
   providers: [AdminService]
