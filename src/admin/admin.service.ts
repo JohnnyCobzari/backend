@@ -8,6 +8,7 @@ import { WaitingAddLocal } from 'src/local/schemas/waiting-local.schema';
 import { AddLocal } from 'src/local/schemas/create-local.schema';
 import { LocalNotification } from 'src/local/schemas/create-local-ntification.schema';
 import { Notification } from 'src/notifications/schemas/notifications.schema';
+import { User } from 'src/auth/schemas/user.schema';
 
 @Injectable()
 export class AdminService {
@@ -19,6 +20,7 @@ export class AdminService {
         @InjectModel(AddLocal.name) private addLocalModel: Model<AddLocal>,
         @InjectModel(LocalNotification.name) private localNotificationModel: Model<LocalNotification>,
         @InjectModel(Notification.name) private notificationModel: Model<Notification>,
+        @InjectModel(User.name) private userModel: Model<User>,
       ) {}
     
     
@@ -137,28 +139,39 @@ export class AdminService {
         if (!waitingNotification) {
           throw new NotFoundException('No waiting notifications found');
         }
-    
-        // Move user to main user database
-        const newNotification = new this.notificationModel({
-          message: waitingNotification.message,
-          createdAt: waitingNotification.createdAt,
-          userId: waitingNotification.userId,
-          destination: 'all'
+      
+        // Fetch all users
+        const allUsers = await this.userModel.find().exec();
+      
+        // Loop through each user and create a new notification
+        const newNotifications = allUsers.map(async (user) => {
+          const newNotification = new this.notificationModel({
+            userId: user._id,  // Assign the userId of the recipient
+            message: waitingNotification.message,
+            createdAt: waitingNotification.createdAt,
+          });
+      
+          await newNotification.save();
+          return newNotification;
         });
-    
-        await newNotification.save();
 
-        const notification = new this.notificationModel({
+      
+        // Wait for all notifications to be created
+        await Promise.all(newNotifications);
+      
+        // Create an approval notification for the user who created the original notification
+        const approvalNotification = new this.notificationModel({
           userId: waitingNotification.userId,  // Assign the userId of the creator
           message: `Your notification has been approved!`,
           createdAt: new Date(),
         });
       
-        await notification.save();
-        // Remove user from waiting list or update status
+        await approvalNotification.save();
+
         await this.localNotificationModel.findByIdAndDelete(id).exec();
-        return newNotification;
+        return approvalNotification;
       }
+      
     
       // Reject user
       async rejectNotification(id: string): Promise<LocalNotification> {

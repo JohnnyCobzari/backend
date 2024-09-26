@@ -23,7 +23,7 @@ export class LocalController {
       }
 
       @Post('send-notification')
-      @Roles(Role.local)
+      @Roles(Role.local, Role.Admin)
   @UseGuards(AuthGuard('jwt'), RolesGuard)
       async addToNotificationWaitingList(@Body() createLocalNotificationDto: CreateLocalNotificationDto): Promise<LocalNotification> {
           return this.localService.addToNotificationWaitingList(createLocalNotificationDto);
