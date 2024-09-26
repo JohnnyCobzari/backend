@@ -110,6 +110,22 @@ body {
   max-width: 610px;
 }
 
+.textlink {
+
+  margin-left: 635px; 
+  font-size: 10px;
+  width: 240px;
+  text-align: center;
+  max-width: 600px;
+  background-color: rgba(84, 84, 86, 0.1); /* Transparent blue background */
+  color: rgb(131, 115, 90, 255); /* Text color blue */
+  padding: 8px; /* Add some padding around the text */
+  border: 1px solid rgb(2, 2, 2); /* Optional blue border */
+  border-radius: 5px; /* Optional rounded corners */
+  font-weight: bold;
+}
+
+
 /* pentru butonul mare */
 
 .buttonBox {

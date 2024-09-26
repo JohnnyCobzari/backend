@@ -5,6 +5,10 @@ import { FaSignOutAlt, FaCog } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { CgMenu } from "react-icons/cg";
+import SettingsModal from "./SettingsModal";
+import "../styles/SettingsModal.css"; // Make sure the relative path is correct
+
+
 const AskIfUserWantsToLogOut = ({ onDelete, onCancel }) => {
 	return (
 		<div className="modal-overlay">
@@ -28,8 +32,11 @@ function Header({ setIsOpen, isOpen }) {
 
 	const navigate = useNavigate();
 	const [showModal, setShowModal] = useState(false);
+	const [showSettingsModal, setShowSettingsModal] = useState(false); // State for settings modal
+	const [showNotification, setShowNotification] = useState(false); // New state for notifications
 
 	//variabile ---------
+	
 
 	const toggleSidebar = () => {
 		setIsOpen(!isOpen);
@@ -48,6 +55,21 @@ function Header({ setIsOpen, isOpen }) {
 		// Redirect to the homepage
 		navigate("/");
 	};
+
+	
+	  const handleSettingsClick = () => {
+		setShowSettingsModal((prevState) => !prevState); // Toggle settings modal
+		if (!showSettingsModal) {
+		  setShowNotification(false); // Close notifications if settings is opened
+		}
+	  };
+	
+	  const handleNotificationClick = () => {
+		setShowNotification((prevState) => !prevState); // Toggle notifications
+		if (!showNotification) {
+		  setShowSettingsModal(false); // Close settings if notifications is opened
+		}
+	  };
 	return (
 		<header>
 			<button className="toggle-btn" onClick={toggleSidebar}>
@@ -63,11 +85,21 @@ function Header({ setIsOpen, isOpen }) {
 				{" "}
 				{/* Accesare corectă a clasei CSS */}
 				<NotificationIcon />
-				<FaCog size={21} title="Settings" />
+				<FaCog
+  size={21}
+  onClick={handleSettingsClick} // Apelează funcția care afișează modalul
+/>
 				<FaSignOutAlt size={21} title="Logout" onClick={() => setShowModal(true)} />
 			</div>
 			{/* pentru cortina sura care aparare cand apesi pe log out */}
 			{showModal && <AskIfUserWantsToLogOut onDelete={handleLogout} onCancel={handleCancel} />}
+			{/* Afișare modal Setări */}
+			{showSettingsModal && (
+  <SettingsModal
+    isOpen={showSettingsModal}
+    onClose={() => setShowSettingsModal(false)} // Închide modalul
+  />
+)}
 		</header>
 	);
 }

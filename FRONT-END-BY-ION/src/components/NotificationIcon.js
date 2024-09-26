@@ -40,7 +40,7 @@ const NotificationIcon = () => {
         setNotifications(processedNotifications);
       } catch (error) {
         console.error("Error fetching notifications:", error);
-        alert("Failed to fetch notifications. Please try again later.");
+
       }
     };
 
@@ -51,7 +51,6 @@ const NotificationIcon = () => {
   const handleDeleteNotification = async (notificationId) => {
     if (!notificationId) {
       console.error("No notification ID provided for deletion.");
-      alert("Invalid notification ID.");
       return;
     }
 
