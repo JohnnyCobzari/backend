@@ -54,7 +54,7 @@ function LoginPage() {
   // Handler pentru trimiterea formularului
   const handleSubmit = async (event) => {
     event.preventDefault(); // Previne reîncărcarea paginii
-    axios.post('http://localhost:3002/auth/login', {
+    axios.post('http://localhost:3002/auth/login-local', {
       email: email,
       password: password,
     })

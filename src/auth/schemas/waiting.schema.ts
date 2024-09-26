@@ -5,7 +5,7 @@ import { Role } from '../enums/role.enum';
 @Schema()
 export class WaitingLocal extends Document {
   @Prop({ required: true })
-  name: string;
+  companyDirector: string;
 
   @Prop({ required: true })
   email: string;
@@ -14,10 +14,10 @@ export class WaitingLocal extends Document {
   password: string;
 
   @Prop()
-  docImage?: string;
+  documentImageUrl?: string;
 
   @Prop()
-  hisImage?: string;
+  userPhotoUrls?: string[];
 
   @Prop({ type: [String], enum: Role })
   role?: Role[];
@@ -27,3 +27,5 @@ export class WaitingLocal extends Document {
 }
 
 export const WaitingUserSchema = SchemaFactory.createForClass(WaitingLocal);
+
+

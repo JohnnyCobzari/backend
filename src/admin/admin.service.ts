@@ -36,11 +36,11 @@ export class AdminService {
     
         // Move user to main user database
         const newUser = new this.localModel({
-          name: waitingUser.name,
+          companyDirector: waitingUser.companyDirector,
           email: waitingUser.email,
           password: waitingUser.password, // Password is already hashed
-          docImage: waitingUser.docImage,
-          hisImage: waitingUser.hisImage,
+          documentImageUrl: waitingUser.documentImageUrl,
+          userPhotoUrls: waitingUser.userPhotoUrls,
           role: waitingUser.role,
         });
     
