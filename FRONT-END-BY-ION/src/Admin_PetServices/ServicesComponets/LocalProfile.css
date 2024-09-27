@@ -1,6 +1,17 @@
 body {
 	background-color: var(--highColor);
 }
+
+.star-rating2 {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20px;
+  }
+  
+  .star2 {
+	cursor: pointer;
+	transition: color 0.2s;
+  }
 .carousel-container_img {
 	max-width: 600px;
 	margin: 100px auto 20px;
