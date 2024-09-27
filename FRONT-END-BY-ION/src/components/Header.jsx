@@ -66,19 +66,19 @@ function Header({ setIsOpen, isOpen }) {
 			<div className={styles.HeaderPets}>
 				{" "}
 				{/* Accesare corectă a clasei CSS */}
-				<img src="./images/HeaderPets.png" alt="Pets" />
+				<img src={process.env.PUBLIC_URL + "/images/HeaderPets.png"} alt="Pets" />
 			</div>
 			<div className={styles.HeaderButtons}>
 				{" "}
 				{/* Accesare corectă a clasei CSS */}
-                <BsFillSendPlusFill size={21} onClick={togglePopup}/>
+				<BsFillSendPlusFill size={21} onClick={togglePopup} />
 				<NotificationIcon />
 				<FaCog size={21} title="Settings" />
 				<FaSignOutAlt size={21} title="Logout" onClick={() => setShowModal(true)} />
 			</div>
 			{/* pentru cortina sura care aparare cand apesi pe log out */}
 			{showModal && <AskIfUserWantsToLogOut onDelete={handleLogout} onCancel={handleCancel} />}
-            <NotificationPopup isOpen={isPopupOpen} onClose={togglePopup}/>
+			<NotificationPopup isOpen={isPopupOpen} onClose={togglePopup} />
 		</header>
 	);
 }
