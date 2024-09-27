@@ -3,15 +3,15 @@ import { IsString, IsNotEmpty, IsNumber, IsArray, IsOptional, IsLongitude, IsLat
 export class AddLocalDto {
   @IsNotEmpty()
   @IsString()
-  type: string;
+  localType: string;
 
   @IsNotEmpty()
   @IsString()
-  name: string;
+  localName: string;
 
   @IsNotEmpty()
   @IsString()
-  information: string;
+  localInfo: string;
 
   @IsNotEmpty()
   @IsString()
@@ -24,10 +24,6 @@ export class AddLocalDto {
   @IsNotEmpty()
   @IsLatitude()
   latitude: number;
-
-  @IsNotEmpty()
-  @IsString()
-  profileImage: string;
 
   @IsOptional()
   @IsArray()

@@ -4,6 +4,8 @@ import { FiX } from "react-icons/fi";
 import ImageUpload from "../../components/DragAndDrop";
 import GeolocationComponent from "../../components/Geolocation";
 import MultipleImageUpload from "./MultipleFileUpload";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 const SideBarAdd = ({ isOpen, setIsOpen }) => {
 	// State for form inputs
@@ -14,14 +16,15 @@ const SideBarAdd = ({ isOpen, setIsOpen }) => {
 	const [latitude, setLatitude] = useState(null); // Latitude
 	const [longitude, setLongitude] = useState(null); // Longitude
 	const [ImagesUpload, onImagesUpload] = useState([]);
+	const [error, setError] = useState([]);
 
 	const handleCoordinatesFetched = (lat, lng) => {
 		setLatitude(lat);
 		setLongitude(lng);
 	};
-
+	const navigate = useNavigate();
 	// Handle form submission (if required)
-	const handleFormSubmit = (e) => {
+	const handleFormSubmit = async (e) => {
 		e.preventDefault();
 
 		const userId = localStorage.getItem("userId");
@@ -38,6 +41,25 @@ const SideBarAdd = ({ isOpen, setIsOpen }) => {
 			images: ImagesUpload,
 		};
 
+
+		try {
+			const response = await axios.post(`http://localhost:3002/local/add-local`, addLocalForm, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+					"Content-Type": "application/json",
+				},
+			});
+
+			if (response.status === 201) {
+				console.log("Local profile created successfully!");
+				navigate("/ServicesHome");
+			} else {
+				setError("Failed to create pet profile.");
+			}
+		} catch (error) {
+			console.error("Error creating pet profile:", error);
+			setError("Failed to create pet profile.");
+		}
 		console.log(addLocalForm); // Replace with actual form submission logic
 	};
 

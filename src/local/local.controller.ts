@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards,  } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards,  } from '@nestjs/common';
 import { LocalService } from './local.service';
 import { AddLocalDto } from './dto/create-local.dto';
 import { WaitingAddLocal } from './schemas/waiting-local.schema';
@@ -42,4 +42,25 @@ export class LocalController {
         async createReview(@Body() createReviewDto: CreateReviewDto): Promise<Review> {
           return this.localService.addReview(createReviewDto);
         }
+
+        @Get('all-reviews/:id')
+        @Roles(Role.User,Role.Admin, Role.local)
+        @UseGuards(AuthGuard('jwt'), RolesGuard)
+      async findAllReviews(@Param('id') localId: string): Promise<Review[]> {
+          return this.localService.findAllReviews(localId);
+        }
+
+        @Get('one-local/:id')
+@Roles(Role.User, Role.Admin, Role.local)
+@UseGuards(AuthGuard('jwt'), RolesGuard)
+async findById(@Param('id') localId: string): Promise<AddLocal> {
+    return this.localService.findById(localId);
+}
+
+@Get('users-local/:id')
+@Roles(Role.User, Role.Admin, Role.local)
+@UseGuards(AuthGuard('jwt'), RolesGuard)
+async findByUserId(@Param('id') userId: string): Promise<AddLocal[]> {
+    return this.localService.findByUserId(userId);
+}
 }

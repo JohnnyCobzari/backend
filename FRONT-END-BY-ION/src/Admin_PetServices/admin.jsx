@@ -77,7 +77,7 @@ function NewNotificationItem({ item, onDelete, onApprove }) {
     return (
         <li style={styles.listItem}>
             <div>
-                <p><strong>Message:</strong> {item.message}</p>
+                <p><strong>Message:</strong> {item.announcement}</p>
                 <p><strong>Created At:</strong> {new Date(item.createdAt).toLocaleString()}</p>
                 <p><strong>Status:</strong> {item.status}</p>
             </div>

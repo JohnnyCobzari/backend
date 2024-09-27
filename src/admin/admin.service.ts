@@ -81,13 +81,12 @@ export class AdminService {
       
         // Move local to main database
         const newAddLocal = new this.addLocalModel({
-          type: waitingAddLocal.type,
-          name: waitingAddLocal.name,
-          information: waitingAddLocal.information,
+          localType: waitingAddLocal.localType,
+          localName: waitingAddLocal.localName,
+          localInfo: waitingAddLocal.localInfo,
           address: waitingAddLocal.address,
           longitude: waitingAddLocal.longitude,
           latitude: waitingAddLocal.latitude,
-          profileImage: waitingAddLocal.profileImage,
           images: waitingAddLocal.images,
           userId: waitingAddLocal.userId,  // Assuming AddLocal has a userId field
         });
@@ -100,7 +99,7 @@ export class AdminService {
         // Create a notification for the user who created the local
         const notification = new this.notificationModel({
           userId: waitingAddLocal.userId,  // Assign the userId of the creator
-          message: `Your Add Local request for "${waitingAddLocal.name}" has been approved!`,
+          message: `Your Add Local request for "${waitingAddLocal.localName}" has been approved!`,
           createdAt: new Date(),
         });
       
@@ -121,7 +120,7 @@ export class AdminService {
 
         const notification = new this.notificationModel({
           userId: waitingAddLocal.userId,  // Assign the userId of the creator
-          message: `Your Add Local request for "${waitingAddLocal.name}" has been rejected!`,
+          message: `Your Add Local request for "${waitingAddLocal.localName}" has been rejected!`,
           createdAt: new Date(),
         });
       
@@ -147,8 +146,7 @@ export class AdminService {
         const newNotifications = allUsers.map(async (user) => {
           const newNotification = new this.notificationModel({
             userId: user._id,  // Assign the userId of the recipient
-            message: waitingNotification.message,
-            createdAt: waitingNotification.createdAt,
+            message: waitingNotification.announcement,
           });
       
           await newNotification.save();

@@ -57,7 +57,7 @@ function App() {
         <Route path="/ServiceLogin" element={<ServiceLoginPage />} />
         <Route path="/ServiceSignUp" element={<ServiceSignUpPage />} />
         <Route path="/ServiceHome" element={<ServiceHomePage/>}/>
-        <Route path='/LocalProfile' element={<LocalProfile/>}/>
+        <Route path='/LocalProfile/:id' element={<LocalProfile/>}/>
 
         <Route path="/Admin" element={<Admin />} />
         <Route path="/LogIn" element={<LoginPage />  } />
