@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards,  } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards, ValidationPipe,  } from '@nestjs/common';
 import { LocalService } from './local.service';
 import { AddLocalDto } from './dto/create-local.dto';
 import { WaitingAddLocal } from './schemas/waiting-local.schema';
@@ -37,10 +37,16 @@ export class LocalController {
         }
 
         @Post('create-review')
-        @Roles(Role.User)
+        @Roles(Role.User, Role.Admin)
         @UseGuards(AuthGuard('jwt'), RolesGuard)
-        async createReview(@Body() createReviewDto: CreateReviewDto): Promise<Review> {
-          return this.localService.addReview(createReviewDto);
+        async createReview(@Body(new ValidationPipe({ transform: true })) createReviewDto: CreateReviewDto): Promise<Review> {
+            try {
+                console.log(createReviewDto); // Log the DTO
+                return await this.localService.addReview(createReviewDto);
+              } catch (error) {
+                console.error('Error in createReview:', error);
+                throw error;
+              }
         }
 
         @Get('all-reviews/:id')
