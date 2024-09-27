@@ -1,0 +1,35 @@
+.star-rating {
+    display: flex;
+    align-items: center;
+  }
+  
+  .star-container {
+    position: relative;
+    width: 40px; /* Width of each star */
+    height: 40px; /* Height of each star */
+    margin-right: 5px; /* Space between stars */
+  }
+  
+  .star {
+    font-size: 2rem; /* Adjust the size of the stars */
+    color: lightgray; /* Color for unfilled stars */
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .star-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: gold; /* Color for filled stars */
+    overflow: hidden; /* Hide overflow for partial stars */
+    transition: width 0.2s ease;
+  }
+  
+  .rating-value {
+    margin-left: 10px; /* Space between stars and rating text */
+    font-size: 1.2rem; /* Adjust the size of the rating text */
+  }
+  

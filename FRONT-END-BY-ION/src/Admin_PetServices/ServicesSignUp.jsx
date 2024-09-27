@@ -149,7 +149,7 @@ function ServiceSignUp() {
 				</button>
 				<p className="paragraf">
 					Already have an account?{" "}
-					<a href="LogIn" className="sign-up">
+					<a href="ServiceLogIn" className="sign-up">
 						Log In
 					</a>
 				</p>

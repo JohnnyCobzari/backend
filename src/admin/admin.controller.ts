@@ -26,6 +26,7 @@ export class AdminController {
   @Post('approve/:id')
   async approveUser(@Param('id') id: string): Promise<Local> {
     const user = await this.adminService.approveUser(id);
+    console.log("o ajuns");
     if (!user) {
       throw new NotFoundException('User not found or could not be approved');
     }
@@ -75,8 +76,8 @@ export class AdminController {
   async getWaitingListNotification(): Promise<LocalNotification[]> {
     return this.adminService.getWaitingListNotifciation();
   }
-//   @Roles(Role.User)
-//   @UseGuards( RolesGuard)
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Post('approve-notification/:id')
   async approveNotification(@Param('id') id: string): Promise<Notification> {
     const Notification = await this.adminService.approveNotification(id);
@@ -85,8 +86,8 @@ export class AdminController {
     }
     return Notification;
   }
-//   @Roles(Role.User)
-//   @UseGuards( RolesGuard)
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Post('reject-notification/:id')
   async rejectNotification(@Param('id') id: string): Promise<LocalNotification> {
     const notification = await this.adminService.rejectNotification(id);

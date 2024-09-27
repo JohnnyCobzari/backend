@@ -8,13 +8,13 @@ import { User } from 'src/auth/schemas/user.schema';
   export class AddLocal extends Document{
     
   @Prop({ required: true })
-  type: string;
+  localType: string;
 
   @Prop({ required: true })
-  name: string;
+  localName: string;
 
   @Prop({ required: true })
-  information: string;
+  localInfo: string;
 
   @Prop({ required: true })
   address: string;
@@ -24,9 +24,6 @@ import { User } from 'src/auth/schemas/user.schema';
 
   @Prop({ required: true })
   latitude: number;
-
-  @Prop({ required: true })
-  profileImage: string;
 
   @Prop({ type: [String], default: [] })
   images: string[];

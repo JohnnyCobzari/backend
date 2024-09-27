@@ -48,12 +48,7 @@ export class NotificationService {
     }
   
     // Using $or to find notifications for either the user or where the destination is 'all'
-    const notifications = await this.notificationModel.find({
-      $or: [
-        { userId: userId },
-        { destination: 'all' }
-      ]
-    }).exec();
+    const notifications = await this.notificationModel.find({userId: userId }).exec();
   
     if (notifications.length === 0) {
       throw new NotFoundException('No notifications found for this user');

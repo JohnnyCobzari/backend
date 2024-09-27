@@ -39,8 +39,7 @@ const NotificationIcon = () => {
 
         setNotifications(processedNotifications);
       } catch (error) {
-        console.error("Error fetching notifications:", error);
-
+        //console.error("Error fetching notifications:", error);
       }
     };
 

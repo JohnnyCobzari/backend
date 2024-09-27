@@ -17,10 +17,14 @@ import { WaitingUserSchema } from './schemas/waiting.schema';
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) =>{
-        return{
-          secret: config.get<string>('JWT_SECRET'),
-          signOptions: {expiresIn:config.get<string | number>('JWT_EXPIRE')}
-        }
+        const secret = config.get<string>('JWT_SECRET');
+        const expiresIn = config.get<string | number>('JWT_EXPIRE');
+        console.log('JWT Secret:', secret);
+        console.log('JWT Expiration Time:', expiresIn);
+        return {
+            secret,
+            signOptions: { expiresIn },
+        };
       }
     }),
     MongooseModule.forFeature([{name: 'User', schema: UserSchema}]),

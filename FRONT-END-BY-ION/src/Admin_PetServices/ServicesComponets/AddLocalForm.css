@@ -1,49 +1,78 @@
 .sidebar-add {
-    position: fixed;
-    bottom: -100%; /* Inițial ascuns în afara ecranului */
-    left: 0;
-    width: 100%;
-    height: 90vh;
-    background-color: var(--midColor);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: bottom 0.5s ease; /* Tranziția la deschidere */
-    z-index: 10;
-    overflow-y: auto; 
+	position: fixed;
+	bottom: -100%; /* Inițial ascuns în afara ecranului */
+	left: 0;
+	width: 100%;
+	height: 90vh;
+	background-color: var(--midColor);
+	color: white;
+	display: block;
+	transition: bottom 0.5s ease; /* Tranziția la deschidere */
+	z-index: 10;
+	overflow-y: auto;
 }
 
 .sidebar-add.open-add {
-    bottom: 0; /* Afișează sidebar-ul de jos */
+	bottom: 0; /* Afișează sidebar-ul de jos */
 }
 
 .toggle-button-add {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    
-    color: var(--lowColor);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: transparent;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	color: var(--lowColor);
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	background-color: transparent;
 }
 
 .toggle-button-add:hover {
-    transform: scale(1.1);
+	transform: scale(1.1);
 }
 
 .content-add {
-    margin: 0 auto;
-    width: 80%;
-    padding: 20px;
-    text-align: center;
-    transform: translateX(40px);
-    max-width: 580px
+	overflow-y: auto;
+	margin: 0 auto;
+	width: 80%;
+	padding: 20px;
+	text-align: center;
+	transform: translateX(40px);
+	max-width: 580px;
 }
 
-.content-add p{
- text-align: left;
+.content-add p {
+	text-align: left;
 }
 
+.content-add textarea {
+	width: 100%;
+	height: 20vh;
+	background-color: var(--highColor);
+	border-radius: 4px;
+	resize: none;
+	border: none;
+	padding: 10px;
+	color: var(--lowColor);
+}
+
+.content-add textarea:focus {
+	outline: none;
+	border: 1px solid var(--lowColor);
+}
+
+.LocalUploadForm {
+	width: 100%;
+	padding: 10px;
+	background-color: #83735a;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+	margin-top: 18px;
+}
+
+.LocalUploadForm:hover {
+	background-color: #6b5b48; /* Darker shade on hover */
+}

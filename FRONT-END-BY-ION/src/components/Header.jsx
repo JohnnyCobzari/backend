@@ -7,7 +7,8 @@ import React, { useState } from "react";
 import { CgMenu } from "react-icons/cg";
 import SettingsModal from "./SettingsModal";
 import "../styles/SettingsModal.css"; // Make sure the relative path is correct
-
+import { BsFillSendPlusFill } from "react-icons/bs";
+import NotificationPopup from "../Admin_PetServices/ServicesComponets/NotificationPopup";
 
 const AskIfUserWantsToLogOut = ({ onDelete, onCancel }) => {
 	return (
@@ -34,6 +35,12 @@ function Header({ setIsOpen, isOpen }) {
 	const [showModal, setShowModal] = useState(false);
 	const [showSettingsModal, setShowSettingsModal] = useState(false); // State for settings modal
 	const [showNotification, setShowNotification] = useState(false); // New state for notifications
+	const [isPopupOpen, setPopupOpen] = useState(false);
+
+	// Toggle the popup open/close state
+	const togglePopup = () => {
+		setPopupOpen((prevState) => !prevState);
+	};
 
 	//variabile ---------
 	
@@ -79,11 +86,12 @@ function Header({ setIsOpen, isOpen }) {
 			<div className={styles.HeaderPets}>
 				{" "}
 				{/* Accesare corectă a clasei CSS */}
-				<img src="./images/HeaderPets.png" alt="Pets" />
+				<img src={process.env.PUBLIC_URL + "/images/HeaderPets.png"} alt="Pets" />
 			</div>
 			<div className={styles.HeaderButtons}>
 				{" "}
 				{/* Accesare corectă a clasei CSS */}
+				<BsFillSendPlusFill size={21} onClick={togglePopup} />
 				<NotificationIcon />
 				<FaCog
   size={21}
@@ -100,6 +108,7 @@ function Header({ setIsOpen, isOpen }) {
     onClose={() => setShowSettingsModal(false)} // Închide modalul
   />
 )}
+			<NotificationPopup isOpen={isPopupOpen} onClose={togglePopup} />
 		</header>
 	);
 }
