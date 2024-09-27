@@ -1,34 +1,83 @@
-import React from "react";
-import Carousel from "react-bootstrap/Carousel";
+import React, { useState, useEffect } from 'react';
+import "./LocalProfile.css"
 
-// ExampleCarouselImage Component
-function ExampleCarouselImage({ images, index }) {
-	return (
-		<img
-			className="d-block w-100"
-			src={images[index]} // Use the current index to display the corresponding image
-			alt={`Slide ${index + 1}`} // Alt text for accessibility
-		/>
-	);
-}
+const ImageCarousel = ({ images }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isSliding, setIsSliding] = useState(false);
 
-// UncontrolledExample Component
-function ImageCarousel() {
-	const images = ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZAhZTmV7ezdrDYE73Kiy0mwGx3Zhwvagf3g&s", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo5WKKj_Y8od_BJFvoLDKlz50BBGd2i1sH03wGY8jFIKmeKyIzdEnSLUjqmCF_nVqYMBw&usqp=CAU", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRE_18dJrdd1gfLSqCtbyi5_sSJ_L8DY6XJxhlEHgRWlVw2GEmauc4lVB4QHNoT3kRpxs8&usqp=CAU", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZAhZTmV7ezdrDYE73Kiy0mwGx3Zhwvagf3g&s", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo5WKKj_Y8od_BJFvoLDKlz50BBGd2i1sH03wGY8jFIKmeKyIzdEnSLUjqmCF_nVqYMBw&usqp=CAU", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRE_18dJrdd1gfLSqCtbyi5_sSJ_L8DY6XJxhlEHgRWlVw2GEmauc4lVB4QHNoT3kRpxs8&usqp=CAU"];
+  const handlePrevClick = () => {
+    setIsSliding(true);
+    setTimeout(() => {
+      setCurrentIndex((prevIndex) =>
+        prevIndex === 0 ? images.length - 1 : prevIndex - 1
+      );
+      setIsSliding(false);
+    }, 500);
+  };
 
-	return (
-		<Carousel>
-			{images.map((image, index) => (
-				<Carousel.Item key={index}>
-					<ExampleCarouselImage images={images} index={index} />
-					<Carousel.Caption>
-						<h3>{`Image ${index + 1}`}</h3>
-		
-					</Carousel.Caption>
-				</Carousel.Item>
-			))}
-		</Carousel>
-	);
-}
+  const handleNextClick = () => {
+    setIsSliding(true);
+    setTimeout(() => {
+      setCurrentIndex((prevIndex) =>
+        prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      );
+      setIsSliding(false);
+    }, 500);
+  };
+
+  const handleThumbClick = (index) => {
+    setIsSliding(true);
+    setTimeout(() => {
+      setCurrentIndex(index);
+      setIsSliding(false);
+    }, 500);
+  };
+
+  const getAdjacentIndex = (offset) => {
+    const newIndex = currentIndex + offset;
+    return (newIndex + images.length) % images.length;
+  };
+
+  return (
+    <div className="carousel-container_img">
+      <div className={`carousel_img ${isSliding ? 'sliding_img' : ''}`}>
+        <button className="prev_img" onClick={handlePrevClick}>
+          &#10094;
+        </button>
+        <div className="image-wrapper_img">
+          <img
+            className="adjacent-img_img left_img"
+            src={images[getAdjacentIndex(-1)]}
+            alt="Previous Slide"
+          />
+          <img
+            className={`main-img_img ${isSliding ? 'sliding_img' : ''}`}
+            src={images[currentIndex]}
+            alt={`Slide ${currentIndex}`}
+          />
+          <img
+            className="adjacent-img_img right_img"
+            src={images[getAdjacentIndex(1)]}
+            alt="Next Slide"
+          />
+        </div>
+        <button className="next_img" onClick={handleNextClick}>
+          &#10095;
+        </button>
+      </div>
+      <div className="thumbnail-container_img">
+        {images.map((image, index) => (
+          <img
+            key={index}
+            className={`thumbnail_img ${index === currentIndex ? 'active_img' : ''}`}
+            src={image}
+            alt={`Thumbnail ${index}`}
+            onClick={() => handleThumbClick(index)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default ImageCarousel;
