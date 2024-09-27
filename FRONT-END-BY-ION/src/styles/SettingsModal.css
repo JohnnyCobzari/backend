@@ -1,0 +1,66 @@
+.settings-popup {
+    background-color: #ffffffab;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    position: fixed; /* Folosește fixed pentru a se suprapune peste restul paginii */
+    right: 0;
+    top: 65px;
+    width: 180px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1001; /* Setează un z-index mare pentru a se suprapune peste alte elemente */
+  }
+  
+  .settings-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .settings-icon {
+    color: var(--lowColor);
+    cursor: pointer;
+  }
+  
+  .settings-popup ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .settings-popup ul li {
+    padding: 5px 0;
+  }
+  
+  .modalsettings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .modalsettings-header h4 {
+    margin: 0;
+  }
+  
+  .settings-icon {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .textlinksettings {
+  background-color: rgb(131, 115, 90, 255); /* Green background */
+  border: none;
+  color: white; /* White text */
+  padding: 7px; /* Padding around the text */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+
+  cursor: pointer;
+  border-radius: 4px; /* Rounded corners */
+  }
+  

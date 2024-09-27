@@ -20,6 +20,14 @@ body {
   overflow-x: hidden; /* Ascunde scroll-ul pe orizontală */
 }
 
+.textlinksign {
+  font-size: 10px;
+  width: 20px;
+  max-width: 100px;
+  color: rgb(131, 115, 90, 255); /* Text color blue */
+  font-weight: bold;
+}
+
 /*=================================================*/
 /* General styling for larger screens (default) */
 .uperContainerForImagesPage2 {

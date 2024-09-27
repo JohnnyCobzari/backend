@@ -63,6 +63,10 @@ function IntroPage() {
                 <img className="firstPageImage" src="/images/firstPageImage.png" alt="First page image" />
             </div>
 
+            <a className="textlink" href="http://localhost:3000/serviceSignUp">
+             Add your business to our pet service map!
+            </a>
+
             <p className="smallTextAtTheButton">
                 In today's world, pet ownership is at an all-time high, with dogs and cats becoming integral members of many households. However, finding suitable partners for breeding and accessing essential pet services like veterinary care, grooming, and pet shops remains a challenge for many pet owners. PawPaw provides you the solution. Find here a match for your pet!
             </p>

@@ -128,7 +128,14 @@ function LoginPage() {
         <p className="paragraf">
           Don't have an account? <a href="SignUp" className="sign-up">sign-up</a>
         </p>
+        <a className="textlinksign" href="http://localhost:3000/serviceSignUp">
+        Switch to Business Account!
+        </a>
+
+        
       </form>
+
+      
 
       <div className="FooterImageBoxPage2">
         <img src="images/LogInUnder.png" alt="Footer Image" />
