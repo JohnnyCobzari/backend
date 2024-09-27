@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { AddLocalDto } from './dto/create-local.dto';
 import { WaitingAddLocal } from './schemas/waiting-local.schema';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateLocalNotificationDto } from './dto/create-local-notification.dto';
 import { LocalNotification } from './schemas/create-local-ntification.schema';
@@ -59,4 +59,32 @@ export class LocalService {
     
         return review;
       }
+
+      async findById(id: string): Promise<AddLocal> {
+    
+        
+        const local = await this.LocalModel.findById(id);
+        if(!local) {
+            throw new NotFoundException('Pet not found');
+        }
+        return local;
+     }
+
+     async findByUserId(id: string): Promise<AddLocal[]> {
+      
+        const locals = await this.LocalModel.find({userId: id});
+        if(!locals) {
+            throw new NotFoundException('Pet not found');
+        }
+        return locals;
+     }
+
+     async findAllReviews(id: string): Promise<Review[]> {
+      
+        const reviews = await this.reviewModel.find({localId: id});
+        if(!reviews) {
+            throw new NotFoundException('Pet not found');
+        }
+        return reviews;
+     }
 }

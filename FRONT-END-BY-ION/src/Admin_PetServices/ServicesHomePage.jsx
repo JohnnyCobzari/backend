@@ -37,10 +37,7 @@ const ServiceHomePage = () => {
 				const response = await axios.get("http://localhost:3002/pets", {
 					headers: {
 						Authorization: `Bearer ${token}`,
-					},
-					params: {
-						userId, // Pass the userId as a query parameter
-					},
+					}
 				});
 
 				// Filter pets that have valid coordinates (latitude and longitude)

@@ -5,6 +5,24 @@ import Logo from "../components/Logo";
 import { useNavigate } from "react-router-dom";
 import ImageUpload from "../components/DragAndDrop";
 import MultipleImageUpload from "./ServicesComponets/MultipleFileUpload";
+import axios from "axios";
+
+const api = axios.create({
+	baseURL: 'http://localhost:3002', // Your backend URL
+	headers: {
+	  'Content-Type': 'application/json',
+	  'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+	}
+  });
+  
+  // Function to set the token in headers
+  export const setAuthToken = (token) => {
+	if (token) {
+	  api.defaults.headers['Authorization'] = `Bearer ${token}`;
+	} else {
+	  delete api.defaults.headers['Authorization'];
+	}
+  };
 
 function ServiceSignUp() {
 	const navigate = useNavigate();
@@ -17,6 +35,7 @@ function ServiceSignUp() {
 		companyDirector: "",
 		documentImageUrl: "",
 		userPhotoUrls: [],
+		role: "local"
 	});
 
 	const [error, setError] = useState("");
@@ -35,6 +54,9 @@ function ServiceSignUp() {
 		setFormData((prevData) => ({ ...prevData, userPhotoUrls: newImageUrls[0] }));
 	};
 
+	
+  
+
 	const handleSubmit = (event) => {
 		event.preventDefault(); // Prevent page reload
 
@@ -47,6 +69,37 @@ function ServiceSignUp() {
 		// Display submitted data
 		setSubmittedData(formData);
 		setError(""); // Clear error message
+
+		axios.post('http://localhost:3002/auth/local-signUp', formData)
+	  .then((response) => {
+		const { token, userId } = response.data;
+		localStorage.setItem('authToken', token);
+		localStorage.setItem('userId', userId);
+  
+		// Update Axios default headers
+		setAuthToken(token);
+  
+		   setFormData({
+      email: "",
+      password: "",
+      repeatPassword: "",
+      companyDirector: "",
+      documentImageUrl: "",
+      userPhotoUrls: [],
+    });
+		// go to the home page
+		navigate('/HomePage'); //<============================================
+	  })
+	  .catch((err) => {
+		// Check if the error has a response and a message
+		if (err.response.data.message) {
+		  console.log('Error message from backend:', err.response.data.message); // Check in the console
+		  setError(err.response.data.message);  // Set the backend message as the error
+		} else {
+		  setError("An error occurred while logging in.");  // Fallback message
+		}
+	  });
+	
 	};
 
 	return (

@@ -4,7 +4,7 @@ import { Role } from '../enums/role.enum';
 export class CreateLocalDto {
   @IsNotEmpty()
   @IsString()
-  name: string;
+  companyDirector: string; // Matches your front-end's "companyDirector"
 
   @IsNotEmpty()
   @IsEmail()
@@ -16,13 +16,13 @@ export class CreateLocalDto {
 
   @IsOptional()
   @IsString()
-  docImage?: string;
+  documentImageUrl?: string; // Matches your front-end's "documentImageUrl"
 
   @IsOptional()
   @IsString()
-  hisImage?: string;
+  userPhotoUrls?: string[]; // Adjusted to match the front-end's "userPhotoUrls" as an array
 
   @IsOptional()
-  @IsEnum(Role, { each: true })
-  role?: Role[];
+  @IsEnum(Role)
+  role?: Role; // Adjusted to a single role, as your form sends "local"
 }

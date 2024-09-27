@@ -6,14 +6,37 @@ import StarRating from "./ServicesComponets/StarRating";
 import { PiMapPinAreaBold } from "react-icons/pi";
 import ReviewsBox from "./ServicesComponets/ReveiwsBox";
 
+
+import { useEffect, useState } from "react";
+import axios from 'axios';
+
 function LocalProfile() {
-	const localInfo = {
-		address: "strada albisoara",
-		localInfo: "loren ispusdn valsdnvaslkj vasfivn asdflk dsklfj sdjfk fjkl",
-		localName: "bigShop",
-		localType: "Pet Shop",
-		userId: "66e1c4efb15fa60cdd025907",
-	};
+  
+
+  const [localInfo, setLocals]= useState();
+  useEffect(() => {
+		
+
+		const currentUrl = window.location.href; // Get the full URL
+const localId = currentUrl.split("/").pop(); // Get the last part after the final slash
+
+console.log(localId);
+
+		
+			const response =axios.get(`http://localhost:3002/local/one-local/${localId}`, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+					"Content-Type": "application/json",
+				},
+			})
+			.then(response => {
+                setLocals(response.data);
+				console.log(localInfo);
+            })
+            .catch(error => console.error('Error fetching notifications:', error));;
+
+            console.log(localInfo);
+	});
 
 	const images = ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZAhZTmV7ezdrDYE73Kiy0mwGx3Zhwvagf3g&s", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo5WKKj_Y8od_BJFvoLDKlz50BBGd2i1sH03wGY8jFIKmeKyIzdEnSLUjqmCF_nVqYMBw&usqp=CAU", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYwGZzpqc8SDDerpr-LEqReJ_QqRgBVxEVUuOt9XbOfd71jk4vZBDQCgu5v8aNJGLo7Ao&usqp=CAU", "https://c8.alamy.com/comp/2RD1H9J/pet-shop-building-line-concept-2RD1H9J.jpg"];
 
