@@ -5,12 +5,7 @@ export class CreateLocalNotificationDto {
   
   @IsString()
   @IsNotEmpty()
-  message: string;
-
-  @IsDate()
-  @IsNotEmpty()
-  @Type(() => Date) 
-  createdAt: Date;
+  announcement: string;
 
   @IsMongoId()
   @IsNotEmpty()

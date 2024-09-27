@@ -3,13 +3,15 @@ import { Document } from 'mongoose';
 import { User } from "../../auth/schemas/user.schema";
 import mongoose from "mongoose";
 
+
+@Schema({
+    timestamps: true, // Automatically adds createdAt and updatedAt fields
+  })
 @Schema()
 export class LocalNotification extends Document {
   @Prop()
-  message: string;
+  announcement: string;
 
-  @Prop()
-  createdAt: Date;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User'}) 
   userId: User;
