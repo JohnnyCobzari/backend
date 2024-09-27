@@ -24,7 +24,7 @@ body {
 	overflow: hidden;
 }
 
-img {
+.carousel-container_img img {
 	border-radius: 10px;
 	transition:
 		transform 0.3s ease-in-out,
@@ -121,7 +121,7 @@ button:hover {
 
 /* celelalte elemente inafara de carusel================================*/
 
-.localNameCOntainer {
+.localNameContainer {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -131,7 +131,7 @@ button:hover {
 	margin-bottom: 15px;
 }
 
-.localNameCOntainer div {
+.localNameContainer div {
 	flex: 1;
 	height: 1px;
 	background-image: linear-gradient(rgb(255, 234, 184), rgb(165, 93, 42));
@@ -153,12 +153,12 @@ button:hover {
 	margin-bottom: 10px;
 }
 
-.localNameCOntainer h2 {
+.localNameContainer h2 {
 	font-size: 2rem;
 	font-weight: bold;
 }
 
-.localNameCOntainer div {
+.localNameContainer div {
 	flex-grow: 1;
 	height: 1px;
 	background-color: white;
@@ -251,7 +251,7 @@ button:hover {
 }
 
 .LocalInformationButton,
-.LocalReviewBUtton {
+.LocalReviewButton {
 	flex: 1;
 	border-bottom: 1px solid var(--lowColor);
 	border-color: transparent;
@@ -264,20 +264,20 @@ button:hover {
 }
 
 .LocalInformationButton.activeButton {
-	border-bottom: 3px solid var(--primaryColor);
+	border-bottom: 3px solid var(--lowColor);
 }
 
-.LocalReviewBUtton.activeButton {
-	border-bottom: 3px solid var(--primaryColor);
+.LocalReviewButton.activeButton {
+	border-bottom: 3px solid var(--lowColor);
 }
 
 .LocalInformationButton:not(.activeButton),
-.LocalReviewBUtton:not(.activeButton) {
+.LocalReviewButton:not(.activeButton) {
 	border-bottom: none;
 }
 
 .LocalInformationButton:hover,
-.LocalReviewBUtton:hover {
+.LocalReviewButton:hover {
 	background-color: var(--midColor);
 }
 

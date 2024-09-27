@@ -32,7 +32,7 @@ const SidebarLocals = ({ isOpen, isOpenForm, setIsOpenForm }) => {
             .catch(error => console.error('Error fetching notifications:', error));;
 
 		
-	});
+	}, []);
 
 	const goToLocalProfile = (id) => {
 		navigate(`/LocalProfile/${id}`);
