@@ -92,7 +92,7 @@ body {
 	z-index: 2;
 }
 
-button:hover {
+.prev_img:hover, .next_img:hover {
 	background-color: rgba(162, 130, 49, 0.5);
 }
 
@@ -134,7 +134,7 @@ button:hover {
 .localNameContainer div {
 	flex: 1;
 	height: 1px;
-	background-image: linear-gradient(rgb(255, 234, 184), rgb(165, 93, 42));
+	background-image: linear-gradient(to right,rgb(255, 234, 184), rgb(255, 198, 158));
 	margin: 0 10px;
 }
 
@@ -239,7 +239,7 @@ button:hover {
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	margin-top: 20px;
+	margin-top: 36px;
 	border-top: 1px solid var(--midColor);
 	background-color: aqua;
 }

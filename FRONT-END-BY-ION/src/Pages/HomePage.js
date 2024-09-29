@@ -60,7 +60,7 @@ const MainPage = () => {
 
 	return (
 		<>
-			<Header setIsOpen={setIsOpen} isOpen={isOpen} />
+			<Header setIsOpen={setIsOpen} isOpen={isOpen} showMatch={true} />
 			<Sidebar isOpen={isOpen} />
 			<MapBox pets={allPets} />
 			<Footer />

@@ -6,10 +6,6 @@ import axios from 'axios';
 const SidebarLocals = ({ isOpen, isOpenForm, setIsOpenForm }) => {
 	const navigate = useNavigate();
 
-
-	const goToCreateProfile = () => {
-		navigate("/AddPet");
-	};
 	const [locals, setLocals]= useState([]);
 
 
@@ -19,7 +15,7 @@ const SidebarLocals = ({ isOpen, isOpenForm, setIsOpenForm }) => {
 		const userId = localStorage.getItem("userId");
 
 		
-			const response =axios.get(`http://localhost:3002/local/users-local/${userId}`, {
+			const response = axios.get(`http://localhost:3002/local/users-local/${userId}`, {
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem("authToken")}`,
 					"Content-Type": "application/json",
@@ -27,7 +23,9 @@ const SidebarLocals = ({ isOpen, isOpenForm, setIsOpenForm }) => {
 			})
 			.then(response => {
                 setLocals(response.data);
-				console.log(locals);
+                console.log('debug1')
+				console.log(response.data);
+                localStorage.setItem("locals", JSON.stringify(response.data));
             })
             .catch(error => console.error('Error fetching notifications:', error));;
 

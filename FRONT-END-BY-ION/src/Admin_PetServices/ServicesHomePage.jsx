@@ -64,7 +64,7 @@ const ServiceHomePage = () => {
 
 	return (
 		<>
-			<Header setIsOpen={setIsOpen} isOpen={isOpen} />
+			<Header setIsOpen={setIsOpen} isOpen={isOpen} showMatch={false} />
 			<SidebarLocals isOpen={isOpen} isOpenForm={isOpenForm} setIsOpenForm={setIsOpenForm} />
 			<MapBox pets={allPets} />
 			<div className="addLocalButton">
