@@ -6,6 +6,8 @@ import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import { NewPasswordDto } from './dto/new-password.dto';
+import { CreateLocalDto } from './dto/local-signup.dto';
+
 
 @Controller('auth')
 export class AuthController {
@@ -22,7 +24,12 @@ export class AuthController {
     login(@Body() loginDto: LoginDto): Promise<{token: string}> {
         return this.authService.login(loginDto)
     } 
-    
+
+    @Post('/login-local')
+    loginlocal(@Body() loginDto: LoginDto): Promise<{token: string}> {
+        return this.authService.loginlocal(loginDto)
+    } 
+
     @Post('reset-password')
     @HttpCode(HttpStatus.OK)
     async postReset(@Body('email') email: string) {
@@ -53,4 +60,12 @@ export class AuthController {
       passwordToken: token, // Send the token back to the frontend
     };
   }
+
+  @Post('local-signup')
+  async addToWaitingList(@Body() createLocalDto: CreateLocalDto) {
+    return await this.authService.addToWaitingList(createLocalDto);
+  }
+ 
+
+
 }

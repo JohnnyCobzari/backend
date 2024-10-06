@@ -54,7 +54,7 @@ const ImageUpload = ({ setImageSrc, imageSrc }) => {
   };
 
   const imageContainerStyle = {
-    marginTop: '20px', // Spațiu între buton și imaginea selectată
+    marginLeft: '0px', // Spațiu între buton și imaginea selectată
   };
 
   const h3Style = {

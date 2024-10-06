@@ -1,5 +1,6 @@
 import { Schema, Prop, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from "mongoose";
+import { Role } from '../enums/role.enum';
 
 @Schema({
   timestamps: true, // Automatically adds createdAt and updatedAt fields
@@ -26,6 +27,13 @@ export class User extends Document {
   // Add the resetTokenExpiration field to the schema
   @Prop()
   resetTokenExpiration?: Date;
+
+  @Prop({
+    type: [{ type: String, enum: Role }],
+    default: [Role.User],
+  })
+  role: Role[];
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -10,16 +10,23 @@ import { NewPasswordDto } from './dto/new-password.dto';
 import * as crypto from 'crypto';
 import * as nodemailer from 'nodemailer';
 import * as sendgridTransport from 'nodemailer-sendgrid-transport';
+import { CreateLocalDto } from './dto/local-signup.dto';
+import { WaitingLocal } from './schemas/waiting.schema';
+import { Local } from './schemas/local.schema';
 
 @Injectable()
 export class AuthService {
     constructor(
         @InjectModel(User.name)
         private usermodel: Model<User>,
-        private jwtService: JwtService
+        private jwtService: JwtService,
+        @InjectModel(WaitingLocal.name)
+        private waitingUserModel: Model<WaitingLocal>,
+        @InjectModel(Local.name)
+        private LocalModel: Model<Local>,
     ) {}
     async signUp(signUpDto: SignUpDto): Promise<{ token: string; userId: string }> {
-      const { name, email, password } = signUpDto;
+      const { name, email, password, role } = signUpDto;
     
       // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -28,7 +35,8 @@ export class AuthService {
       const user = await this.usermodel.create({
         name,
         email,
-        password: hashedPassword
+        password: hashedPassword,
+        role
       });
     
       // Generate JWT token
@@ -43,6 +51,40 @@ export class AuthService {
     
       // Find the user by email
       const user = await this.usermodel.findOne({ email });
+    
+      if (!user) {
+        console.log('Invalid email');
+        throw new UnauthorizedException({
+          statusCode: 401,
+          message: 'Invalid email',
+          error: 'Unauthorized',
+        });
+      }
+    
+      // Compare password
+      const isPassCorrect = await bcrypt.compare(password, user.password);
+    
+      if (!isPassCorrect) {
+        console.log('Incorrect password');
+        throw new UnauthorizedException({
+          statusCode: 401,
+          message: 'Invalid password',
+          error: 'Unauthorized',
+        });
+      }
+    
+      // Generate JWT token
+      const token = this.jwtService.sign({ id: user._id });
+    
+      // Return both token and user ID
+      return { token, userId: user._id.toString() };
+    }
+
+    async loginlocal(loginDto: LoginDto): Promise<{ token: string; userId: string }> {
+      const { email, password } = loginDto;
+    
+      // Find the user by email
+      const user = await this.LocalModel.findOne({ email });
     
       if (!user) {
         console.log('Invalid email');
@@ -150,5 +192,16 @@ async sendResetLink(email: string): Promise<void> {
 
     return user;
   }
+
+  async addToWaitingList(createUserDto: CreateLocalDto): Promise<WaitingLocal> {
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+    const waitingUser = new this.waitingUserModel({
+      ...createUserDto,
+      password: hashedPassword,
+      status: 'pending',
+    });
+    return await waitingUser.save();
+  }
+
 
 }

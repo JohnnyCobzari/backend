@@ -5,6 +5,9 @@ import { PetModule } from './pet/pet.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
+import { NotificationModule } from './notifications/notifications.module';
+import { AdminModule } from './admin/admin.module';
+import { LocalModule } from './local/local.module';
 
 @Module({
   imports: [
@@ -14,7 +17,10 @@ import { AuthModule } from './auth/auth.module';
     }),
     MongooseModule.forRoot(process.env.DBURI),
     PetModule,
-    AuthModule
+    AuthModule,
+    NotificationModule,
+    AdminModule,
+    LocalModule
   ],
   controllers: [AppController],
   providers: [AppService],

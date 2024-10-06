@@ -7,6 +7,8 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { JwTStrategy } from './jwt.strategy';
+import { LocalSchema } from './schemas/local.schema';
+import { WaitingUserSchema } from './schemas/waiting.schema';
 
 
 @Module({
@@ -15,13 +17,19 @@ import { JwTStrategy } from './jwt.strategy';
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) =>{
-        return{
-          secret: config.get<string>('JWT_SECRET'),
-          signOptions: {expiresIn:config.get<string | number>('JWT_EXPIRE')}
-        }
+        const secret = config.get<string>('JWT_SECRET');
+        const expiresIn = config.get<string | number>('JWT_EXPIRE');
+        console.log('JWT Secret:', secret);
+        console.log('JWT Expiration Time:', expiresIn);
+        return {
+            secret,
+            signOptions: { expiresIn },
+        };
       }
     }),
-    MongooseModule.forFeature([{name: 'User', schema: UserSchema}])
+    MongooseModule.forFeature([{name: 'User', schema: UserSchema}]),
+    MongooseModule.forFeature([{name: 'Local', schema: LocalSchema}]),
+    MongooseModule.forFeature([{name: 'WaitingLocal', schema: WaitingUserSchema}])
   ],
   controllers: [AuthController],
   providers: [AuthService, JwTStrategy],

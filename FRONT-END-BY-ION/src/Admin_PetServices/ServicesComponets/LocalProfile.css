@@ -1,0 +1,425 @@
+body {
+	background-color: var(--highColor);
+}
+
+.star-rating2 {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20px;
+  }
+  
+  .star2 {
+	cursor: pointer;
+	transition: color 0.2s;
+  }
+.carousel-container_img {
+	max-width: 600px;
+	margin: 100px auto 20px;
+}
+
+.carousel_img {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	overflow: hidden;
+}
+
+.image-wrapper_img {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	width: 100%;
+	height: 300px;
+	overflow: hidden;
+}
+
+.carousel-container_img img {
+	border-radius: 10px;
+	transition:
+		transform 0.3s ease-in-out,
+		opacity 0.5s ease-in-out;
+}
+
+.main-img_img {
+	width: 70%;
+	z-index: 1;
+	border-radius: 10px;
+	transition:
+		transform 0.3s ease-in-out,
+		opacity 0.5s ease-in-out;
+	opacity: 1;
+}
+
+.sliding_img .main-img_img {
+	opacity: 0;
+	transform: scale(0.8);
+}
+
+.adjacent-img_img {
+	width: 40%;
+	opacity: 0.6;
+	transition:
+		transform 0.3s ease-in-out,
+		opacity 0.5s ease-in-out;
+}
+
+.left_img {
+	position: absolute;
+	left: 0;
+	z-index: 0;
+}
+
+.right_img {
+	position: absolute;
+	right: 0;
+	z-index: 0;
+}
+
+.prev_img {
+	left: 10px;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background-color: rgba(128, 94, 8, 0.5);
+	color: white;
+	border: none;
+	padding: 10px;
+	cursor: pointer;
+	z-index: 2;
+}
+
+.next_img {
+	right: 10px;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background-color: rgba(128, 94, 8, 0.5);
+	color: white;
+	border: none;
+	padding: 10px;
+	cursor: pointer;
+	z-index: 2;
+}
+
+.prev_img:hover, .next_img:hover {
+	background-color: rgba(162, 130, 49, 0.5);
+}
+
+/* Thumbnails */
+.thumbnail-container_img {
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+}
+
+.thumbnail_img {
+	width: 60px;
+	height: 40px;
+	margin: 0 5px;
+	cursor: pointer;
+	opacity: 0.6;
+	border-radius: 5px;
+	transition: opacity 0.3s;
+}
+
+.thumbnail_img:hover,
+.thumbnail_img.active_img {
+	opacity: 1;
+	border: 2px solid #333;
+}
+
+/* celelalte elemente inafara de carusel================================*/
+
+.localNameContainer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: var(--lowColor);
+	color: white;
+	border-radius: 5px;
+	margin-bottom: 15px;
+}
+
+.localNameContainer div {
+	flex: 1;
+	height: 1px;
+	background-image: linear-gradient(to right,rgb(255, 234, 184), rgb(255, 198, 158));
+	margin: 0 10px;
+}
+
+.localProfileInfo {
+	background-color: var(--lightColor);
+	border-radius: 15px;
+	padding: 20px 20px 0;
+	margin: 20px auto;
+	width: 80%;
+	box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.localType {
+	color: var(--primaryColor);
+	font-size: 1.2rem;
+	margin-bottom: 10px;
+}
+
+.localNameContainer h2 {
+	font-size: 2rem;
+	font-weight: bold;
+}
+
+.localNameContainer div {
+	flex-grow: 1;
+	height: 1px;
+	background-color: white;
+	margin: 0 10px;
+}
+
+.carouselContainer {
+	margin-bottom: 20px;
+	padding: 10px;
+	background-color: var(--lowColor);
+	border-radius: 15px;
+}
+
+.localProfileInfo p {
+	margin: 0;
+	padding: 5px 0;
+}
+
+.localProfileInfo h3,
+.localProfileInfo h2 {
+	text-align: center;
+}
+
+.TypeLocalWriting {
+	font-size: 1.2rem;
+	font-weight: bold;
+	color: var(--lowColor);
+	margin-top: 30px;
+}
+
+.info {
+	font-size: 0.9rem;
+	line-height: 1.6;
+	color: gray;
+	margin-bottom: 15px;
+}
+
+.address {
+	font-size: 1rem;
+	display: flex;
+	align-items: center;
+	color: var(--darkColor);
+}
+
+.AddressContainer svg {
+	margin-right: 8px;
+	color: var(--primaryColor);
+	transform: translateX(-5px);
+	color: rgb(181, 223, 235);
+}
+
+.starRatingContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+}
+
+.AddressContainer {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 10px;
+}
+
+/*Butoanele de in josul pagini===============================*/
+
+.LocalButtonsBox {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	margin-top: 36px;
+	border-top: 1px solid var(--midColor);
+	background-color: aqua;
+}
+
+.LocalButtonsBox div {
+	height: 44px;
+	width: 1px;
+	background-color: #333;
+}
+
+.LocalInformationButton,
+.LocalReviewButton {
+	flex: 1;
+	border-bottom: 1px solid var(--lowColor);
+	border-color: transparent;
+	color: var(--lowColor);
+	padding: 10px 20px;
+	font-size: 1rem;
+	border: none;
+	cursor: pointer;
+	transition: border-bottom 0.3s ease-in-out;
+}
+
+.LocalInformationButton.activeButton {
+	border-bottom: 3px solid var(--lowColor);
+}
+
+.LocalReviewButton.activeButton {
+	border-bottom: 3px solid var(--lowColor);
+}
+
+.LocalInformationButton:not(.activeButton),
+.LocalReviewButton:not(.activeButton) {
+	border-bottom: none;
+}
+
+.LocalInformationButton:hover,
+.LocalReviewButton:hover {
+	background-color: var(--midColor);
+}
+
+/* Reviews list container */
+.reviewsList {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px; /* Space between each review item */
+}
+
+/* Individual review items */
+.reviewItem {
+	background-color: #ffffff;
+	padding: 15px;
+	border-radius: 8px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+	transition: box-shadow 0.3s ease;
+}
+
+.reviewItem:hover {
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.reviewItem p {
+	margin: 5px 0;
+	color: #555; /* Gray color for the text */
+}
+
+/* Last paragraph for rating */
+.reviewItem p:last-child {
+	font-weight: bold;
+	color: #007bff; /* Blue color for rating */
+}
+
+/* Add Review button container */
+.addReviewContainer {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  /* Add Review button styling */
+  .addReviewButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .addReviewButton:hover {
+    background-color: #218838;
+  }
+
+  /* Button to open the curtain */
+.openReviewButton {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .openReviewButton:hover {
+    background-color: #218838;
+  }
+  
+  /* Curtain effect */
+  .addReviewCurtain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+    transition: height 0.5s ease;
+    z-index: 1000;
+    display: none;
+  }
+  
+  /* Curtain open state */
+  .addReviewCurtain.open {
+    display: block;
+    height: 100vh;
+  }
+  
+  /* Content inside the curtain */
+  .curtainContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    width: 80%;
+    max-width: 500px;
+  }
+  
+  .curtainContent h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  
+  .curtainContent textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 20px;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .curtainContent button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .curtainContent button:hover {
+    background-color: #218838;
+  }
+  

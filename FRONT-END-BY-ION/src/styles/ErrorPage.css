@@ -1,0 +1,28 @@
+/* Assuming the background color is already set in your existing CSS */
+
+.error-container {
+    text-align: center;
+    padding: 50px;
+}
+
+.pet-image-NoRepeatPlz {
+    width: 60%;
+    max-width: 380px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);;
+}
+
+.error-title {
+    font-size: 2em;
+    color: #333;
+    margin-top: 20px;
+}
+
+.error-message {
+    font-size: 1.2em;
+    color: #666;
+    margin-top: 10px;
+}
+
+

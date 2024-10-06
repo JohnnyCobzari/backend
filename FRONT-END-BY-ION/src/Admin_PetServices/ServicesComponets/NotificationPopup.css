@@ -1,0 +1,43 @@
+.message_notification-popup {
+	position: fixed;
+	top: 74px;
+	right: 10%;
+	background-color: white;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	width: 286px;
+	height: auto;
+	padding: 10px;
+}
+
+/* Style for the input field */
+.announcement_input {
+	width: 100%;
+    padding: 10px;
+    padding-right: 66px;
+	font-size: 16px;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	outline: none;
+}
+
+/* Style for the send button */
+.send_button {
+	position: absolute;
+	top: 50%;
+	right: 15px;
+	transform: translateY(-50%);
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	color: var(--lowColor);
+	font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Change button color on hover */
+.send_button:hover {
+	color: #9b720a;
+}

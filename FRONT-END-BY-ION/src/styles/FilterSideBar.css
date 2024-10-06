@@ -1,0 +1,252 @@
+:root {
+	--highColor: #f3ede4;
+	--midColor: #dad5cd;
+	--lowColor: #6b5e49;
+}
+
+.sidebar-container_Filter_Side_Bar {
+	position: absolute;
+	z-index: 10;
+	top: 10px;
+	right: 10px;
+}
+
+.filter-button_Filter_Side_Bar {
+	color: #6b5e49;
+	border: none;
+	cursor: pointer;
+	z-index: 2;
+	background: none;
+}
+
+.sidebar_Filter_Side_Bar {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 250px;
+	height: 73vh;
+	background-color: var(--midColor);
+	box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+	transform: translateX(105%);
+	transition: transform 0.5s ease;
+	z-index: 1;
+	overflow-y: auto;
+}
+
+.open_Filter_Side_Bar {
+    display: flex;
+    flex-direction: column;
+	transform: translateX(0); /* Move into view */
+}
+
+.close-button_Filter_Side_Bar {
+	color: var(--lowColor);
+	position: absolute;
+	top: 0;
+	right: 0;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+/*====================================================*/
+
+.Content_FilterSideBar {
+	width: 100%;
+	height: 100vh;
+	margin: 40px auto 0;
+	overflow-y: auto;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+/* Styling for p elements and filter sections */
+.WritingFromFilterBar {
+	color: var(--lowColor);
+	font-size: 18px;
+	font-weight: bold;
+	cursor: pointer;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 10px 0;
+	padding-top: 5px;
+	border-top: 1px solid white;
+}
+
+.filter-section:first-of-type .WritingFromFilterBar {
+	border-top: none;
+}
+.filter-section{
+    position: relative;
+}
+.filter-options {
+	margin-left: 10px;
+	padding-left: 20px;
+}
+
+/* Arrow rotation */
+.arrow-icon {
+	transition: transform 0.3s ease;
+}
+
+.rotate {
+	transform: rotate(180deg);
+}
+
+/* Styling checkboxes */
+.filter-options label {
+	display: block;
+	margin: 5px 0;
+	font-size: 16px;
+}
+
+.filter-options input {
+	margin-right: 10px;
+}
+
+/*=========================check pox with point =============*/
+
+/* Ascundem checkbox-ul implicit */
+input[type="checkbox"] {
+	appearance: none; /* Pentru a elimina stilul implicit */
+	-webkit-appearance: none; /* Suport pentru Safari */
+	background-color: #fff; /* Culoarea fundalului */
+	border: 2px solid #6b5e49; /* Bordura cercului */
+	border-radius: 50%; /* Pentru a crea cercul */
+	width: 14px; /* Dimensiunea cercului */
+	height: 14px; /* Dimensiunea cercului */
+	cursor: pointer;
+	position: relative; /* Pentru poziționarea punctului interior */
+	outline: none; /* Eliminăm highlight-ul default */
+	transition: background-color 0.2s ease;
+}
+
+/* Stilul când checkbox-ul este selectat */
+input[type="checkbox"]:checked {
+	background-color: #dad5cd; /* Culoarea cercului când e selectat */
+	border-color: #6b5e49; /* Bordura când este selectat */
+}
+
+/* Adăugăm punctul interior când checkbox-ul este selectat */
+input[type="checkbox"]:checked::before {
+	content: ""; /* Punctul nu are text */
+	position: absolute;
+	top: 50%; /* Centrare verticală */
+	left: 50%; /* Centrare orizontală */
+	transform: translate(-50%, -50%); /* Mutăm punctul în centru */
+	width: 7px; /* Dimensiunea punctului */
+	height: 7px; /* Dimensiunea punctului */
+	background-color: #6b5e49; /* Culoarea punctului */
+	border-radius: 100%; /* Transformăm punctul în cerc */
+}
+.filter-options label{
+    color: #4f483b;
+}
+
+.filter-options .FilterSideBarInput {
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+	border: none;
+    width: 100%;
+    font-size: 13px;
+	background-color: var(--highColor);
+	border-radius: 5px;
+    padding: 3px 10px;
+    color: #6b5e49;
+    padding-right: 28px;
+    transform: translateX(-10%);
+}
+
+/*========================================================*/
+
+.search-icon{
+    color: var(--lowColor);
+    position: absolute;
+    right: 24px;
+    bottom: 5px;
+}
+
+/*============================================*/
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 100px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--lowColor);
+    border-radius: 100px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  /* for the apply filters button==============*/
+
+  button.apply-filters {
+    cursor: pointer;
+    margin: 5px auto;
+    width: 70%;
+    background-color:#6b5e49;
+    color: white;
+    padding: 5px 0px;
+    border-radius: 30px;
+    border: none;
+    font-size: 16px;
+    transition: box-shadow 0.3s ease-in-out;
+ }
+ 
+ button.apply-filters:hover {
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+ }
+
+ /*pentru price ===============================*/
+
+ .range-input-container {
+    margin: 15px 0 15px;
+    color: var(--lowColor);
+    display: flex;
+    gap: 5px; /* Spațiu între inputuri și select */
+  }
+  
+  .range-input {
+    background-color: var(--highColor);
+    padding: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 40%; /* Poți ajusta după preferință */
+  }
+  
+  .range-input:focus {
+    border-color: var(--lowColor);
+    outline: none;
+    box-shadow: 0 0 8px rgba(137, 105, 0, 0.6);
+  }
+  
+  .currency-select {
+    color: var(--lowColor);
+    padding: 2px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: var(--highColor);
+    cursor: pointer;
+  }
+  
+  .currency-select:focus {
+    border-color: var(--lowColor);
+    outline: none;
+    box-shadow: 0 0 8px rgba(137, 105, 0, 0.6);
+  }
+  
+
+ 

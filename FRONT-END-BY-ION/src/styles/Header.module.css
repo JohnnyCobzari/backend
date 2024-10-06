@@ -1,0 +1,70 @@
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 20px;
+	background-color: #f8f9fa;
+	border-bottom: 1px solid #e0e0e0;
+  }
+
+:root {
+	--highColor: #f3ede4;
+	--midColor: #dad5cd;
+	--lowColor: #6b5e49;
+}
+
+header {
+	background: linear-gradient(to right, #efe2cd, #f3ede4); 
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 64px;
+	z-index: 1000;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	display: flex;
+	justify-content: space-between;
+}
+
+.HeaderButtons {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width: 136px;
+	color: #6b5e49;
+}
+
+.HeaderButtons svg {
+	cursor: pointer;
+}
+
+.HeaderButtons svg:hover {
+	transform: scale(1.2); /* Zoom in on hover */
+	color: var(--midColor); /* Schimbă culoarea la hover */
+}
+
+.header-logo {
+	transform: translateX(115px);
+}
+
+.header-logo:hover {
+	cursor: pointer;
+	transform: scale(1.05); /* efect de mărire la hover */
+}
+
+.HeaderPets img {
+	height: 64px;
+	width: auto;
+	transform: translateY(4px);
+}
+
+.toggle-btn {
+	background: none;
+	border: none;
+	cursor: pointer;
+  }
+  
+@media (max-width: 780px) {
+	.HeaderPets img {
+		display: none;
+	}
+}
